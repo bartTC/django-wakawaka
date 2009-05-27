@@ -83,6 +83,10 @@ INSTALLED_APPS = (
     'wakawaka',
 )
 
+LOGIN_URL = '/accounts/login/'
+LOGOUT_URL = '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/'
+
 try:
     from settings_local import *
 except ImportError:
