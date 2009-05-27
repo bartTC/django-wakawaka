@@ -25,7 +25,9 @@
 	</p>
 	{% endif %}
 
-	{{ rev.content|linebreaks|urlize|wikify }}
+	<div class="page">
+	{{ rev.content|linebreaks|wikify|urlize }}
+	</div>
 
 	{% spaceless %}
 	<div class="info">
