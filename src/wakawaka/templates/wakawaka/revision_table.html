@@ -21,7 +21,11 @@
 				{% if rev_b %}
 					{% ifequal rev_b.pk rev.pk %}checked{% endifequal %}
 				{% else %}
-					{% ifequal forloop.counter 2 %}checked{% endifequal %}
+					{% ifequal page.revisions.all|length 1 %}
+						checked
+					{% else %}
+						{% ifequal forloop.counter 2 %}checked{% endifequal %}
+					{% endifequal %}
 				{% endif %}
 			/>
 		</td>
