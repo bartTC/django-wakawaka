@@ -105,7 +105,8 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
     if request.method == 'POST':
         form = WikiPageForm(data=request.POST)
         if form.is_valid():
-            # Check if the content is changed, except there is a rev_id
+            # Check if the content is changed, except there is a rev_id and the
+            # user possibly only reverted the HEAD to it
             if not rev_id and initial['content'] == form.cleaned_data['content']:
                 form.errors['content'] = (_('You have made no changes!'),)
 
@@ -117,7 +118,6 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
                 except WikiPage.DoesNotExist:
                     # Must be a new one, create that page
                     page = WikiPage.objects.create(slug=slug)
-                    print "SETIE ERSTELLT"
 
                 form.save(request, page)
                 request.user.message_set.create(message=ugettext('Your changes to %s were saved' % page.slug))
