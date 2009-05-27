@@ -10,5 +10,9 @@ urlpatterns = patterns('',
     url('^accounts/login/$', login, name='auth_login'),
     url('^accounts/logout/$', logout, name='auth_logout'),
 
+    # Include the wacky wakawaka urls
     (r'^', include('wakawaka.urls')),
+
+    # If all pages are only for authenticated users, import this urlconf instead
+    #(r'^', include('wakawaka.urls.authenticated')),
 )

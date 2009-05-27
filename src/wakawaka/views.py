@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from wakawaka.forms import WikiPageForm, DeleteWikiPageForm
 from wakawaka.models import WikiPage, Revision
 
+__all__ = ['index', 'page', 'edit', 'revisions', 'changes', 'revision_list', 'page_list']
 
 def index(request, template_name='wakawaka/page.html', extra_context={}):
     '''
@@ -48,7 +49,6 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-@login_required
 def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_context={}):
     '''
     Displays the form for editing and deleting a page.
