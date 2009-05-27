@@ -6,3 +6,12 @@ django-wakawka is a super simple wiki system written in Python using the Django
 framework.
 
 Description and installation doc follows.
+
+TODO:
+=====
+
+- The request ip is hardcoded to 127.0.0.1
+- Add locking to the edit-view
+- Better permission handling in the edit view (add, change, delete)
+- Better readme
+- pypi release
