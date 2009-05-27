@@ -7,7 +7,6 @@ class WikiPage(models.Model):
     slug = models.CharField(_('slug'), max_length=255)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
-    #editable = models.BooleanField(_('editable'), default=True)
 
     class Meta:
         ordering = ['slug']

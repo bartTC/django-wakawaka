@@ -83,10 +83,12 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
     if request.method == 'POST' and request.POST.get('delete'):
         delete_form = DeleteWikiPageForm(request.POST)
         if delete_form.is_valid():
+
             # Delete revision
             if delete_form.cleaned_data.get('delete', False) == 'rev':
                 page_deleted = delete_form.delete_revision(page, rev)
                 if page_deleted:
+                    # This was the only one revision so the whole page was deleted.
                     request.user.message_set.create(message=ugettext('The page for %s was deleted because you deleted the only revision' % page.slug))
                     return HttpResponseRedirect(reverse('wakawaka_index'))
                 request.user.message_set.create(message=ugettext('The revision for %s was deleted' % page.slug))
@@ -180,7 +182,6 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
                               RequestContext(request))
-
 
 # Some useful views
 def revision_list(request, template_name='wakawaka/revision_list.html', extra_context={}):
