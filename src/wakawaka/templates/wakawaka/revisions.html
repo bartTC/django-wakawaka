@@ -1,0 +1,11 @@
+{% extends "wakawaka/base.html" %}
+
+{% block title %}
+	{{ page.slug }}
+{% endblock %}
+
+{% block content %}
+	<h1>History for {{ page.slug }}</h1>
+
+	{% include "wakawaka/revision_table.html" %}
+{% endblock %}

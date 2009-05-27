@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	{% block extrahead %}{% endblock %}
+	<style type="text/css">
+	html{ font-size: 100.01%; }
+	body{ font-size: 1em; font-family: Georgia, sans-serif; color: #555; margin: 0; padding: 2em 5em; }
+	a:link{ color: #286EE6; }
+	a:visited{ color: #1C4EA3; }
+	a:hover, a:active{ color: #EB0800; }
+	a.doesnotexist{ text-decoration: none; border-bottom: 1px dashed #aaa; color: #888; }
+	h1, h2{ font-weight: normal; margin: 1.5em 0 0.5em 0; color: #275C74; }
+	h1 a{ color: #1884B6; text-decoration: none; }
+	h2{ font-size: 1.2em; }
+	div.info{ border: 1px solid #C2E86C; background-color: #D4E8A8; font-size: 0.9em; margin: 1em 0;}
+	div.info span{ display: inline-block; padding: 0.5em 1em; background-color: #DFE8CA; border-right: 1px solid #C2E86C; }
+	form.wakawaka_delete_form{ padding: 1em; margin-top: 3em; background-color: #F3D39E; }
+	form.wakawaka_delete_form p{ margin: 0; display: inline; }
+	textarea{ width: 100%; }
+	ul.messages{ color: #C70800; }
+	ul.errorlist{ color: #C70800; }
+	table.history{ border-collapse: collapse; border: none; font-size: 0.9em; }
+	table.history th{ border: none; padding: 0.5em 1em; border: 1px solid #aaa; background-color: #ccc;}
+	table.history td{ border: none; padding: 0.5em 1em; border: 1px solid #ddd;}
+	pre.changes{ width: 100%; overflow: auto; font-size: 0.8em; font-family: monospace;  }
+	p.revert-warning{ background-color: #FEF098; padding: 1em; color: black; }
+	</style>
+</head>
+<body>
+	{% if messages %}
+	<ul class="messages">
+	{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	{% spaceless %}
+	<div class="info">
+	{% block info %}
+		{% if user.is_authenticated %}
+		<span style="float: right;">
+			<a href="{% url auth_logout %}">Logout ({{ user.username }})</a>
+		</span>
+		{% else %}
+		<span style="float: right;">
+			<a href="{% url auth_login %}">Login</a>
+		</span>
+		{% endif %}
+		<span>
+			<a href="{% url wakawaka_index %}">Start</a>
+		</span>
+		<span>
+			<a href="{% url wakawaka_revision_list %}">Recent revisions</a>
+		</span>
+		<span>
+			<a href="{% url wakawaka_page_list %}">All Pages</a>
+		</span>
+	{% endblock %}
+	</div>
+	{% endspaceless %}
+
+	{% block content %}
+	{% endblock %}
+</body>
+</html>

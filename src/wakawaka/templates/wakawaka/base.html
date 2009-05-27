@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	{% block extrahead %}{% endblock %}
+</head>
+<body>
+	{% if messages %}
+	<ul class="messages">
+	{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+
+	{% spaceless %}
+	<div class="info">
+	{% block info %}
+		<span class="start">
+			<a href="{% url wakawaka_index %}">Start</a>
+		</span>
+		<span class="start">
+			<a href="{% url wakawaka_revision_list %}">Recent revisions</a>
+		</span>
+		<span class="start">
+			<a href="{% url wakawaka_page_list %}">All Pages</a>
+		</span>
+	{% endblock %}
+	</div>
+	{% endspaceless %}
+
+	{% block content %}
+	{% endblock %}
+</body>
+</html>

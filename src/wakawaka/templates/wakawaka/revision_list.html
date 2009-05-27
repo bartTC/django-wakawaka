@@ -1,0 +1,34 @@
+{% extends "wakawaka/base.html" %}
+
+{% block title %}
+	List of all revisions
+{% endblock %}
+
+{% block content %}
+	<h1>List of all revisions</h1>
+
+	<table class="history" border="1">
+	<tr>
+		<th>Page</th>
+		<th>Changed</th>
+		<th>Message</th>
+		<th>Modified by</th>
+		<th>&nbsp;</th>
+	</tr>
+	{% for rev in revision_list %}
+	<tr>
+		<td>{{ rev.page.slug }}</td>
+		<td class="modifed">{{ rev.modified|timesince }} ago</td>
+		<td class="message">{{ rev.message }}</td>
+		<td class="creator">{{ rev.creator.username }}</td>
+		<td class="options">
+			<a href="{% url wakawaka_page slug=rev.page.slug, rev_id=rev.pk %}">View</a>
+			{% if user.is_authenticated %}
+			<a href="{% url wakawaka_edit slug=rev.page.slug, rev_id=rev.pk %}">Revert</a>
+			{% endif %}
+		</td>
+	</tr>
+	{% endfor %}
+	</table>
+
+{% endblock %}

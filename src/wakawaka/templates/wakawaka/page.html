@@ -1,0 +1,44 @@
+{% extends "wakawaka/base.html" %}
+
+{% load wakawaka_tags %}
+
+{% block extrahead %}
+	{{ block.super }}
+
+	{# Don't let search engines scan this old revision #}
+	{% if rev.is_not_current %}
+		<meta name="robots" content="noindex" />
+	{% endif %}
+{% endblock %}
+
+{% block title %}
+	{{ page.slug }}
+{% endblock %}
+
+{% block content %}
+	<h1><a href="{% url wakawaka_page slug=page.slug %}">{{ page.slug }}</a></h1>
+
+	{% if rev.is_not_current %}
+	<p class="revert-warning">
+		You are viewing an older revision!
+		<a href="{% url wakawaka_page slug=page.slug %}">See the latest version</a>
+	</p>
+	{% endif %}
+
+	{{ rev.content|linebreaks|urlize|wikify }}
+
+	{% spaceless %}
+	<div class="info">
+	<span>
+		<strong>{{ page.slug }}</strong>
+	</span>
+	<span>
+		Recently modified by <em>{{ page.current.creator }}</em>: {{ rev.modified|date:_("DATETIME_FORMAT") }}
+		(<a href="{% url wakawaka_revision_list slug=page.slug %}">History</a>)
+	</span>
+	<span>
+		<a href="{% url wakawaka_edit slug=page.slug %}">Edit</a>
+	</span>
+	</div>
+	{% endspaceless %}
+{% endblock %}
