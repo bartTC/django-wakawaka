@@ -38,7 +38,6 @@
 
 	{% spaceless %}
 	<div class="info">
-	{% block info %}
 		{% if user.is_authenticated %}
 		<span style="float: right;">
 			<a href="{% url auth_logout %}">Logout ({{ user.username }})</a>
@@ -57,7 +56,6 @@
 		<span>
 			<a href="{% url wakawaka_page_list %}">All Pages</a>
 		</span>
-	{% endblock %}
 	</div>
 	{% endspaceless %}
 

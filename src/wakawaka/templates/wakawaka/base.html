@@ -14,17 +14,15 @@
 
 	{% spaceless %}
 	<div class="info">
-	{% block info %}
-		<span class="start">
+		<span>
 			<a href="{% url wakawaka_index %}">Start</a>
 		</span>
-		<span class="start">
+		<span>
 			<a href="{% url wakawaka_revision_list %}">Recent revisions</a>
 		</span>
-		<span class="start">
+		<span>
 			<a href="{% url wakawaka_page_list %}">All Pages</a>
 		</span>
-	{% endblock %}
 	</div>
 	{% endspaceless %}
 
