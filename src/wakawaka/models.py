@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 
 class WikiPage(models.Model):
     slug = models.CharField(_('slug'), max_length=255)
@@ -22,15 +21,6 @@ class WikiPage(models.Model):
     def rev(self, rev_id):
         return self.revisions.get(pk=rev_id)
 
-class RevisionManager(models.Manager):
-    def create_empty(self, request, page):
-        self.create(
-            page=page,
-            content=u'Describe %s here...' % page.slug,
-            creator=request.user,
-            creator_ip='127.0.0.1',
-        )
-
 class Revision(models.Model):
     page = models.ForeignKey(WikiPage, related_name='revisions')
     content = models.TextField(_('content'))
@@ -39,8 +29,6 @@ class Revision(models.Model):
     creator_ip = models.IPAddressField(_('creator ip'))
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
-
-    objects = RevisionManager()
 
     class Meta:
         ordering = ['-modified']
