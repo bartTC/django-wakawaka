@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect, HttpResponseBadRequest,\
-    HttpResponseNotFound
+    HttpResponseNotFound, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
@@ -60,6 +60,10 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
         rev = page.current
         initial = {'content': page.current.content}
 
+        # Do not allow editing wiki pages if the user has no permission
+        if not request.user.has_perms(('wakawaka.change_wikipage', 'wakawaka.change_revision' )):
+            return HttpResponseForbidden(ugettext('You don\'t have permission to edit pages.'))
+
         if rev_id:
             # There is a specific revision, fetch this
             rev_specific = Revision.objects.get(pk=rev_id)
@@ -72,18 +76,27 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
     # This page does not exist, create a dummy page
     # Note that it's not saved here
     except WikiPage.DoesNotExist:
+
+        # Do not allow adding wiki pages if the user has no permission
+        if not request.user.has_perms(('wakawaka.add_wikipage', 'wakawaka.add_revision',)):
+            return HttpResponseForbidden(ugettext('You don\'t have permission to add wiki pages.'))
+
         page = WikiPage(slug=slug)
         page.is_initial = True
         rev = None
         initial = {'content': _('Describe your new page %s here...' % slug),
                    'message': _('Initial revision')}
 
-    # Page delete form
-    delete_form = DeleteWikiPageForm(request)
-    if request.method == 'POST' and request.POST.get('delete'):
-        delete_form = DeleteWikiPageForm(request, request.POST)
-        if delete_form.is_valid():
-            return delete_form.delete_wiki(request, page, rev)
+    # Don't display the delete form if the user has nor permission
+    delete_form = None
+    # The user has permission, then do
+    if request.user.has_perm('wakawaka.delete_wikipage') or \
+       request.user.has_perm('wakawaka.delete_revision'):
+        delete_form = DeleteWikiPageForm(request)
+        if request.method == 'POST' and request.POST.get('delete'):
+            delete_form = DeleteWikiPageForm(request, request.POST)
+            if delete_form.is_valid():
+                return delete_form.delete_wiki(request, page, rev)
 
     # Page add/edit form
     form = WikiPageForm(initial=initial)

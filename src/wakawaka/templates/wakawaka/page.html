@@ -38,9 +38,11 @@
 		Recently modified by <em>{{ page.current.creator }}</em>: {{ rev.modified|date:_("DATETIME_FORMAT") }}
 		(<a href="{% url wakawaka_revision_list slug=page.slug %}">History</a>)
 	</span>
+	{% if perms.wakawaka.change_wikipage %}
 	<span>
 		<a href="{% url wakawaka_edit slug=page.slug %}">Edit</a>
 	</span>
+	{% endif %}
 	</div>
 	{% endspaceless %}
 {% endblock %}

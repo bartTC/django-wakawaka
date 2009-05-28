@@ -25,7 +25,7 @@
 		</p>
 	</form>
 
-	{% if not page.is_initial %}
+	{% if not page.is_initial and delete_form %}
 	<form class="wakawaka_delete_form" method="POST" action="" onsubmit="return confirm('Really?');">
 		{{ delete_form.as_p }}
 		<p>
