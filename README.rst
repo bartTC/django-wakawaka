@@ -3,7 +3,11 @@ django-wakawaka
 ===============
 
 django-wakawka is a super simple wiki system written in Python using the Django
-framework.
+framework. A sample installation is available under::
+
+    http://wakawaka.mahner.org/
+
+Log in with the username ``admin`` and the password ``admin``.
 
 Installation:
 =============
@@ -32,9 +36,9 @@ Example::
     WAKAWAKA_DEFAULT_INDEX = 'Home'
 
 Words that are written in CamelCase (a pair of one upper letter followed by
-*n* lower letters) are automatically treated as internal wiki link. You can
-change this behaviour by adding a setting ``WAKAWAKA_SLUG_REGEX`` in your
-settings.py. This holds a regular expression of the wiki urls. Default::
+*n* lower letters) are automatically treated as internal wiki links. You can
+change this behaviour by adding a setting ``WAKAWAKA_SLUG_REGEX`` to your
+settings.py. This holds a regular expression of the wiki name format. Default::
 
     WAKAWAKA_SLUG_REGEX = r'((([A-Z]+[a-z]+){2,})(/([A-Z]+[a-z]+){2,})*)'
 
