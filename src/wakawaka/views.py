@@ -2,10 +2,10 @@ import difflib
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
-from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseBadRequest,\
+    HttpResponseNotFound
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from wakawaka.forms import WikiPageForm, DeleteWikiPageForm
 from wakawaka.models import WikiPage, Revision
@@ -39,7 +39,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     except WikiPage.DoesNotExist:
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('wakawaka_edit', kwargs={'slug': slug}))
-        raise Http404()
+        return HttpResponseNotFound()
 
     template_context = {
         'page': page,
@@ -79,26 +79,11 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
                    'message': _('Initial revision')}
 
     # Page delete form
-    delete_form = DeleteWikiPageForm()
+    delete_form = DeleteWikiPageForm(request)
     if request.method == 'POST' and request.POST.get('delete'):
-        delete_form = DeleteWikiPageForm(request.POST)
+        delete_form = DeleteWikiPageForm(request, request.POST)
         if delete_form.is_valid():
-
-            # Delete revision
-            if delete_form.cleaned_data.get('delete', False) == 'rev':
-                page_deleted = delete_form.delete_revision(page, rev)
-                if page_deleted:
-                    # This was the only one revision so the whole page was deleted.
-                    request.user.message_set.create(message=ugettext('The page for %s was deleted because you deleted the only revision' % page.slug))
-                    return HttpResponseRedirect(reverse('wakawaka_index'))
-                request.user.message_set.create(message=ugettext('The revision for %s was deleted' % page.slug))
-                return HttpResponseRedirect(reverse('wakawaka_page', kwargs={'slug': page.slug}))
-
-            # Delete the page
-            if delete_form.cleaned_data.get('delete', False) == 'page':
-                delete_form.delete_page(page)
-                request.user.message_set.create(message=ugettext('The page %s was deleted' % page.slug))
-                return HttpResponseRedirect(reverse('wakawaka_index'))
+            return delete_form.delete_wiki(request, page, rev)
 
     # Page add/edit form
     form = WikiPageForm(initial=initial)
@@ -163,7 +148,7 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
         rev_b = Revision.objects.get(pk=rev_b_id)
         page = WikiPage.objects.get(slug=slug)
     except ObjectDoesNotExist:
-        raise Http404()
+        return HttpResponseNotFound()
 
     if rev_a.content != rev_b.content:
         d = difflib.unified_diff(rev_b.content.splitlines(),
