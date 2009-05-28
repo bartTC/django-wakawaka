@@ -1,15 +1,16 @@
 # from http://open.e-scribe.com/browser/python/django/apps/protowiki/templatetags/wikitags.py
 # copyright Paul Bissex, MIT license
-from django.core.exceptions import ObjectDoesNotExist
 import re
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import Library
 from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
 from wakawaka.models import WikiPage
+from wakawaka.urls import WIKI_SLUG
 
 register = Library()
 
-WIKI_WORDS_REGEX = re.compile(r'\b((([A-Z]+[a-z]+){2,})(/([A-Z]+[a-z]+){2,})*)\b')
+WIKI_WORDS_REGEX = re.compile(r'\b%s\b' % WIKI_SLUG)
 
 @register.filter
 def wikify(value):

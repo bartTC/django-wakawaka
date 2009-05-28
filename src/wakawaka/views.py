@@ -118,6 +118,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
                     page = WikiPage.objects.create(slug=slug)
 
                 form.save(request, page)
+
                 request.user.message_set.create(message=ugettext('Your changes to %s were saved' % page.slug))
                 return HttpResponseRedirect(reverse('wakawaka_page', kwargs={'slug': page.slug}))
 
