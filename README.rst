@@ -14,10 +14,14 @@ Installation:
 
 1. Put ``wakawaka`` to your INSTALLED_APPS in your settings.py within your
    django project.
-2. Add (r'^wiki/', include('wakawaka.urls')), to your urls.py.
+2. Add ``(r'^wiki/', include('wakawaka.urls')),`` to your urls.py.
 
 That's all. Wakawaka has no other dependencies than Django 1.0 (or Django 1.1,
 currently known as *trunk*)
+
+**Private wiki:** If you want to deploy a private wiki so that every page
+needs an login simply add this line ``(r'^wiki/', include('wakawaka.urls.authenticated')),``
+to your urls.py instead of the above.
 
 Configuration:
 ==============
