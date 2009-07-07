@@ -1,11 +1,19 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
+
 
 class WikiPage(models.Model):
     slug = models.CharField(_('slug'), max_length=255)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
+    
+    content_type = models.ForeignKey(ContentType, null=True)
+    object_id = models.PositiveIntegerField(null=True)
+    group = generic.GenericForeignKey("content_type", "object_id")
 
     class Meta:
         ordering = ['slug']
