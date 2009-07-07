@@ -12,17 +12,19 @@ from wakawaka.models import WikiPage, Revision
 
 __all__ = ['index', 'page', 'edit', 'revisions', 'changes', 'revision_list', 'page_list']
 
-def index(request, template_name='wakawaka/page.html', extra_context={}):
+def index(request, template_name='wakawaka/page.html'):
     '''
     Redirects to the default wiki index name.
     '''
     index_slug = getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex')
     return HttpResponseRedirect(reverse('wakawaka_page', kwargs={'slug': index_slug}))
 
-def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context={}):
+def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None):
     '''
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
     '''
+    if extra_context is None:
+        extra_context = {}
     try:
         page = WikiPage.objects.get(slug=slug)
         rev = page.current
@@ -49,11 +51,12 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_context={}):
+def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_context=None):
     '''
     Displays the form for editing and deleting a page.
     '''
-
+    if extra_context is None:
+        extra_context = {}
     # Get the page for slug and get a specific revision, if given
     try:
         page = WikiPage.objects.get(slug=slug)
@@ -133,11 +136,12 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
                               RequestContext(request))
 
 def revisions(request, slug, template_name='wakawaka/revisions.html',
-                  extra_context={}):
+                  extra_context=None):
     '''
     Displays the list of all revisions for a specific WikiPage
     '''
-
+    if extra_context is None:
+        extra_context = {}
     page = get_object_or_404(WikiPage, slug=slug)
     template_context = {
         'page': page,
@@ -146,10 +150,14 @@ def revisions(request, slug, template_name='wakawaka/revisions.html',
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def changes(request, slug, template_name='wakawaka/changes.html', extra_context={}):
+def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
     '''
     Displays the changes between two revisions.
     '''
+    
+    if extra_context is None:
+        extra_context = {}
+    
     rev_a_id = request.GET.get('a', None)
     rev_b_id = request.GET.get('b', None)
 
@@ -183,10 +191,12 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
                               RequestContext(request))
 
 # Some useful views
-def revision_list(request, template_name='wakawaka/revision_list.html', extra_context={}):
+def revision_list(request, template_name='wakawaka/revision_list.html', extra_context=None):
     '''
     Displays a list of all recent revisions.
     '''
+    if extra_context is None:
+        extra_context = {}
     template_context = {
         'revision_list': Revision.objects.all(),
     }
@@ -194,10 +204,12 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def page_list(request, template_name='wakawaka/page_list.html', extra_context={}):
+def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
     '''
     Displays all Pages
     '''
+    if extra_context is None:
+        extra_context = {}
     template_context = {
         'page_list': WikiPage.objects.order_by('slug'),
         'index_slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
