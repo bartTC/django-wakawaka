@@ -57,4 +57,8 @@ class WikifyContentNode(Node):
 @register.tag
 def wikify_content(parser, token):
     bits = token.split_contents()
-    return WikifyContentNode(parser.compile_filter(bits[1]), bits[2])
+    try:
+        group_var = bits[2]
+    except IndexError:
+        group_var = None
+    return WikifyContentNode(parser.compile_filter(bits[1]), group_var)
