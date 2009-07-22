@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-wakawaka',
-    version='0.1.1',
+    version='0.2',
     description='A super simple wiki app written in Python using the Django Framwork',
     long_description=open('README.rst').read(),
     author='Martin Mahner',

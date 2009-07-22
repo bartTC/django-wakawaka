@@ -49,7 +49,8 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_context={}):
+def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_context={},
+         wiki_page_form=WikiPageForm, wiki_delete_form=DeleteWikiPageForm):
     '''
     Displays the form for editing and deleting a page.
     '''
@@ -92,16 +93,16 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
     # The user has permission, then do
     if request.user.has_perm('wakawaka.delete_wikipage') or \
        request.user.has_perm('wakawaka.delete_revision'):
-        delete_form = DeleteWikiPageForm(request)
+        delete_form = wiki_delete_form(request)
         if request.method == 'POST' and request.POST.get('delete'):
-            delete_form = DeleteWikiPageForm(request, request.POST)
+            delete_form = wiki_delete_form(request, request.POST)
             if delete_form.is_valid():
                 return delete_form.delete_wiki(request, page, rev)
 
     # Page add/edit form
-    form = WikiPageForm(initial=initial)
+    form = wiki_page_form(initial=initial)
     if request.method == 'POST':
-        form = WikiPageForm(data=request.POST)
+        form = wiki_page_form(data=request.POST)
         if form.is_valid():
             # Check if the content is changed, except there is a rev_id and the
             # user possibly only reverted the HEAD to it
