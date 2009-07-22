@@ -53,4 +53,10 @@ Wakawaka does not provide the ability to store file attachments to wiki pages.
 To do so, have a look on the side project `django-attachments`_ which provides
 a unobstrusive way to add attachments to models.
 
+Changelog:
+==========
+
+v0.3 (2009-07-22):
+    Edit-forms are now replaceable
+
 .. _`django-attachments`: http://github.com/bartTC/django-attachments/
