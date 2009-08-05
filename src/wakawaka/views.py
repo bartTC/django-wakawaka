@@ -42,6 +42,12 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
             raise Http404
     else:
         group = None
+    
+    if group:
+        group_base = bridge.group_base_template()
+    else:
+        group_base = None
+    
     try:
         if group:
             queryset = group.get_related_objects(WikiPage)
@@ -79,6 +85,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
         'page': page,
         'rev': rev,
         'group': group,
+        'group_base': group_base,
     }
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
@@ -97,6 +104,12 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
             raise Http404
     else:
         group = None
+    
+    if group:
+        group_base = bridge.group_base_template()
+    else:
+        group_base = None
+    
     # Get the page for slug and get a specific revision, if given
     try:
         if group:
@@ -191,6 +204,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
         'page': page,
         'rev': rev,
         'group': group,
+        'group_base': group_base,
     }
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
@@ -215,9 +229,14 @@ def revisions(request, slug, template_name='wakawaka/revisions.html',
     else:
         queryset = WikiPage.objects.all()
     page = get_object_or_404(queryset, slug=slug)
+    if group:
+        group_base = bridge.group_base_template()
+    else:
+        group_base = None
     template_context = {
         'page': page,
         'group': group,
+        'group_base': group_base,
     }
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
@@ -238,6 +257,11 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
             raise Http404
     else:
         group = None
+    
+    if group:
+        group_base = bridge.group_base_template()
+    else:
+        group_base = None
     
     rev_a_id = request.GET.get('a', None)
     rev_b_id = request.GET.get('b', None)
@@ -273,6 +297,7 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
         'rev_a': rev_a,
         'rev_b': rev_b,
         'group': group,
+        'group_base': group_base,
     }
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
@@ -296,9 +321,14 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
         revision_list = group.get_related_objects(Revision, join="page")
     else:
         revision_list = Revision.objects.all()
+    if group:
+        group_base = bridge.group_base_template()
+    else:
+        group_base = None
     template_context = {
         'revision_list': revision_list,
         'group': group,
+        'group_base': group_base,
     }
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
@@ -322,10 +352,15 @@ def page_list(request, template_name='wakawaka/page_list.html', extra_context=No
     else:
         page_list = WikiPage.objects.all()
     page_list = page_list.order_by('slug')
+    if group:
+        group_base = bridge.group_base_template()
+    else:
+        group_base = None
     template_context = {
         'page_list': page_list,
         'index_slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
         'group': group,
+        'group_base': group_base,
     }
     template_context.update(extra_context)
     return render_to_response(template_name, template_context,
