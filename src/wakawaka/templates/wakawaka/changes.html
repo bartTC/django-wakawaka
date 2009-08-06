@@ -1,6 +1,7 @@
 {% extends "wakawaka/base.html" %}
 
 {% load wakawaka_tags %}
+{% load i18n %}
 
 {% block extrahead %}
 	{{ block.super }}
@@ -12,7 +13,7 @@
 {% endblock %}
 
 {% block title %}
-	Changes for {{ page.slug }}
+	{% blocktrans with page.slug as slug %}Changes for {{ slug  }}{% endblocktrans %}
 {% endblock %}
 
 {% block content %}

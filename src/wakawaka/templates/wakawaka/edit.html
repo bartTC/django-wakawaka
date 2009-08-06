@@ -1,14 +1,26 @@
 {% extends "wakawaka/base.html" %}
 
+{% load i18n %}
+
 {% block title %}
-	Editing {{ page.slug }}
+    {% if page.is_initial %}
+        {% blocktrans with page.slug as slug %}Add {{ slug  }}{% endblocktrans %}
+    {% else %}
+        {% blocktrans with page.slug as slug %}Edit {{ slug  }}{% endblocktrans %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-	<h1>{% if page.is_initial %}Add{% else %}Edit{% endif %} {{ page.slug }}</h1>
+	<h1>
+	    {% if page.is_initial %}
+	        {% blocktrans with page.slug as slug %}Add {{ slug  }}{% endblocktrans %}
+	    {% else %}
+	        {% blocktrans with page.slug as slug %}Edit {{ slug  }}{% endblocktrans %}
+	    {% endif %}
+	</h1>
 
 	{% if rev.is_not_current %}
-	<p class="revert-warning">You will revert this page to an revision which is not the latest!</p>
+	<p class="revert-warning">{% trans "You are editing an revision which is not the latest!" %}</p>
 	{% endif %}
 
 	<form class="wakawaka_edit_form" method="POST" action="">
@@ -21,20 +33,20 @@
 			{% else %}
 				{% url wakawaka_page slug=page.slug %}
 			{% endif %}
-			">Cancel</a>
+			">{% trans "Cancel" %}</a>
 		</p>
 	</form>
 
 	{% if not page.is_initial and delete_form %}
-	<form class="wakawaka_delete_form" method="POST" action="" onsubmit="return confirm('Really?');">
+	<form class="wakawaka_delete_form" method="POST" action="" onsubmit="return confirm('{% trans "Please confirm deletion" %}');">
 		{{ delete_form.as_p }}
 		<p>
-			<input type="submit" value="Delete"/>
+			<input type="submit" value="{% trans "Delete" %}"/>
 		</p>
 	</form>
 	{% endif %}
 
-	<h2>Revisions for this page</h2>
+	<h2>{% trans "Revisions for this page" %}</h2>
 
 	{% include "wakawaka/revision_table.html" %}
 {% endblock %}
