@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from django.http import HttpResponseRedirect, HttpResponseBadRequest,\
-    HttpResponseNotFound, HttpResponseForbidden
+    HttpResponseForbidden, Http404
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
@@ -39,7 +39,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     except WikiPage.DoesNotExist:
         if request.user.is_authenticated():
             return HttpResponseRedirect(reverse('wakawaka_edit', kwargs={'slug': slug}))
-        return HttpResponseNotFound()
+        raise Http404
 
     template_context = {
         'page': page,
@@ -163,7 +163,7 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
         rev_b = Revision.objects.get(pk=rev_b_id)
         page = WikiPage.objects.get(slug=slug)
     except ObjectDoesNotExist:
-        return HttpResponseNotFound()
+        raise Http404
 
     if rev_a.content != rev_b.content:
         d = difflib.unified_diff(rev_b.content.splitlines(),
