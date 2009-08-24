@@ -50,7 +50,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     
     try:
         if group:
-            queryset = group.get_related_objects(WikiPage)
+            queryset = group.content_objects(WikiPage)
         else:
             queryset = WikiPage.objects.all()
         page = queryset.get(slug=slug)
@@ -59,7 +59,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
         # Display an older revision if rev_id is given
         if rev_id:
             if group:
-                revision_queryset = group.get_related_objects(Revision, join="page")
+                revision_queryset = group.content_objects(Revision, join="page")
             else:
                 revision_queryset = Revision.objects.all()
             rev_specific = revision_queryset.get(pk=rev_id)
@@ -113,7 +113,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
     # Get the page for slug and get a specific revision, if given
     try:
         if group:
-            queryset = group.get_related_objects(WikiPage)
+            queryset = group.content_objects(WikiPage)
         else:
             queryset = WikiPage.objects.all()
         page = queryset.get(slug=slug)
@@ -173,7 +173,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html', extra_c
                 try:
                     # Check that the page already exist
                     if group:
-                        queryset = group.get_related_objects(WikiPage)
+                        queryset = group.content_objects(WikiPage)
                     else:
                         queryset = WikiPage.objects.all()
                     page = queryset.get(slug=slug)
@@ -225,7 +225,7 @@ def revisions(request, slug, template_name='wakawaka/revisions.html',
     else:
         group = None
     if group:
-        queryset = group.get_related_objects(WikiPage)
+        queryset = group.content_objects(WikiPage)
     else:
         queryset = WikiPage.objects.all()
     page = get_object_or_404(queryset, slug=slug)
@@ -272,8 +272,8 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
 
     try:
         if group:
-            revision_queryset = group.get_related_objects(Revision, join="page")
-            wikipage_queryset = group.get_related_objects(WikiPage)
+            revision_queryset = group.content_objects(Revision, join="page")
+            wikipage_queryset = group.content_objects(WikiPage)
         else:
             revision_queryset = Revision.objects.all()
             wikipage_queryset = WikiPage.objects.all()
@@ -318,7 +318,7 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
     else:
         group = None
     if group:
-        revision_list = group.get_related_objects(Revision, join="page")
+        revision_list = group.content_objects(Revision, join="page")
     else:
         revision_list = Revision.objects.all()
     if group:
@@ -348,7 +348,7 @@ def page_list(request, template_name='wakawaka/page_list.html', extra_context=No
     else:
         group = None
     if group:
-        page_list = group.get_related_objects(WikiPage)
+        page_list = group.content_objects(WikiPage)
     else:
         page_list = WikiPage.objects.all()
     page_list = page_list.order_by('slug')
