@@ -1,0 +1,252 @@
+# Danish translation of Django Wakawaka.
+# Copyright (C) 2009 Martin Mahner
+# This file is distributed under the same license as the django-wakawaka package.
+# Mikkel Høgh <mikkel@hoegh.org> 2010
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.3.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-01-16 15:10+0100\n"
+"PO-Revision-Date: 2010-01-16 15:11+0100\n"
+"Last-Translator: Mikkel Høgh <mikkel@hoegh.org>\n"
+"Language-Team: Dansk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms.py:8
+msgid "Content"
+msgstr "Indhold"
+
+#: forms.py:9
+msgid "Change message (optional)"
+msgstr "Ændringsbesked (frivillig)"
+
+#: forms.py:25 templates/wakawaka/edit.html:44
+msgid "Delete"
+msgstr "Slet"
+
+#: forms.py:34
+msgid "Delete this revision"
+msgstr "Slet denne version"
+
+#: forms.py:38
+msgid "Delete the page with all revisions"
+msgstr "Slet siden med alle dens versioner"
+
+#: forms.py:61
+#, python-format
+msgid "The page %s was deleted"
+msgstr "Siden %s blev slettet"
+
+#: forms.py:72
+#, python-format
+msgid "The revision for %s was deleted"
+msgstr "Versionen for %s blev slettet"
+
+#: forms.py:79
+#, python-format
+msgid ""
+"You can not delete this revison for %s because it's the only one and you "
+"have no permission to delete the whole page."
+msgstr ""
+"Du kan ikke slette versionen for %s fordi det er den eneste version og du "
+"har ikke tilladelse til at slette hele siden."
+
+#: forms.py:87
+#, python-format
+msgid "The page for %s was deleted because you deleted the only revision"
+msgstr "Siden %s blev slettet, fordi du slettede den eneste version"
+
+#: models.py:6
+msgid "slug"
+msgstr "slug"
+
+#: models.py:7 models.py:30
+msgid "created"
+msgstr "oprettet"
+
+#: models.py:8 models.py:31
+msgid "modified"
+msgstr "ændret"
+
+#: models.py:26
+msgid "content"
+msgstr "indhold"
+
+#: models.py:27
+msgid "change message"
+msgstr "ændringsbesked"
+
+#: models.py:29
+msgid "creator ip"
+msgstr "opretters IP"
+
+#: views.py:66
+msgid "You don't have permission to edit pages."
+msgstr "Du har ikke tilladelse til at redigere sider."
+
+#: views.py:74
+#, python-format
+msgid "Reverted to \"%s\""
+msgstr "Tilbageført til “%s”"
+
+#: views.py:83
+msgid "You don't have permission to add wiki pages."
+msgstr "Du har ikke tilladelse til at tilføje nye wikisider."
+
+#: views.py:88
+#, python-format
+msgid "Describe your new page %s here..."
+msgstr "Beskriv din nye side %s her…"
+
+#: views.py:89
+msgid "Initial revision"
+msgstr "Oprindelig version"
+
+#: views.py:110
+msgid "You have made no changes!"
+msgstr "Du har ikke lavet nogen ændringer!"
+
+#: views.py:123
+#, python-format
+msgid "Your changes to %s were saved"
+msgstr "Dine ændringer til %s blev gemt"
+
+#: views.py:174
+msgid "No changes were made between this two files."
+msgstr "Ingen ændringer blev lavet mellem disse to filer."
+
+#: templates/wakawaka/base.html:20
+msgid "Start"
+msgstr "Start"
+
+#: templates/wakawaka/base.html:23
+msgid "Recent revisions"
+msgstr "Nyeste versioner"
+
+#: templates/wakawaka/base.html:26
+msgid "All Pages"
+msgstr "Alle sider"
+
+#: templates/wakawaka/changes.html:16
+#, python-format
+msgid "Changes for %(slug)s"
+msgstr "Ændringer for %(slug)s"
+
+#: templates/wakawaka/edit.html:7 templates/wakawaka/edit.html.py:16
+#, python-format
+msgid "Add %(slug)s"
+msgstr "Tilføj %(slug)s"
+
+#: templates/wakawaka/edit.html:9 templates/wakawaka/edit.html.py:18
+#, python-format
+msgid "Edit %(slug)s"
+msgstr "Rediger %(slug)s"
+
+#: templates/wakawaka/edit.html:23
+msgid "You are editing an revision which is not the latest!"
+msgstr "Du redigerer en version som ikke er den seneste!"
+
+#: templates/wakawaka/edit.html:29
+msgid "Save changes"
+msgstr "Gem ændringer"
+
+#: templates/wakawaka/edit.html:30
+msgid "or"
+msgstr "eller"
+
+#: templates/wakawaka/edit.html:36
+msgid "Cancel"
+msgstr "Annulér"
+
+#: templates/wakawaka/edit.html:41
+msgid "Please confirm deletion"
+msgstr "Bekræft venligst sletning"
+
+#: templates/wakawaka/edit.html:49
+msgid "Revisions for this page"
+msgstr "Versioner af denne side"
+
+#: templates/wakawaka/page.html:24
+msgid "You are viewing an older revision!"
+msgstr "Du ser på en tidligere version!"
+
+#: templates/wakawaka/page.html:26
+msgid "See the latest version"
+msgstr "Se den nyeste version"
+
+#: templates/wakawaka/page.html:41
+msgid "DATETIME_FORMAT"
+msgstr "DATETIME_FORMAT"
+
+#: templates/wakawaka/page.html:41
+#, python-format
+msgid ""
+"\n"
+"    \t\t    Recently modified by <em>%(creator)s</em>: %(modified)s\n"
+"    \t\t"
+msgstr ""
+"\n"
+"Senest ændret af <em>%(creator)s</em>: %(modified)s"
+
+#: templates/wakawaka/page.html:44
+msgid "History"
+msgstr "Historik"
+
+#: templates/wakawaka/page.html:49
+msgid "Edit"
+msgstr "Redigér"
+
+#: templates/wakawaka/page_list.html:6 templates/wakawaka/page_list.html:10
+msgid "All wiki pages"
+msgstr "Alle wikisider"
+
+#: templates/wakawaka/revision_list.html:6
+#: templates/wakawaka/revision_list.html:10
+msgid "List of all revisions"
+msgstr "Liste over alle versioner"
+
+#: templates/wakawaka/revision_list.html:14
+msgid "Page"
+msgstr "Side"
+
+#: templates/wakawaka/revision_list.html:15
+#: templates/wakawaka/revision_table.html:7
+msgid "Changed"
+msgstr "Ændret"
+
+#: templates/wakawaka/revision_list.html:16
+#: templates/wakawaka/revision_table.html:8
+msgid "Message"
+msgstr "Besked"
+
+#: templates/wakawaka/revision_list.html:17
+#: templates/wakawaka/revision_table.html:9
+msgid "Modified by"
+msgstr "Ændret af"
+
+#: templates/wakawaka/revision_list.html:27
+#: templates/wakawaka/revision_table.html:38
+msgid "View"
+msgstr "Vis"
+
+#: templates/wakawaka/revision_list.html:29
+#: templates/wakawaka/revision_table.html:39
+msgid "Revert"
+msgstr "Tilbagefør"
+
+#: templates/wakawaka/revision_table.html:6
+msgid "Compare"
+msgstr "Sammenlign"
+
+#: templates/wakawaka/revision_table.html:45
+msgid "Compare revisions"
+msgstr "Sammenlign versioner"
+
+#: templates/wakawaka/revisions.html:6 templates/wakawaka/revisions.html:10
+#, python-format
+msgid "History for %(slug)s"
+msgstr "Historik for %(slug)s"
