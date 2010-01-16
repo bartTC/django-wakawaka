@@ -22,7 +22,7 @@ DELETE_CHOICES = (
 )
 
 class DeleteWikiPageForm(forms.Form):
-    delete = forms.ChoiceField(choices=())
+    delete = forms.ChoiceField(label=_('Delete'), choices=())
 
     def __init__(self, request, *args, **kwargs):
         '''
@@ -31,11 +31,11 @@ class DeleteWikiPageForm(forms.Form):
         '''
         self.base_fields['delete'].choices = []
         if request.user.has_perm('wakawaka.delete_revision'):
-            self.base_fields['delete'].choices.append(('rev', 'Delete this revision'),)
+            self.base_fields['delete'].choices.append(('rev', _('Delete this revision')),)
 
         if request.user.has_perm('wakawaka.delete_revision') and \
            request.user.has_perm('wakawaka.delete_wikipage'):
-            self.base_fields['delete'].choices.append(('page', 'Delete the page with all revisions'),)
+            self.base_fields['delete'].choices.append(('page', _('Delete the page with all revisions')),)
 
         super(DeleteWikiPageForm, self).__init__(*args, **kwargs)
 
