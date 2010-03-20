@@ -12,42 +12,37 @@ from wakawaka.models import WikiPage, Revision
 
 __all__ = ['index', 'page', 'edit', 'revisions', 'changes', 'revision_list', 'page_list']
 
-def index(request, template_name='wakawaka/page.html', group_slug=None, bridge=None):
+def index(request, template_name='wakawaka/page.html'):
     '''
     Redirects to the default wiki index name.
     '''
     kwargs = {
         'slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
     }
-    if bridge is None:
-        redirect_to = reverse('wakawaka_page', kwargs=kwargs)
+    # be group aware
+    group = getattr(request, "group", None)
+    if group:
+        redirect_to = request.bridge.reverse('wakawaka_page', group, kwargs=kwargs)
     else:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
-        redirect_to = bridge.reverse('wakawaka_page', group, kwargs=kwargs)
+        redirect_to = reverse('wakawaka_page', kwargs=kwargs)
     return HttpResponseRedirect(redirect_to)
 
-def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None, group_slug=None, bridge=None):
+def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None):
     '''
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
     '''
     if extra_context is None:
         extra_context = {}
-    if bridge is not None:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
-    else:
-        group = None
-    
+
+    # be group aware
+    group = getattr(request, "group", None)
     if group:
+        bridge = request.bridge
         group_base = bridge.group_base_template()
     else:
+        bridge = None
         group_base = None
-    
+
     try:
         if group:
             queryset = group.content_objects(WikiPage)
@@ -93,25 +88,22 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
 
 def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
          extra_context=None, wiki_page_form=WikiPageForm,
-         wiki_delete_form=DeleteWikiPageForm, group_slug=None, bridge=None):
+         wiki_delete_form=DeleteWikiPageForm):
     '''
     Displays the form for editing and deleting a page.
     '''
     if extra_context is None:
         extra_context = {}
-    if bridge is not None:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
-    else:
-        group = None
-    
+
+    # be group aware
+    group = getattr(request, "group", None)
     if group:
+        bridge = request.bridge
         group_base = bridge.group_base_template()
     else:
+        bridge = None
         group_base = None
-    
+
     # Get the page for slug and get a specific revision, if given
     try:
         if group:
@@ -212,29 +204,28 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def revisions(request, slug, template_name='wakawaka/revisions.html',
-                  extra_context=None, group_slug=None, bridge=None):
+def revisions(request, slug, template_name='wakawaka/revisions.html', extra_context=None):
     '''
     Displays the list of all revisions for a specific WikiPage
     '''
     if extra_context is None:
         extra_context = {}
-    if bridge is not None:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
+
+    # be group aware
+    group = getattr(request, "group", None)
+    if group:
+        bridge = request.bridge
+        group_base = bridge.group_base_template()
     else:
-        group = None
+        bridge = None
+        group_base = None
+
     if group:
         queryset = group.content_objects(WikiPage)
     else:
         queryset = WikiPage.objects.all()
     page = get_object_or_404(queryset, slug=slug)
-    if group:
-        group_base = bridge.group_base_template()
-    else:
-        group_base = None
+
     template_context = {
         'page': page,
         'group': group,
@@ -244,27 +235,23 @@ def revisions(request, slug, template_name='wakawaka/revisions.html',
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None, group_slug=None, bridge=None):
+def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
     '''
     Displays the changes between two revisions.
     '''
     
     if extra_context is None:
         extra_context = {}
-    
-    if bridge is not None:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
-    else:
-        group = None
-    
+
+    # be group aware
+    group = getattr(request, "group", None)
     if group:
+        bridge = request.bridge
         group_base = bridge.group_base_template()
     else:
+        bridge = None
         group_base = None
-    
+
     rev_a_id = request.GET.get('a', None)
     rev_b_id = request.GET.get('b', None)
 
@@ -306,27 +293,27 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
                               RequestContext(request))
 
 # Some useful views
-def revision_list(request, template_name='wakawaka/revision_list.html', extra_context=None, group_slug=None, bridge=None):
+def revision_list(request, template_name='wakawaka/revision_list.html', extra_context=None):
     '''
     Displays a list of all recent revisions.
     '''
     if extra_context is None:
         extra_context = {}
-    if bridge is not None:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
+
+    # be group aware
+    group = getattr(request, "group", None)
+    if group:
+        bridge = request.bridge
+        group_base = bridge.group_base_template()
     else:
-        group = None
+        bridge = None
+        group_base = None
+
     if group:
         revision_list = group.content_objects(Revision, join="page")
     else:
         revision_list = Revision.objects.all()
-    if group:
-        group_base = bridge.group_base_template()
-    else:
-        group_base = None
+
     template_context = {
         'revision_list': revision_list,
         'group': group,
@@ -336,28 +323,28 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
     return render_to_response(template_name, template_context,
                               RequestContext(request))
 
-def page_list(request, template_name='wakawaka/page_list.html', extra_context=None, group_slug=None, bridge=None):
+def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
     '''
     Displays all Pages
     '''
     if extra_context is None:
         extra_context = {}
-    if bridge is not None:
-        try:
-            group = bridge.get_group(group_slug)
-        except ObjectDoesNotExist:
-            raise Http404
+
+    # be group aware
+    group = getattr(request, "group", None)
+    if group:
+        bridge = request.bridge
+        group_base = bridge.group_base_template()
     else:
-        group = None
+        bridge = None
+        group_base = None
+
     if group:
         page_list = group.content_objects(WikiPage)
     else:
         page_list = WikiPage.objects.all()
     page_list = page_list.order_by('slug')
-    if group:
-        group_base = bridge.group_base_template()
-    else:
-        group_base = None
+
     template_context = {
         'page_list': page_list,
         'index_slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
