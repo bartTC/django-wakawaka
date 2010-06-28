@@ -187,7 +187,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
                 if group:
                     redirect_to = bridge.reverse('wakawaka_page', group, kwargs=kwargs)
                 else:
-                    reverse('wakawaka_page', kwargs=kwargs)
+                    redirect_to = reverse('wakawaka_page', kwargs=kwargs)
                 
                 request.user.message_set.create(message=ugettext('Your changes to %s were saved' % page.slug))
                 return HttpResponseRedirect(redirect_to)
