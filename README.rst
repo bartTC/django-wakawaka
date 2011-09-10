@@ -3,11 +3,7 @@ django-wakawaka
 ===============
 
 django-wakawka is a super simple wiki system written in Python using the Django
-framework. A sample installation is available under::
-
-    http://wakawaka.mahner.org/
-
-Log in with the username ``admin`` and the password ``admin``.
+framework.
 
 Installation:
 =============
