@@ -1,5 +1,6 @@
 import difflib
 from django.conf import settings
+from django.contrib import messages
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.context import RequestContext
 from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest,\
@@ -188,8 +189,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
                     redirect_to = bridge.reverse('wakawaka_page', group, kwargs=kwargs)
                 else:
                     redirect_to = reverse('wakawaka_page', kwargs=kwargs)
-                
-                request.user.message_set.create(message=ugettext('Your changes to %s were saved' % page.slug))
+                messages.success(request, ugettext('Your changes to %s were saved' % page.slug))
                 return HttpResponseRedirect(redirect_to)
 
     template_context = {
