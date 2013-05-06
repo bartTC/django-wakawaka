@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<form method="GET" action="{% url wakawaka_changes slug=page.slug %}">
+<form method="GET" action="{% url 'wakawaka_changes' slug=page.slug %}">
 <table class="history" border="1">
 <tr>
 	<th>{% trans "Compare" %}</th>
@@ -35,8 +35,8 @@
 	<td class="message">{{ rev.message }}</td>
 	<td class="creator">{{ rev.creator.username }}</td>
 	<td class="options">
-		<a href="{% url wakawaka_page slug=page.slug, rev_id=rev.pk %}">{% trans "View" %}</a>
-		<a href="{% url wakawaka_edit slug=page.slug, rev_id=rev.pk %}">{% trans "Revert" %}</a>
+		<a href="{% url 'wakawaka_page' slug=page.slug rev_id=rev.pk %}">{% trans "View" %}</a>
+		<a href="{% url 'wakawaka_edit' slug=page.slug rev_id=rev.pk %}">{% trans "Revert" %}</a>
 	</td>
 </tr>
 {% endfor %}
