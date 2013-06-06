@@ -40,21 +40,21 @@
 	<div class="info">
 		{% if user.is_authenticated %}
 		<span style="float: right;">
-			<a href="{% url auth_logout %}">Logout ({{ user.username }})</a>
+			<a href="{% url 'auth_logout' %}">Logout ({{ user.username }})</a>
 		</span>
 		{% else %}
 		<span style="float: right;">
-			<a href="{% url auth_login %}">Login</a>
+			<a href="{% url 'auth_login' %}">Login</a>
 		</span>
 		{% endif %}
 		<span>
-			<a href="{% url wakawaka_index %}">Start</a>
+			<a href="{% url 'wakawaka_index' %}">Start</a>
 		</span>
 		<span>
-			<a href="{% url wakawaka_revision_list %}">Recent revisions</a>
+			<a href="{% url 'wakawaka_revision_list' %}">Recent revisions</a>
 		</span>
 		<span>
-			<a href="{% url wakawaka_page_list %}">All Pages</a>
+			<a href="{% url 'wakawaka_page_list' %}">All Pages</a>
 		</span>
 	</div>
 	{% endspaceless %}

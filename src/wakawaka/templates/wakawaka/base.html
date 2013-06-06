@@ -17,13 +17,13 @@
 	{% spaceless %}
 	<div class="info">
 		<span>
-			<a href="{% url wakawaka_index %}">{% trans "Start" %}</a>
+			<a href="{% url 'wakawaka_index' %}">{% trans "Start" %}</a>
 		</span>
 		<span>
-			<a href="{% url wakawaka_revision_list %}">{% trans "Recent revisions" %}</a>
+			<a href="{% url 'wakawaka_revision_list' %}">{% trans "Recent revisions" %}</a>
 		</span>
 		<span>
-			<a href="{% url wakawaka_page_list %}">{% trans "All Pages" %}</a>
+			<a href="{% url 'wakawaka_page_list' %}">{% trans "All Pages" %}</a>
 		</span>
 	</div>
 	{% endspaceless %}
