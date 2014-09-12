@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from django.contrib.auth.models import User
+try:
+    from django.conf import settings
+    User = settings.AUTH_USER_MODEL
+except ImportError:
+    from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
