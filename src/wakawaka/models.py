@@ -3,7 +3,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class WikiPage(models.Model):
@@ -13,7 +13,7 @@ class WikiPage(models.Model):
 
     content_type = models.ForeignKey(ContentType, null=True)
     object_id = models.PositiveIntegerField(null=True)
-    group = generic.GenericForeignKey("content_type", "object_id")
+    group = GenericForeignKey("content_type", "object_id")
 
     class Meta:
         verbose_name = _("Wiki page")
@@ -36,7 +36,7 @@ class Revision(models.Model):
     content = models.TextField(_('content'))
     message = models.TextField(_('change message'), blank=True)
     creator = models.ForeignKey(User, blank=True, null=True, related_name='wakawaka_revisions')
-    creator_ip = models.IPAddressField(_('creator ip'))
+    creator_ip = models.GenericIPAddressField(_('creator ip'))
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
 

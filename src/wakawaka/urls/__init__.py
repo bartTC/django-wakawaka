@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from wakawaka.views import *
