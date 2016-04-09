@@ -1,22 +1,23 @@
 import difflib
+
 from django.conf import settings
 from django.contrib import messages
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template.context import RequestContext
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest,\
     HttpResponseForbidden
-from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template.context import RequestContext
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.core.exceptions import ObjectDoesNotExist
+
 from wakawaka.forms import WikiPageForm, DeleteWikiPageForm
 from wakawaka.models import WikiPage, Revision
 
-__all__ = ['index', 'page', 'edit', 'revisions', 'changes', 'revision_list', 'page_list']
 
 def index(request):
-    '''
+    """
     Redirects to the default wiki index name.
-    '''
+    """
     kwargs = {
         'slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
     }
@@ -24,9 +25,9 @@ def index(request):
     return HttpResponseRedirect(redirect_to)
 
 def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None):
-    '''
+    """
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
-    '''
+    """
     if extra_context is None:
         extra_context = {}
 
@@ -65,9 +66,9 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
 def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
          extra_context=None, wiki_page_form=WikiPageForm,
          wiki_delete_form=DeleteWikiPageForm):
-    '''
+    """
     Displays the form for editing and deleting a page.
-    '''
+    """
     if extra_context is None:
         extra_context = {}
 
@@ -158,9 +159,9 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
                               RequestContext(request))
 
 def revisions(request, slug, template_name='wakawaka/revisions.html', extra_context=None):
-    '''
+    """
     Displays the list of all revisions for a specific WikiPage
-    '''
+    """
     if extra_context is None:
         extra_context = {}
 
@@ -175,9 +176,9 @@ def revisions(request, slug, template_name='wakawaka/revisions.html', extra_cont
                               RequestContext(request))
 
 def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
-    '''
+    """
     Displays the changes between two revisions.
-    '''
+    """
     
     if extra_context is None:
         extra_context = {}
@@ -218,9 +219,9 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
 
 # Some useful views
 def revision_list(request, template_name='wakawaka/revision_list.html', extra_context=None):
-    '''
+    """
     Displays a list of all recent revisions.
-    '''
+    """
     if extra_context is None:
         extra_context = {}
 
@@ -233,9 +234,9 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
                               RequestContext(request))
 
 def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
-    '''
+    """
     Displays all Pages
-    '''
+    """
     if extra_context is None:
         extra_context = {}
 

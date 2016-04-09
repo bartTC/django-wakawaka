@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+
 from wakawaka.urls import urlpatterns
 
 for waka_url in urlpatterns:

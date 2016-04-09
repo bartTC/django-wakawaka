@@ -1,4 +1,12 @@
+#!/usr/bin/env python
 from setuptools import setup, find_packages
+
+requirements = [
+    'django>=1.8',
+]
+
+test_requirements = [
+]
 
 setup(
     name='django-wakawaka',
@@ -7,21 +15,15 @@ setup(
     long_description=open('README.rst').read(),
     author='Martin Mahner',
     author_email='martin@mahner.org',
-    url='http://github.com/bartTC/django-wakawaka/tree/master',
+    url='http://github.com/bartTC/django-wakawaka/',
     packages=find_packages(),
-    classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Framework :: Django',
-    ],
-    package_data = {
-        'wakawaka': [
-            'templates/wakawaka/*.html',
+    package_data={
+        'wakawaka/': [
+            'static/*.*',
+            'templates/*.*'
         ]
     },
+    install_requires=requirements,
+    tests_require=test_requirements,
     zip_safe=False,
 )

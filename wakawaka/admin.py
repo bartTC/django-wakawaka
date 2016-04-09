@@ -1,5 +1,7 @@
 from django.contrib import admin
+
 from wakawaka.models import WikiPage, Revision
+
 
 class RevisionInlines(admin.TabularInline):
     model = Revision

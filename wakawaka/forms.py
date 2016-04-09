@@ -1,9 +1,11 @@
 from django import forms
 from django.contrib import messages
-from django.utils.translation import ugettext_lazy as _, ugettext
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from wakawaka.models import Revision, WikiPage
+from django.http import HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _, ugettext
+
+from wakawaka.models import Revision
+
 
 class WikiPageForm(forms.Form):
     content = forms.CharField(label=_('Content'), widget=forms.Textarea(attrs={'rows': 30}))

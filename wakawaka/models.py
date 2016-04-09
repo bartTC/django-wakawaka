@@ -1,9 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext, ugettext_lazy as _
-
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
 
 
 class WikiPage(models.Model):

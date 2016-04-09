@@ -1,10 +1,10 @@
-# from http://open.e-scribe.com/browser/python/django/apps/protowiki/templatetags/wikitags.py
-# copyright Paul Bissex, MIT license
 import re
+
 from django.core.exceptions import ObjectDoesNotExist
-from django.template import Library, Node, Variable
-from django.utils.safestring import mark_safe
 from django.core.urlresolvers import reverse
+from django.template import Library, Node
+from django.utils.safestring import mark_safe
+
 from wakawaka.models import WikiPage
 from wakawaka.urls import WIKI_SLUG
 
