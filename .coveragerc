@@ -1,0 +1,14 @@
+[run]
+source = wakawaka
+branch = True
+omit =
+    wakawaka/migrations/*
+    wakawaka/tests/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+
+[html]
+directory = /tmp/coverage_report/wakawaka
