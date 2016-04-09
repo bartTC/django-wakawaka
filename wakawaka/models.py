@@ -11,10 +11,6 @@ class WikiPage(models.Model):
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
 
-    content_type = models.ForeignKey(ContentType, null=True)
-    object_id = models.PositiveIntegerField(null=True)
-    group = GenericForeignKey("content_type", "object_id")
-
     class Meta:
         verbose_name = _("Wiki page")
         verbose_name_plural = _("Wiki pages")

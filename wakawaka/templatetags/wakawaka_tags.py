@@ -13,7 +13,7 @@ register = Library()
 WIKI_WORDS_REGEX = re.compile(r'\b%s\b' % WIKI_SLUG, re.UNICODE)
 
 
-def replace_wikiwords(value, group=None):
+def replace_wikiwords(value):
     def replace_wikiword(m):
         slug = m.group(1)
         try:
@@ -21,19 +21,13 @@ def replace_wikiwords(value, group=None):
             kwargs = {
                 'slug': slug,
             }
-            if group:
-                url = group.content_bridge.reverse('wakawaka_page', group, kwargs=kwargs)
-            else:
-                url = reverse('wakawaka_page', kwargs=kwargs)
+            url = reverse('wakawaka_page', kwargs=kwargs)
             return r'<a href="%s">%s</a>' % (url, slug)
         except ObjectDoesNotExist:
             kwargs = {
                 'slug': slug,
             }
-            if group:
-                url = group.content_bridge.reverse('wakawaka_edit', group, kwargs=kwargs)
-            else:
-                url = reverse('wakawaka_edit', kwargs=kwargs)
+            url = reverse('wakawaka_edit', kwargs=kwargs)
             return r'<a class="doesnotexist" href="%s">%s</a>' % (url, slug)
     return mark_safe(WIKI_WORDS_REGEX.sub(replace_wikiword, value))
 
@@ -45,20 +39,14 @@ def wikify(value):
 
 
 class WikifyContentNode(Node):
-    def __init__(self, content_expr, group_var):
+    def __init__(self, content_expr):
         self.content_expr = content_expr
-        self.group_var = Variable(group_var)
-    
+
     def render(self, context):
         content = self.content_expr.resolve(context)
-        group = self.group_var.resolve(context)
-        return replace_wikiwords(content, group)
+        return replace_wikiwords(content)
 
 @register.tag
 def wikify_content(parser, token):
     bits = token.split_contents()
-    try:
-        group_var = bits[2]
-    except IndexError:
-        group_var = None
-    return WikifyContentNode(parser.compile_filter(bits[1]), group_var)
+    return WikifyContentNode(parser.compile_filter(bits[1]))
