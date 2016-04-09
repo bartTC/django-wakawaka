@@ -8,8 +8,7 @@ setup(
     author='Martin Mahner',
     author_email='martin@mahner.org',
     url='http://github.com/bartTC/django-wakawaka/tree/master',
-    packages=find_packages('src', exclude=('wakawaka_project',)),
-    package_dir = {'': 'src'},
+    packages=find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
