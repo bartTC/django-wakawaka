@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 import difflib
 
 from django.conf import settings
@@ -23,6 +25,7 @@ def index(request):
     }
     redirect_to = reverse('wakawaka_page', kwargs=kwargs)
     return HttpResponseRedirect(redirect_to)
+
 
 def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None):
     """

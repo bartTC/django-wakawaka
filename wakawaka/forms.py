@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django import forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -20,9 +22,6 @@ class WikiPageForm(forms.Form):
             message = self.cleaned_data['message']
         )
 
-DELETE_CHOICES = (
-
-)
 
 class DeleteWikiPageForm(forms.Form):
     delete = forms.ChoiceField(label=_('Delete'), choices=())
@@ -79,7 +78,9 @@ class DeleteWikiPageForm(forms.Form):
             # has no permisson to delete the page.
             if revision_length <= 1 and \
                not request.user.has_perm('wakawaka.delete_wikipage'):
-               messages.error(request, ugettext('You can not delete this revison for %s because it\'s the only one and you have no permission to delete the whole page.' % page.slug))
+               messages.error(request, ugettext(
+                   'You can not delete this revison for %s because it\'s the '
+                   'only one and you have no permission to delete the whole page.' % page.slug))
                return HttpResponseRedirect(reverse('wakawaka_page', kwargs={'slug': page.slug}))
 
             # Delete the page and the revision if the user has both permissions
@@ -87,7 +88,8 @@ class DeleteWikiPageForm(forms.Form):
                request.user.has_perm('wakawaka.delete_revision') and \
                request.user.has_perm('wakawaka.delete_wikipage'):
                 self._delete_page(page)
-                messages.success(request, ugettext('The page for %s was deleted because you deleted the only revision' % page.slug))
+                messages.success(request, ugettext(
+                    'The page for %s was deleted because you deleted the only revision' % page.slug))
                 return HttpResponseRedirect(reverse('wakawaka_index'))
 
         return None
