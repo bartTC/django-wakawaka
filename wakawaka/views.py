@@ -9,7 +9,6 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest,\
     HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
-from django.template.context import RequestContext
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from wakawaka.forms import WikiPageForm, DeleteWikiPageForm

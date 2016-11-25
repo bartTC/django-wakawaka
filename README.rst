@@ -68,6 +68,7 @@ project in a separate virtualenv. I'm using [virtualenvwrapper][venvw] here::
     $ ./runtests.py
 
 Example Project:
+================
 
 The application comes with a sample project. This gives you a brief overview
 about the Wiki features, and can help you with the integration of the
