@@ -5,6 +5,36 @@ django-wakawaka
 django-wakawka is a super simple wiki system written in Python using the Django
 framework.
 
+* Links between Wiki pages are automatically resolved by their CamelCase naming
+  scheme.
+
+* It automatically keeps track of revision changes of a Page, while
+  providing the ability to revert to earlier states.
+
+* It also has a quite comprehensive permission integration, taking care of
+  Django's default create/edit/delete permissions.
+
+* Wakawaka is an application and indented to be placed in an existing project.
+
+Some screenshots from the *Example Project*:
+
+.. image:: ./docs/_static/overview.png
+    :scale: 25 %
+    :target: ./docs/_static/overview.png
+
+.. image:: ./docs/_static/revisions.png
+    :scale: 25 %
+    :target: ./docs/_static/revisions.png
+
+.. image:: ./docs/_static/history.png
+    :scale: 25 %
+    :target: ./docs/_static/history.png
+
+.. image:: ./docs/_static/pagelist.png
+    :scale: 25 %
+    :target: ./docs/_static/pagelist.png
+
+
 Installation:
 =============
 
@@ -19,6 +49,7 @@ currently known as *trunk*)
 needs an login simply add this line ``(r'^wiki/', include('wakawaka.urls.authenticated')),``
 to your urls.py instead of the above.
 
+
 Configuration:
 ==============
 
@@ -26,8 +57,8 @@ Wakawaka takes care of Django's permission system. Grant your users always a
 pair of ``wikipage`` and ``revision`` permissions either what they should do.
 (Adding, changing or deleting WikiPages)
 
-Optional Configuration:
------------------------
+Optional Settings:
+------------------
 
 The name of your first wiki page is defined as ``WikiIndex``. You can change
 this by adding a setting ``WAKAWAKA_DEFAULT_INDEX`` to your settings.py.
@@ -61,11 +92,12 @@ Djanog versions::
     $ tox
 
 To run the testsuite manually in your development environment, install the
-project in a separate virtualenv. I'm using [virtualenvwrapper][venvw] here::
+project in a separate virtualenv. I'm using virtualenvwrapper_ here::
 
     $ mkvirtualenv --python=`which python3` wakawaka-env
     $ pip install -e .
     $ ./runtests.py
+
 
 Example Project:
 ================
@@ -83,26 +115,29 @@ application into an existing project. It's alo used for the test suite::
 .. note:: ``runtestproject.py`` is the pendant to a regular ``manage.py`` file
     in a Django project..
 
-[venvw]: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+
 
 Changelog:
 ==========
 
 v1.0 (master):
 
-    * Django 1.9 compatibility and total cleanup.
-    * Removed Pinax Group support.
-    * Removed example project.
+* Django 1.10 compatibility and total cleanup.
+* Full Python 3 compatibility.
+* Tests.
+* Removed Pinax Group support.
+* Removed example project.
 
 v0.3: (2009-08-06):
 
-    * If a wikipage was not found, the view now raises a proper Http404 instead of a
-      (silent) HttpResponseNotFound. This gives you the ability to display a proper
-      404 page.
-    * All templates are now translatable using gettext.
+* If a wikipage was not found, the view now raises a proper Http404 instead of a
+  (silent) HttpResponseNotFound. This gives you the ability to display a proper
+  404 page.
+* All templates are now translatable using gettext.
 
 v0.2 (2009-07-22):
 
-    * Edit-forms are now replaceable
+* Edit-forms are now replaceable
 
 .. _`django-attachments`: http://github.com/bartTC/django-attachments/
