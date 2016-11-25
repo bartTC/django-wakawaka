@@ -24,22 +24,15 @@ framework.
 
 Some screenshots from the *Example Project*:
 
-.. image:: ./docs/_static/overview.png
-    :scale: 25 %
-    :target: ./docs/_static/overview.png
+* `WikiIndex Page`_
+* `Revision List`_
+* `Page History`_
+* `Page List`_
 
-.. image:: ./docs/_static/revisions.png
-    :scale: 25 %
-    :target: ./docs/_static/revisions.png
-
-.. image:: ./docs/_static/history.png
-    :scale: 25 %
-    :target: ./docs/_static/history.png
-
-.. image:: ./docs/_static/pagelist.png
-    :scale: 25 %
-    :target: ./docs/_static/pagelist.png
-
+.. _WikiIndex Page: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/overview.png
+.. _Revision List: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/revisions.png
+.. _Page History: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/history.png
+.. _Page List: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/pagelist.png
 
 Installation:
 =============
@@ -131,9 +124,8 @@ v1.0 (master):
 
 * Django 1.10 compatibility and total cleanup.
 * Full Python 3 compatibility.
-* Tests.
 * Removed Pinax Group support.
-* Removed example project.
+* Tests.
 
 v0.3: (2009-08-06):
 
