@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.org/bartTC/django-wakawaka.svg?branch=master
+    :target: https://travis-ci.org/bartTC/django-wakawaka
+
+.. image:: https://codecov.io/github/bartTC/django-wakawaka/coverage.svg?branch=master
+    :target: https://codecov.io/github/bartTC/django-wakawaka?branch=master
+
 ===============
 django-wakawaka
 ===============
