@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
 from wakawaka.views import *
@@ -10,7 +10,7 @@ from wakawaka.views import *
 WIKI_SLUG = r'((([A-Z]+[a-z]+){2,})(/([A-Z]+[a-z]+){2,})*)'
 WIKI_SLUG = getattr(settings, 'WAKAWAKA_SLUG_REGEX', WIKI_SLUG)
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^$', index, name='wakawaka_index'),
 
     # Revision and Page list
@@ -31,4 +31,4 @@ urlpatterns = patterns('',
     # Page
     url(r'^(?P<slug>%s)/rev(?P<rev_id>\d+)/$' % WIKI_SLUG, page, name='wakawaka_page'),
     url(r'^(?P<slug>%s)/$' % WIKI_SLUG, page, name='wakawaka_page'),
-)
+]
