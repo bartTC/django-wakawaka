@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.auth.models import User
 from django.utils.six import python_2_unicode_compatible
 from django.conf import settings
 
@@ -25,7 +24,6 @@ class WikiPage(models.Model):
     def current(self):
         return self.revisions.latest()
 
-    @property
     def rev(self, rev_id):
         return self.revisions.get(pk=rev_id)
 
