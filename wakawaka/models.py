@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.utils.six import python_2_unicode_compatible
+from django.conf import settings
+
 
 @python_2_unicode_compatible
 class WikiPage(models.Model):
@@ -23,6 +25,7 @@ class WikiPage(models.Model):
     def current(self):
         return self.revisions.latest()
 
+    @property
     def rev(self, rev_id):
         return self.revisions.get(pk=rev_id)
 
@@ -32,8 +35,7 @@ class Revision(models.Model):
     page = models.ForeignKey(WikiPage, related_name='revisions')
     content = models.TextField(_('content'))
     message = models.TextField(_('change message'), blank=True)
-    creator = models.ForeignKey(User, blank=True, null=True,
-                                related_name='wakawaka_revisions')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='wakawaka_revisions')
     creator_ip = models.GenericIPAddressField(_('creator ip'))
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
