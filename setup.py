@@ -1,29 +1,59 @@
 #!/usr/bin/env python
-from setuptools import setup, find_packages
+from sys import exit
 
-requirements = [
-    'django>=1.8',
-]
+from setuptools import find_packages, setup
+from setuptools.command.test import test as TestCommand
 
-test_requirements = [
-]
+
+class Tox(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        #import here, cause outside the eggs aren't loaded
+        import tox
+        errno = tox.cmdline(self.test_args)
+        exit(errno)
+
+long_description = u'\n\n'.join((
+    open('README.rst').read(),
+    open('CHANGELOG').read()
+))
 
 setup(
     name='django-wakawaka',
-    version='1.0a',
-    description='A super simple wiki app written in Python using the Django Framwork',
-    long_description=open('README.rst').read(),
+    version='1.0a1',
+    description='django-wakawka is a super simple wiki system written in Python '
+                'using the Django framework.',
+    long_description=long_description,
     author='Martin Mahner',
     author_email='martin@mahner.org',
-    url='http://github.com/bartTC/django-wakawaka/',
+    url='https://github.com/bartTC/django-wakawaka/',
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 3',
+        'Framework :: Django',
+    ],
     packages=find_packages(),
     package_data={
-        'wakawaka/': [
-            'static/*.*',
-            'templates/*.*'
-        ]
+        'dpaste': ['static/*.*', 'templates/*.*'],
+        'docs': ['*'],
     },
-    install_requires=requirements,
-    tests_require=test_requirements,
-    zip_safe=False,
+    include_package_data=True,
+    install_requires=[
+        'django>=1.8',
+    ],
+    tests_require=[
+        'tox>=1.6.1'
+    ],
+    cmdclass={
+        'test': Tox
+    },
 )
