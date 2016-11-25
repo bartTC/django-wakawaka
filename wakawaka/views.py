@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest,\
     HttpResponseForbidden
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.template.context import RequestContext
 from django.utils.translation import ugettext, ugettext_lazy as _
 
@@ -62,9 +62,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
         'rev': rev,
     }
     template_context.update(extra_context)
-    return render_to_response(template_name, template_context,
-                              RequestContext(request))
-
+    return render(request, template_name, template_context)
 
 def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
          extra_context=None, wiki_page_form=WikiPageForm,
@@ -98,7 +96,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
     # This page does not exist, create a dummy page
     # Note that it's not saved here
     except WikiPage.DoesNotExist:
-        
+
         # Do not allow adding wiki pages if the user has no permission
         if not request.user.has_perms(('wakawaka.add_wikipage', 'wakawaka.add_revision',)):
             return HttpResponseForbidden(ugettext('You don\'t have permission to add wiki pages.'))
@@ -142,11 +140,11 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
                     page.save()
 
                 form.save(request, page)
-                
+
                 kwargs = {
                     'slug': page.slug,
                 }
-                
+
                 redirect_to = reverse('wakawaka_page', kwargs=kwargs)
                 messages.success(request, ugettext('Your changes to %s were saved' % page.slug))
                 return HttpResponseRedirect(redirect_to)
@@ -158,8 +156,7 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
         'rev': rev,
     }
     template_context.update(extra_context)
-    return render_to_response(template_name, template_context,
-                              RequestContext(request))
+    return render(request, template_name, template_context)
 
 def revisions(request, slug, template_name='wakawaka/revisions.html', extra_context=None):
     """
@@ -175,14 +172,13 @@ def revisions(request, slug, template_name='wakawaka/revisions.html', extra_cont
         'page': page,
     }
     template_context.update(extra_context)
-    return render_to_response(template_name, template_context,
-                              RequestContext(request))
+    return render(request, template_name, template_context)
 
 def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
     """
     Displays the changes between two revisions.
     """
-    
+
     if extra_context is None:
         extra_context = {}
 
@@ -217,8 +213,7 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
         'rev_b': rev_b,
     }
     template_context.update(extra_context)
-    return render_to_response(template_name, template_context,
-                              RequestContext(request))
+    return render(request, template_name, template_context)
 
 # Some useful views
 def revision_list(request, template_name='wakawaka/revision_list.html', extra_context=None):
@@ -233,8 +228,7 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
         'revision_list': revision_list,
     }
     template_context.update(extra_context)
-    return render_to_response(template_name, template_context,
-                              RequestContext(request))
+    return render(request, template_name, template_context)
 
 def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
     """
@@ -251,5 +245,4 @@ def page_list(request, template_name='wakawaka/page_list.html', extra_context=No
         'index_slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
     }
     template_context.update(extra_context)
-    return render_to_response(template_name, template_context,
-                              RequestContext(request))
+    return render(request, template_name, template_context)
