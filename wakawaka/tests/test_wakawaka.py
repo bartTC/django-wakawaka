@@ -15,9 +15,11 @@ class WakaWakaTestCase(testcases.TestCase):
     """
     General integrity tests around the project.
     """
-    def create_superuser(self, username='superuser', password='foobar'):
-        return User.objects.create_superuser(
-            username, '{}@example.com'.format(username), password)
+    def login_superuser(self, create=True, username='superuser', password='foobar'):
+        if create:
+            User.objects.create_superuser(
+                username, '{}@example.com'.format(username), password)
+        self.client.login(username=username, password=password)
 
     def test_calling_home_redircts_to_wikiindex(self):
         """
@@ -49,8 +51,7 @@ class WakaWakaTestCase(testcases.TestCase):
         """
         If a user is logged in, we redirect to a Create Page form.
         """
-        user = self.create_superuser()
-        self.client.force_login(user)
+        user = self.login_superuser()
 
         # Calling /WikiIndex/ will result in a redirect to /edit/
         response = self.client.get(reverse('wakawaka_index'), follow=True)
@@ -63,8 +64,7 @@ class WakaWakaTestCase(testcases.TestCase):
         At a bare minimum, the PageForm needs a 'content' field. Otherwise
         the form is displayed again, having errors.
         """
-        user = self.create_superuser()
-        self.client.force_login(user)
+        user = self.login_superuser()
 
         data = {}
         edit_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex'})
@@ -80,8 +80,7 @@ class WakaWakaTestCase(testcases.TestCase):
         content = 'This is the content of the new WikiIndex page'
         formatted = '<p>This is the content of the new <a href="/WikiIndex/">WikiIndex</a> page</p>'
 
-        user = self.create_superuser()
-        self.client.force_login(user)
+        self.login_superuser()
 
         data = {'content': content}
         edit_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex'})

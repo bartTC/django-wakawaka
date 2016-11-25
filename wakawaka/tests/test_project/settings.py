@@ -27,6 +27,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Django 1.8/1.9 Middleware style
+from django import get_version
+from distutils.version import StrictVersion
+if StrictVersion(get_version()) < StrictVersion('1.10'):
+    MIDDLEWARE_CLASSES = MIDDLEWARE
+
 ROOT_URLCONF = 'wakawaka.tests.test_project.urls'
 
 TEMPLATES = [
