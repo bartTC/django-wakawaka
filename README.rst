@@ -49,6 +49,41 @@ Wakawaka does not provide the ability to store file attachments to wiki pages.
 To do so, have a look on the side project `django-attachments`_ which provides
 a unobstrusive way to add attachments to models.
 
+
+Testing and Development:
+========================
+
+The project comes with a (not so) comprehensive test library which can be
+simply invoked by Tox, which tests the project under all current Python and
+Djanog versions::
+
+    $ pip install tox
+    $ tox
+
+To run the testsuite manually in your development environment, install the
+project in a separate virtualenv. I'm using [virtualenvwrapper][venvw] here::
+
+    $ mkvirtualenv --python=`which python3` wakawaka-env
+    $ pip install -e .
+    $ ./runtests.py
+
+Example Project:
+
+The application comes with a sample project. This gives you a brief overview
+about the Wiki features, and can help you with the integration of the
+application into an existing project. It's alo used for the test suite::
+
+    $ mkvirtualenv --python=`which python3` wakawaka-env
+    $ pip install -e .
+    $ ./runtestproject.py migrate
+    $ ./runtestproject.py createsuperuser
+    $ ./runtestproject.py runserver
+
+.. note:: ``runtestproject.py`` is the pendant to a regular ``manage.py`` file
+    in a Django project..
+
+[venvw]: https://virtualenvwrapper.readthedocs.io/en/latest/
+
 Changelog:
 ==========
 
@@ -64,7 +99,7 @@ v0.3: (2009-08-06):
       (silent) HttpResponseNotFound. This gives you the ability to display a proper
       404 page.
     * All templates are now translatable using gettext.
-    
+
 v0.2 (2009-07-22):
 
     * Edit-forms are now replaceable

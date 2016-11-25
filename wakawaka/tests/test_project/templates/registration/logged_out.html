@@ -1,0 +1,6 @@
+{% extends "wakawaka/base.html" %}
+
+{% block content %}
+<h1>Logged out</h1>
+<p>Bye bye, <a href="{% url 'auth_login' %}">Login again?</a></p>
+{% endblock %}
