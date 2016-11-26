@@ -44,7 +44,7 @@ class BaseTestCase(testcases.TestCase):
         """
         :return bool: Whether the current Django version is <= 1.8
         """
-        return StrictVersion(DJANGO_VERSION) <= StrictVersion('1.8')
+        return not StrictVersion(DJANGO_VERSION) >= StrictVersion('1.9')
 
     def create_wikipage(self, slug, *args):
         """
