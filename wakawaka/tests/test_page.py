@@ -1,14 +1,11 @@
 from __future__ import unicode_literals
 
-from django import get_version
 from django.contrib.auth.models import Permission
 from django.core.urlresolvers import reverse
 
 from wakawaka.forms import WikiPageForm
 from wakawaka.models import WikiPage, Revision
 from wakawaka.tests.base import BaseTestCase
-
-DJANGO_VERSION = get_version()
 
 
 class PageTestCase(BaseTestCase):

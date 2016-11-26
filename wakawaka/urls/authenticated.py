@@ -1,5 +1,3 @@
-# pragma: no cover
-
 from django.contrib.auth.decorators import login_required
 
 from wakawaka.urls import urlpatterns

@@ -1,10 +1,7 @@
 from __future__ import unicode_literals
 
-from django import get_version
-
-from wakawaka.tests.base import BaseTestCase
 from wakawaka.templatetags.wakawaka_tags import wikify
-DJANGO_VERSION = get_version()
+from wakawaka.tests.base import BaseTestCase
 
 
 class TemplateTagTestCase(BaseTestCase):

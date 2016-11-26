@@ -1,11 +1,8 @@
 from __future__ import unicode_literals
 
-from django import get_version
 from django.core.urlresolvers import reverse
 
 from wakawaka.tests.base import BaseTestCase
-
-DJANGO_VERSION = get_version()
 
 
 class IndexTestCase(BaseTestCase):

@@ -9,6 +9,7 @@ from wakawaka.models import WikiPage, Revision
 
 DJANGO_VERSION = get_version()
 
+
 class BaseTestCase(testcases.TestCase):
     """
     General integrity tests around the project.
@@ -65,7 +66,7 @@ class BaseTestCase(testcases.TestCase):
             Revision.objects.create(
                 page = page,
                 content=rev,
-                message='Created via API',
+                message='Created via API: {}'.format(rev),
                 creator_ip='127.0.0.1'
             )
         return page
