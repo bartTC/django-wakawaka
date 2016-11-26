@@ -91,7 +91,3 @@ class DeleteWikiPageForm(forms.Form):
                 messages.success(request, ugettext(
                     'The page for %s was deleted because you deleted the only revision' % page.slug))
                 return HttpResponseRedirect(reverse('wakawaka_index'))
-
-        return None
-
-

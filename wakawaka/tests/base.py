@@ -45,18 +45,27 @@ class BaseTestCase(testcases.TestCase):
         """
         return StrictVersion(DJANGO_VERSION) <= StrictVersion('1.8')
 
-    def create_wikipage(self, slug, title=None, content=None):
+    def create_wikipage(self, slug, *args):
         """
-        Manualy create a valid Wikipge with one Revision
+        Creates a WikiPage using the given slug. Creates a Revision with the
+        content of each additional argument. Example::
+
+            >>> self.create_wikipage('WikiIndex', 'This is some content')
+
+        Creates one Page WikiIndex with one Title/Text 'This is some content')
+
+            >>> self.create_wikipage('WikiIndex', \
+            'This is the first revision', 'This is the second revision')
+
+        Creates one Page WikiIndex with two revisions, the first one and
+        the second one later.
         """
-        title = title or '{} Page'.format(slug)
-        content = content or 'Lorem ipsum {} page.'.format(slug)
         page = WikiPage.objects.create(slug=slug)
-        Revision.objects.create(
-            page = page,
-            title=title,
-            content=content,
-            message='Created via API',
-            creator_ip='127.0.0.1'
-        )
+        for rev in args:
+            Revision.objects.create(
+                page = page,
+                content=rev,
+                message='Created via API',
+                creator_ip='127.0.0.1'
+            )
         return page
