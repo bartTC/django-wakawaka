@@ -32,7 +32,7 @@ setup(
     author_email='martin@mahner.org',
     url='https://github.com/bartTC/django-wakawaka/',
     classifiers=[
-        'Development Status :: 1 - Stable',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
