@@ -24,7 +24,7 @@ long_description = u'\n\n'.join((
 
 setup(
     name='django-wakawaka',
-    version='1.0a1',
+    version='1.0',
     description='django-wakawka is a super simple wiki system written in Python '
                 'using the Django framework.',
     long_description=long_description,
@@ -32,7 +32,7 @@ setup(
     author_email='martin@mahner.org',
     url='https://github.com/bartTC/django-wakawaka/',
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 1 - Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
