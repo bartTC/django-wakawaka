@@ -1,3 +1,6 @@
+.. image:: https://badge.fury.io/py/django-wakawaka.svg
+    :target: https://badge.fury.io/py/django-wakawaka
+    
 .. image:: https://travis-ci.org/bartTC/django-wakawaka.svg?branch=master
     :target: https://travis-ci.org/bartTC/django-wakawaka
 
