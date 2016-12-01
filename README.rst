@@ -11,7 +11,7 @@
 django-wakawaka
 ===============
 
-django-wakawka is a super simple wiki system written in Python using the Django
+django-wakawaka is a super simple wiki system written in Python using the Django
 framework.
 
 * Links between Wiki pages are automatically resolved by their CamelCase naming
