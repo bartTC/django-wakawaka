@@ -11,7 +11,7 @@
 django-wakawaka
 ===============
 
-django-wakawka is a super simple wiki system written in Python using the Django
+django-wakawaka is a super simple wiki system written in Python using the Django
 framework.
 
 * Links between Wiki pages are automatically resolved by their CamelCase naming
@@ -44,8 +44,7 @@ Installation:
    django project.
 2. Add ``(r'^wiki/', include('wakawaka.urls')),`` to your urls.py.
 
-That's all. Wakawaka has no other dependencies than Django 1.0 (or Django 1.1,
-currently known as *trunk*)
+That's all. Wakawaka has no other dependencies than Django 1.8 or later.
 
 **Private wiki:** If you want to deploy a private wiki so that every page
 needs an login simply add this line ``(r'^wiki/', include('wakawaka.urls.authenticated')),``
