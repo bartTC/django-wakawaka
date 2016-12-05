@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from wakawaka.templatetags.wakawaka_tags import wikify
+from wakawaka.templatetags.wakawaka_tags import preprocess_content
 from wakawaka.tests.base import BaseTestCase
 
 
@@ -52,6 +53,32 @@ class TemplateTagTestCase(BaseTestCase):
         """
         f = wikify('Check WikiIndex out!')
         self.assertEqual(f, 'Check <a class="doesnotexist" href="/WikiIndex/edit/">WikiIndex</a> out!')
+
+    def test_default_preprocess_function_with_paragraphs(self):
+        """
+        By default, the content of a page has its line breaks converted
+        into paragraph tags, and urls are converted to anchor tags.
+        """
+        f = preprocess_content('Check WikiIndex out!\n\nIt features CarrotCake!')
+        self.assertEqual(f, '<p>Check WikiIndex out!</p>\n\n<p>It features CarrotCake!</p>')
+
+    def test_default_preprocess_function_with_urls(self):
+        f = preprocess_content('You can view the source code at https://github.com/bartTC/django-wakawaka')
+        self.assertEqual(f, '<p>You can view the source code at <a href="https://github.com/bartTC/django-wakawaka" rel="nofollow">https://github.com/bartTC/django-wakawaka</a></p>')
+
+    def test_custom_preprocess_function(self):
+        """
+        The default behaviour can be replaces with any python callable.
+        You can add support for markdown, rst, or even filter out bad
+        language. In this test, we want all pages to be displayed in
+        all caps.
+        """
+        def capitalise(value):
+            return value.upper()
+
+        with self.settings(WAKAWAKA_PREPROCESS_CONTENT_FUNCTION=capitalise):
+            f = preprocess_content('Check WikiIndex out!\n\nIt features CarrotCake!')
+            self.assertEqual(f, 'CHECK WIKIINDEX OUT!\n\nIT FEATURES CARROTCAKE!')
 
     def __defunctest_custom_wikiword_regex(self):
         """

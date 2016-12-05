@@ -23,7 +23,8 @@ framework.
 * It also has a quite comprehensive permission integration, taking care of
   Django's default create/edit/delete permissions.
 
-* Wakawaka is an application and indented to be placed in an existing project.
+* Wakawaka can be used as an application on its own, or included into an existing
+  project.
 
 Some screenshots from the *Example Project*:
 
@@ -73,6 +74,16 @@ change this behaviour by adding a setting ``WAKAWAKA_SLUG_REGEX`` to your
 settings.py. This holds a regular expression of the wiki name format. Default::
 
     WAKAWAKA_SLUG_REGEX = r'((([A-Z]+[a-z]+){2,})(/([A-Z]+[a-z]+){2,})*)'
+
+To add markdown (or reStructuredText) support you can specify a function to
+pass page content to before displaying it on the page. For example::
+
+    import markdown
+    WAKAWAKA_PREPROCESS_CONTENT_FUNCTION = markdown.markdown
+
+``WAKAWAKA_PREPROCESS_CONTENT_FUNCTION`` can be any python callable that takes
+a string and returns a string. It is applied before creating the internal wiki
+links.
 
 Attachments:
 ============
