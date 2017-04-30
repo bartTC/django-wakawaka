@@ -29,7 +29,7 @@
 	{% endif %}
 
 	<div class="page">
-	{{ rev.content|urlize|wikify|linebreaks }}
+	{{ rev.content|preprocess_content|wikify }}
 	</div>
 
 	{% spaceless %}

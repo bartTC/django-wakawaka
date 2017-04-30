@@ -2,9 +2,11 @@ from __future__ import unicode_literals
 
 import re
 
+from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.template import Library
+from django.template.defaultfilters import urlize, linebreaks_filter
 from django.utils.safestring import mark_safe
 
 from wakawaka.models import WikiPage
@@ -32,3 +34,23 @@ def replace_wikiwords(value):
 def wikify(value):
     """Makes WikiWords"""
     return replace_wikiwords(value)
+
+@register.filter
+def preprocess_content(value):
+    """
+    Perform pre processing of text. By default this is just to split
+    line breaks into paragraph tags, and to replace urls with anchor
+    tags. You can override the default by setting the
+    WAKAWAKA_PREPROCESS_CONTENT_FUNCTION setting to any callable. For
+    example, to use markdown, you would add the following to
+    settings.py::
+
+        import markdown
+        WAKAWAKA_PREPROCESS_CONTENT_FUNCTION = markdown.markdown
+    """
+
+    def default_preprocessor(value):
+        return linebreaks_filter(urlize(value))
+
+    preprocessor_function = getattr(settings, 'WAKAWAKA_PREPROCESS_CONTENT_FUNCTION', default_preprocessor)
+    return preprocessor_function(value)
