@@ -7,3 +7,5 @@ name = "pypi"
 django-wakawaka = {path = "."}
 docutils = "*"
 pygments = "*"
+coverage = "*"
+codacy-coverage = "*"
