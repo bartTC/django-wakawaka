@@ -44,11 +44,7 @@ Installation:
    django project.
 2. Add ``(r'^wiki/', include('wakawaka.urls')),`` to your urls.py.
 
-That's all. Wakawaka has no other dependencies than Django 1.8 or later.
-
-**Private wiki:** If you want to deploy a private wiki so that every page
-needs an login simply add this line ``(r'^wiki/', include('wakawaka.urls.authenticated')),``
-to your urls.py instead of the above.
+That's all. Wakawaka has no other dependencies than Django 1.11 or later.
 
 
 Configuration:
@@ -85,19 +81,17 @@ a unobstrusive way to add attachments to models.
 Testing and Development:
 ========================
 
-The project comes with a (not so) comprehensive test library which can be
-simply invoked by Tox, which tests the project under all current Python and
-Djanog versions::
+The project comes with a test library which can be simply invoked by Tox,
+which tests the project under all current Python and Django versions::
 
     $ pip install tox
     $ tox
 
 To run the testsuite manually in your development environment, install the
-project in a separate virtualenv. I'm using virtualenvwrapper_ here::
+project using pipenv_:
 
-    $ mkvirtualenv --python=`which python3` wakawaka-env
-    $ pip install -e .
-    $ ./runtests.py
+    $ pipenv install
+    $ pipenv run ./runtests.py
 
 
 Example Project:
@@ -107,14 +101,10 @@ The application comes with a sample project. This gives you a brief overview
 about the Wiki features, and can help you with the integration of the
 application into an existing project. It's alo used for the test suite::
 
-    $ mkvirtualenv --python=`which python3` wakawaka-env
-    $ pip install -e .
-    $ ./runtestproject.py migrate
-    $ ./runtestproject.py createsuperuser
-    $ ./runtestproject.py runserver
+    $ pipenv install
+    $ pipenv run ./manage.py migrate
+    $ pipenv run ./manage.py createsuperuser
+    $ pipenv run ./manage.py runserver
 
-.. note:: ``runtestproject.py`` is the pendant to a regular ``manage.py`` file
-    in a Django project..
-
-.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
 .. _django-attachments: https://github.com/bartTC/django-attachments
+.. _pipenv: https://pipenv.readthedocs.io/

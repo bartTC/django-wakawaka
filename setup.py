@@ -25,7 +25,7 @@ long_description = u'\n\n'.join(
 
 setup(
     name='django-wakawaka',
-    version='1.0',
+    version='1.1',
     description='django-wakawka is a super simple wiki system written in Python '
     'using the Django framework.',
     long_description=long_description,

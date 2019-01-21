@@ -12,6 +12,7 @@ WIKI_SLUG = getattr(settings, 'WAKAWAKA_SLUG_REGEX', WIKI_SLUG)
 
 urlpatterns = [
     url(r'^$', index, name='wakawaka_index'),
+
     # Revision and Page list
     url(r'^history/$', revision_list, name='wakawaka_revision_list'),
     url(r'^index/$', page_list, name='wakawaka_page_list'),

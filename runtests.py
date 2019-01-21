@@ -1,14 +1,13 @@
 #!/usr/bin/env python
-import sys
 import os
+import sys
 
 from django import setup
-from django.conf import settings
 from django.test.runner import DiscoverRunner
 
-from wakawaka.tests.test_project import settings
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wakawaka.tests.test_project.settings")
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE", "wakawaka.tests.test_project.settings"
+)
 
 
 def runtests(*test_args):
