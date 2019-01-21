@@ -1,5 +1,9 @@
+include *.in
+include *.py
+include *.rst
+include .coveragerc
 include LICENSE
-include README.rst
-include CHANGELOG
-recursive-include src/wakawaka/templates/wakawaka *
-recursive-include docs *
+include tox.ini
+recursive-include docs *.png
+recursive-include wakawaka *.html
+recursive-include wakawaka *.po

@@ -5,10 +5,10 @@ import difflib
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest,\
     HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from wakawaka.forms import WikiPageForm, DeleteWikiPageForm
@@ -49,7 +49,7 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     # The Page does not exist, redirect to the edit form or
     # deny, if the user has no permission to add pages
     except WikiPage.DoesNotExist:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             kwargs = {
                 'slug': slug,
             }

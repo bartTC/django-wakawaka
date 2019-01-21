@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 import re
 
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.template import Library
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from wakawaka.models import WikiPage

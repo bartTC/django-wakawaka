@@ -117,3 +117,4 @@ application into an existing project. It's alo used for the test suite::
     in a Django project..
 
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _django-attachments: https://github.com/bartTC/django-attachments

@@ -30,10 +30,10 @@ class WikiPage(models.Model):
 
 @python_2_unicode_compatible
 class Revision(models.Model):
-    page = models.ForeignKey(WikiPage, related_name='revisions')
+    page = models.ForeignKey(WikiPage, related_name='revisions', on_delete=models.CASCADE)
     content = models.TextField(_('content'))
     message = models.TextField(_('change message'), blank=True)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='wakawaka_revisions')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='wakawaka_revisions', on_delete=models.CASCADE)
     creator_ip = models.GenericIPAddressField(_('creator ip'))
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
