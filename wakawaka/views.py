@@ -5,8 +5,12 @@ import difflib
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404, HttpResponseRedirect, HttpResponseBadRequest,\
-    HttpResponseForbidden
+from django.http import (
+    Http404,
+    HttpResponseRedirect,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+)
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.translation import ugettext, ugettext_lazy as _
@@ -19,14 +23,14 @@ def index(request):
     """
     Redirects to the default wiki index name.
     """
-    kwargs = {
-        'slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
-    }
+    kwargs = {'slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex')}
     redirect_to = reverse('wakawaka_page', kwargs=kwargs)
     return HttpResponseRedirect(redirect_to)
 
 
-def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None):
+def page(
+    request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None
+):
     """
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
     """
@@ -50,22 +54,24 @@ def page(request, slug, rev_id=None, template_name='wakawaka/page.html', extra_c
     # deny, if the user has no permission to add pages
     except WikiPage.DoesNotExist:
         if request.user.is_authenticated:
-            kwargs = {
-                'slug': slug,
-            }
+            kwargs = {'slug': slug}
             redirect_to = reverse('wakawaka_edit', kwargs=kwargs)
             return HttpResponseRedirect(redirect_to)
         raise Http404
-    template_context = {
-        'page': page,
-        'rev': rev,
-    }
+    template_context = {'page': page, 'rev': rev}
     template_context.update(extra_context)
     return render(request, template_name, template_context)
 
-def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
-         extra_context=None, wiki_page_form=WikiPageForm,
-         wiki_delete_form=DeleteWikiPageForm):
+
+def edit(
+    request,
+    slug,
+    rev_id=None,
+    template_name='wakawaka/edit.html',
+    extra_context=None,
+    wiki_page_form=WikiPageForm,
+    wiki_delete_form=DeleteWikiPageForm,
+):
     """
     Displays the form for editing and deleting a page.
     """
@@ -80,8 +86,12 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
         initial = {'content': page.current.content}
 
         # Do not allow editing wiki pages if the user has no permission
-        if not request.user.has_perms(('wakawaka.change_wikipage', 'wakawaka.change_revision' )):
-            return HttpResponseForbidden(ugettext('You don\'t have permission to edit pages.'))
+        if not request.user.has_perms(
+            ('wakawaka.change_wikipage', 'wakawaka.change_revision')
+        ):
+            return HttpResponseForbidden(
+                ugettext('You don\'t have permission to edit pages.')
+            )
 
         if rev_id:
             # There is a specific revision, fetch this
@@ -89,28 +99,37 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
             if rev.pk != rev_specific.pk:
                 rev = rev_specific
                 rev.is_not_current = True
-                initial = {'content': rev.content, 'message': _('Reverted to "%s"' % rev.message)}
-
+                initial = {
+                    'content': rev.content,
+                    'message': _('Reverted to "%s"' % rev.message),
+                }
 
     # This page does not exist, create a dummy page
     # Note that it's not saved here
     except WikiPage.DoesNotExist:
 
         # Do not allow adding wiki pages if the user has no permission
-        if not request.user.has_perms(('wakawaka.add_wikipage', 'wakawaka.add_revision',)):
-            return HttpResponseForbidden(ugettext('You don\'t have permission to add wiki pages.'))
+        if not request.user.has_perms(
+            ('wakawaka.add_wikipage', 'wakawaka.add_revision')
+        ):
+            return HttpResponseForbidden(
+                ugettext('You don\'t have permission to add wiki pages.')
+            )
 
         page = WikiPage(slug=slug)
         page.is_initial = True
         rev = None
-        initial = {'content': _('Describe your new page %s here...' % slug),
-                   'message': _('Initial revision')}
+        initial = {
+            'content': _('Describe your new page %s here...' % slug),
+            'message': _('Initial revision'),
+        }
 
     # Don't display the delete form if the user has nor permission
     delete_form = None
     # The user has permission, then do
-    if request.user.has_perm('wakawaka.delete_wikipage') or \
-       request.user.has_perm('wakawaka.delete_revision'):
+    if request.user.has_perm('wakawaka.delete_wikipage') or request.user.has_perm(
+        'wakawaka.delete_revision'
+    ):
         delete_form = wiki_delete_form(request)
         if request.method == 'POST' and request.POST.get('delete'):
             delete_form = wiki_delete_form(request, request.POST)
@@ -140,12 +159,12 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
 
                 form.save(request, page)
 
-                kwargs = {
-                    'slug': page.slug,
-                }
+                kwargs = {'slug': page.slug}
 
                 redirect_to = reverse('wakawaka_page', kwargs=kwargs)
-                messages.success(request, ugettext('Your changes to %s were saved' % page.slug))
+                messages.success(
+                    request, ugettext('Your changes to %s were saved' % page.slug)
+                )
                 return HttpResponseRedirect(redirect_to)
 
     template_context = {
@@ -157,7 +176,10 @@ def edit(request, slug, rev_id=None, template_name='wakawaka/edit.html',
     template_context.update(extra_context)
     return render(request, template_name, template_context)
 
-def revisions(request, slug, template_name='wakawaka/revisions.html', extra_context=None):
+
+def revisions(
+    request, slug, template_name='wakawaka/revisions.html', extra_context=None
+):
     """
     Displays the list of all revisions for a specific WikiPage
     """
@@ -167,11 +189,10 @@ def revisions(request, slug, template_name='wakawaka/revisions.html', extra_cont
     queryset = WikiPage.objects.all()
     page = get_object_or_404(queryset, slug=slug)
 
-    template_context = {
-        'page': page,
-    }
+    template_context = {'page': page}
     template_context.update(extra_context)
     return render(request, template_name, template_context)
+
 
 def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
     """
@@ -198,24 +219,26 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
         raise Http404
 
     if rev_a.content != rev_b.content:
-        d = difflib.unified_diff(rev_b.content.splitlines(),
-                                 rev_a.content.splitlines(),
-                                 'Original', 'Current', lineterm='')
+        d = difflib.unified_diff(
+            rev_b.content.splitlines(),
+            rev_a.content.splitlines(),
+            'Original',
+            'Current',
+            lineterm='',
+        )
         difftext = '\n'.join(d)
     else:
         difftext = _(u'No changes were made between this two files.')
 
-    template_context = {
-        'page': page,
-        'diff': difftext,
-        'rev_a': rev_a,
-        'rev_b': rev_b,
-    }
+    template_context = {'page': page, 'diff': difftext, 'rev_a': rev_a, 'rev_b': rev_b}
     template_context.update(extra_context)
     return render(request, template_name, template_context)
 
+
 # Some useful views
-def revision_list(request, template_name='wakawaka/revision_list.html', extra_context=None):
+def revision_list(
+    request, template_name='wakawaka/revision_list.html', extra_context=None
+):
     """
     Displays a list of all recent revisions.
     """
@@ -223,11 +246,10 @@ def revision_list(request, template_name='wakawaka/revision_list.html', extra_co
         extra_context = {}
 
     revision_list = Revision.objects.all()
-    template_context = {
-        'revision_list': revision_list,
-    }
+    template_context = {'revision_list': revision_list}
     template_context.update(extra_context)
     return render(request, template_name, template_context)
+
 
 def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
     """

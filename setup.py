@@ -12,21 +12,22 @@ class Tox(TestCommand):
         self.test_suite = True
 
     def run_tests(self):
-        #import here, cause outside the eggs aren't loaded
+        # import here, cause outside the eggs aren't loaded
         import tox
+
         errno = tox.cmdline(self.test_args)
         exit(errno)
 
-long_description = u'\n\n'.join((
-    open('README.rst').read(),
-    open('CHANGELOG.rst').read()
-))
+
+long_description = u'\n\n'.join(
+    (open('README.rst').read(), open('CHANGELOG.rst').read())
+)
 
 setup(
     name='django-wakawaka',
     version='1.0',
     description='django-wakawka is a super simple wiki system written in Python '
-                'using the Django framework.',
+    'using the Django framework.',
     long_description=long_description,
     author='Martin Mahner',
     author_email='martin@mahner.org',
@@ -42,18 +43,9 @@ setup(
         'Framework :: Django',
     ],
     packages=find_packages(),
-    package_data={
-        'dpaste': ['static/*.*', 'templates/*.*'],
-        'docs': ['*'],
-    },
+    package_data={'dpaste': ['static/*.*', 'templates/*.*'], 'docs': ['*']},
     include_package_data=True,
-    install_requires=[
-        'django>=1.8',
-    ],
-    tests_require=[
-        'tox>=1.6.1'
-    ],
-    cmdclass={
-        'test': Tox
-    },
+    install_requires=['django>=1.8'],
+    tests_require=['tox>=1.6.1'],
+    cmdclass={'test': Tox},
 )

@@ -14,19 +14,21 @@ class BaseTestCase(testcases.TestCase):
     """
     General integrity tests around the project.
     """
+
     def _create_user(self, username, password):
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             user = User.objects.create(
-                username=username, email='{}@example.com'.format(username))
+                username=username, email='{}@example.com'.format(username)
+            )
             user.set_password(password)
         return user
 
     def login_superuser(self, create=True):
         username, password = 'superuser', 'foobar'
         user = self._create_user(username, password)
-        user.is_superuser= True
+        user.is_superuser = True
         user.is_staff = True
         user.save()
         self.client.login(username=username, password=password)
@@ -64,9 +66,9 @@ class BaseTestCase(testcases.TestCase):
         page = WikiPage.objects.create(slug=slug)
         for rev in args:
             Revision.objects.create(
-                page = page,
+                page=page,
                 content=rev,
                 message='Created via API: {}'.format(rev),
-                creator_ip='127.0.0.1'
+                creator_ip='127.0.0.1',
             )
         return page

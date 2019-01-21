@@ -26,6 +26,7 @@ class TemplateTagTestCase(BaseTestCase):
         CarrotCake/Withbutter
         CarrotCake|WithButter
     """
+
     def test_valid_wikiname_single(self):
         self.create_wikipage('WikiIndex')
         f = wikify('Check WikiIndex out!')
@@ -34,7 +35,9 @@ class TemplateTagTestCase(BaseTestCase):
     def test_valid_wikiname_slashed(self):
         self.create_wikipage('CarrotCake/WithButter')
         f = wikify('Check CarrotCake/WithButter out!')
-        self.assertEqual(f, 'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!')
+        self.assertEqual(
+            f, 'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!'
+        )
 
     def test_invalid_wikiname_single(self):
         f = wikify('Check Carrotcake out!')
@@ -51,7 +54,10 @@ class TemplateTagTestCase(BaseTestCase):
         Those links have a HTML class `doesnotexist` attached.
         """
         f = wikify('Check WikiIndex out!')
-        self.assertEqual(f, 'Check <a class="doesnotexist" href="/WikiIndex/edit/">WikiIndex</a> out!')
+        self.assertEqual(
+            f,
+            'Check <a class="doesnotexist" href="/WikiIndex/edit/">WikiIndex</a> out!',
+        )
 
     def __defunctest_custom_wikiword_regex(self):
         """
@@ -74,4 +80,7 @@ class TemplateTagTestCase(BaseTestCase):
 
             # Valid slug, but page does not exist
             f = wikify('Check AWESOMEBeansoup out!')
-            self.assertEqual(f, 'Check <a class="doesnotexist" href="/AWESOMEBeansoup/edit/">AwesomeBeans</a> out!')
+            self.assertEqual(
+                f,
+                'Check <a class="doesnotexist" href="/AWESOMEBeansoup/edit/">AwesomeBeans</a> out!',
+            )

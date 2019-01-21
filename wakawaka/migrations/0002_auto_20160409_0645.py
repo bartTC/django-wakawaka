@@ -7,17 +7,9 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('wakawaka', '0001_initial'),
-    ]
+    dependencies = [('wakawaka', '0001_initial')]
 
     operations = [
-        migrations.RemoveField(
-            model_name='wikipage',
-            name='content_type',
-        ),
-        migrations.RemoveField(
-            model_name='wikipage',
-            name='object_id',
-        ),
+        migrations.RemoveField(model_name='wikipage', name='content_type'),
+        migrations.RemoveField(model_name='wikipage', name='object_id'),
     ]

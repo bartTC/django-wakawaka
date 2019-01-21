@@ -20,13 +20,39 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Revision',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('content', models.TextField(verbose_name='content')),
-                ('message', models.TextField(blank=True, verbose_name='change message')),
+                (
+                    'message',
+                    models.TextField(blank=True, verbose_name='change message'),
+                ),
                 ('creator_ip', models.GenericIPAddressField(verbose_name='creator ip')),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='created')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modified')),
-                ('creator', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='wakawaka_revisions', to=settings.AUTH_USER_MODEL)),
+                (
+                    'created',
+                    models.DateTimeField(auto_now_add=True, verbose_name='created'),
+                ),
+                (
+                    'modified',
+                    models.DateTimeField(auto_now=True, verbose_name='modified'),
+                ),
+                (
+                    'creator',
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name='wakawaka_revisions',
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
                 'ordering': ['-modified'],
@@ -38,12 +64,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='WikiPage',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('slug', models.CharField(max_length=255, verbose_name='slug')),
-                ('created', models.DateTimeField(auto_now_add=True, verbose_name='created')),
-                ('modified', models.DateTimeField(auto_now=True, verbose_name='modified')),
+                (
+                    'created',
+                    models.DateTimeField(auto_now_add=True, verbose_name='created'),
+                ),
+                (
+                    'modified',
+                    models.DateTimeField(auto_now=True, verbose_name='modified'),
+                ),
                 ('object_id', models.PositiveIntegerField(null=True)),
-                ('content_type', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
+                (
+                    'content_type',
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to='contenttypes.ContentType',
+                    ),
+                ),
             ],
             options={
                 'ordering': ['slug'],
@@ -54,6 +101,10 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='revision',
             name='page',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='revisions', to='wakawaka.WikiPage'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='revisions',
+                to='wakawaka.WikiPage',
+            ),
         ),
     ]

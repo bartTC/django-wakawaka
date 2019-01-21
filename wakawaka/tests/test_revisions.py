@@ -33,8 +33,9 @@ class RevisionsTestCase(BaseTestCase):
         self.create_wikipage('WikiIndex', 'First Content', 'Second Content')
         self.create_wikipage('CarrotCake', 'Carrot Content')
 
-        response = self.client.get(reverse('wakawaka_revision_list',
-                                           kwargs={'slug': 'WikiIndex'}))
+        response = self.client.get(
+            reverse('wakawaka_revision_list', kwargs={'slug': 'WikiIndex'})
+        )
         self.assertContains(response, 'Created via API: First Content')
         self.assertContains(response, 'Created via API: Second Content')
         self.assertNotContains(response, 'Created via API: Carrot Content')

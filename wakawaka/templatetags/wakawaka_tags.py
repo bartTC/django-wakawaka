@@ -25,6 +25,7 @@ def replace_wikiwords(value):
         except ObjectDoesNotExist:
             url = reverse('wakawaka_edit', kwargs={'slug': slug})
             return r'<a class="doesnotexist" href="%s">%s</a>' % (url, slug)
+
     return mark_safe(WIKI_WORDS_REGEX.sub(replace_wikiword, value))
 
 

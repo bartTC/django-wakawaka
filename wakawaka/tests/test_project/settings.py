@@ -1,4 +1,5 @@
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '@9^=k1pya3su*bgfr3%3n8=^-orkzuqrfwj_5-f+g5(&p05lr)'
@@ -30,6 +31,7 @@ MIDDLEWARE = [
 # Django 1.8/1.9 Middleware style
 from django import get_version
 from distutils.version import StrictVersion
+
 if StrictVersion(get_version()) < StrictVersion('1.10'):
     MIDDLEWARE_CLASSES = MIDDLEWARE
 
@@ -46,9 +48,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+            ]
         },
-    },
+    }
 ]
 
 WSGI_APPLICATION = 'wakawaka.tests.test_project.wsgi.application'

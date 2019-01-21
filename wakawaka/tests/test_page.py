@@ -12,6 +12,7 @@ class PageTestCase(BaseTestCase):
     """
     Wiki Page display, editing and deleting.
     """
+
     def test_if_user_not_logged_in_404(self):
         """
         Pages which don't exist, and the user is not logged in, display 404.
@@ -189,7 +190,7 @@ class PageTestCase(BaseTestCase):
         """
         # Create a WikiIndex page with two revisions:
         rev1 = 'First Content'
-        rev2 ='Updated Content'
+        rev2 = 'Updated Content'
         self.create_wikipage('WikiIndex', rev1, rev2)
 
         # Need to be logged in to edit a Page

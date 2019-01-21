@@ -9,6 +9,7 @@ class PageListTestCase(BaseTestCase):
     """
     The Revision List displays all Pages.
     """
+
     def test_pagelist(self):
         # Create a couple of Wiki pages
         self.create_wikipage('WikiIndex', 'Some content')

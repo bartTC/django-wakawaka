@@ -9,6 +9,7 @@ class IndexTestCase(BaseTestCase):
     """
     Index and WikiIndex tests.
     """
+
     def test_calling_home_redircts_to_wikiindex(self):
         """
         Calling the homepage `/` will automatically redirect to the
@@ -31,6 +32,8 @@ class IndexTestCase(BaseTestCase):
             self.assertEqual(response.status_code, 302)
 
             if self.is_django_18():
-                self.assertEqual(response['Location'], 'http://testserver/WikiWukuIndex/')
+                self.assertEqual(
+                    response['Location'], 'http://testserver/WikiWukuIndex/'
+                )
             else:
                 self.assertEqual(response['Location'], '/WikiWukuIndex/')
