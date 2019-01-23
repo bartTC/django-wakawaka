@@ -4,12 +4,12 @@
 .. image:: https://travis-ci.org/bartTC/django-wakawaka.svg?branch=master
     :target: https://travis-ci.org/bartTC/django-wakawaka
 
- .. image:: https://api.codacy.com/project/badge/Grade/6f08231f5cd94c37a08c63946d9b42ba
-   :alt: Codacy Badge
-   :target: https://app.codacy.com/app/bartTC/django-wakawaka
+.. image:: https://api.codacy.com/project/badge/Grade/6f08231f5cd94c37a08c63946d9b42ba
+    :alt: Codacy Badge
+    :target: https://app.codacy.com/app/bartTC/django-wakawaka
    
- .. image:: https://api.codacy.com/project/badge/Coverage/3fc9f0077122402ab3264978b994ecb8    
-   :target: https://www.codacy.com/app/bartTC/django-wakawaka
+.. image:: https://api.codacy.com/project/badge/Coverage/3fc9f0077122402ab3264978b994ecb8    
+    :target: https://www.codacy.com/app/bartTC/django-wakawaka
    
    
 ===============
