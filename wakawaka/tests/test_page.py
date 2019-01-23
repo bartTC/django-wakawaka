@@ -45,7 +45,6 @@ class PageTestCase(BaseTestCase):
         self.assertTrue(isinstance(page.__str__(), str))
         self.assertTrue(isinstance(page.current.__str__(), str))
 
-
     # --------------------------------------------------------------------------
     # Page form creation and permissions
     # --------------------------------------------------------------------------
