@@ -238,7 +238,7 @@ class PageTestCase(BaseTestCase):
         # form is not even displayed then. So this is silently ignored,
         data = {'delete': 'rev'}
         page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2})
-        response = self.client.post(page_url, data, follow=False)
+        self.client.post(page_url, data, follow=False)
         self.assertEqual(WikiPage.objects.count(), 1)
         self.assertEqual(Revision.objects.count(), 2)
 
@@ -247,7 +247,7 @@ class PageTestCase(BaseTestCase):
 
         data = {'delete': 'rev'}
         page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2})
-        response = self.client.post(page_url, data, follow=True)
+        self.client.post(page_url, data, follow=True)
 
         self.assertEqual(WikiPage.objects.count(), 1)
         self.assertEqual(Revision.objects.count(), 1)
@@ -257,7 +257,7 @@ class PageTestCase(BaseTestCase):
         # has aside 'delete_revision' permission also 'delete_wikipage' permission.
         data = {'delete': 'rev'}
         page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1})
-        response = self.client.post(page_url, data, follow=True)
+        self.client.post(page_url, data, follow=True)
 
         self.assertEqual(WikiPage.objects.count(), 1)
         self.assertEqual(Revision.objects.count(), 1)
@@ -268,7 +268,7 @@ class PageTestCase(BaseTestCase):
 
         data = {'delete': 'rev'}
         page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1})
-        response = self.client.post(page_url, data, follow=True)
+        self.client.post(page_url, data, follow=True)
 
         # Since the page does not exist anymore, the user is redirected to
         # the index page.
