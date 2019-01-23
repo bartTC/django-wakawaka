@@ -4,9 +4,14 @@
 .. image:: https://travis-ci.org/bartTC/django-wakawaka.svg?branch=master
     :target: https://travis-ci.org/bartTC/django-wakawaka
 
-.. image:: https://codecov.io/github/bartTC/django-wakawaka/coverage.svg?branch=master
-    :target: https://codecov.io/github/bartTC/django-wakawaka?branch=master
-
+ .. image:: https://api.codacy.com/project/badge/Grade/6f08231f5cd94c37a08c63946d9b42ba
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/app/bartTC/django-wakawaka
+   
+ .. image:: https://api.codacy.com/project/badge/Coverage/3fc9f0077122402ab3264978b994ecb8    
+   :target: https://www.codacy.com/app/bartTC/django-wakawaka
+   
+   
 ===============
 django-wakawaka
 ===============
@@ -36,6 +41,7 @@ Some screenshots from the *Example Project*:
 .. _Revision List: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/revisions.png
 .. _Page History: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/history.png
 .. _Page List: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/pagelist.png
+
 
 Installation:
 =============
@@ -69,6 +75,7 @@ change this behaviour by adding a setting ``WAKAWAKA_SLUG_REGEX`` to your
 settings.py. This holds a regular expression of the wiki name format. Default::
 
     WAKAWAKA_SLUG_REGEX = r'((([A-Z]+[a-z]+){2,})(/([A-Z]+[a-z]+){2,})*)'
+
 
 Attachments:
 ============
