@@ -108,3 +108,7 @@ application into an existing project. It's alo used for the test suite::
 
 .. _django-attachments: https://github.com/bartTC/django-attachments
 .. _pipenv: https://pipenv.readthedocs.io/
+
+.. image:: https://api.codacy.com/project/badge/Grade/6f08231f5cd94c37a08c63946d9b42ba
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/app/bartTC/django-wakawaka?utm_source=github.com&utm_medium=referral&utm_content=bartTC/django-wakawaka&utm_campaign=Badge_Grade_Dashboard
