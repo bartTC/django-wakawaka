@@ -33,6 +33,19 @@ class PageTestCase(BaseTestCase):
         self.assertTrue('form' in response.context)
         self.assertTrue(isinstance(response.context['form'], WikiPageForm))
 
+    def test_model_str_methods(self):
+        """
+        Models __str__ methods are fine.
+        """
+        page = self.create_wikipage(
+            'WikiIndex',
+            'This is the first revision',
+            'This is the second revision'
+        )
+        self.assertTrue(isinstance(page.__str__(), str))
+        self.assertTrue(isinstance(page.current.__str__(), str))
+
+
     # --------------------------------------------------------------------------
     # Page form creation and permissions
     # --------------------------------------------------------------------------

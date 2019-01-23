@@ -24,9 +24,6 @@ class WikiPage(models.Model):
     def current(self):
         return self.revisions.latest()
 
-    def rev(self, rev_id):
-        return self.revisions.get(pk=rev_id)
-
 
 @python_2_unicode_compatible
 class Revision(models.Model):
