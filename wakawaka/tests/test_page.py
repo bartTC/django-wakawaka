@@ -4,7 +4,7 @@ from django.contrib.auth.models import Permission
 from django.urls import reverse
 
 from wakawaka.forms import WikiPageForm
-from wakawaka.models import WikiPage, Revision
+from wakawaka.models import Revision, WikiPage
 from wakawaka.tests.base import BaseTestCase
 
 
@@ -40,7 +40,7 @@ class PageTestCase(BaseTestCase):
         page = self.create_wikipage(
             'WikiIndex',
             'This is the first revision',
-            'This is the second revision'
+            'This is the second revision',
         )
         self.assertTrue(isinstance(page.__str__(), str))
         self.assertTrue(isinstance(page.current.__str__(), str))
@@ -168,11 +168,15 @@ class PageTestCase(BaseTestCase):
         response = self.client.get(page_url, follow=True)
         self.assertContains(response, data2['content'])
 
-        page_url = reverse('wakawaka_page', kwargs={'slug': 'WikiIndex', 'rev_id': 2})
+        page_url = reverse(
+            'wakawaka_page', kwargs={'slug': 'WikiIndex', 'rev_id': 2}
+        )
         response = self.client.get(page_url, follow=True)
         self.assertContains(response, data2['content'])
 
-        page_url = reverse('wakawaka_page', kwargs={'slug': 'WikiIndex', 'rev_id': 1})
+        page_url = reverse(
+            'wakawaka_page', kwargs={'slug': 'WikiIndex', 'rev_id': 1}
+        )
         response = self.client.get(page_url, follow=True)
         self.assertContains(response, data1['content'])
 
@@ -209,7 +213,9 @@ class PageTestCase(BaseTestCase):
         self.login_superuser()
 
         # Calling edit form with older revision will have that content in form
-        page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1})
+        page_url = reverse(
+            'wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1}
+        )
         response = self.client.get(page_url, follow=True)
         self.assertContains(response, rev1)
         self.assertContains(response, 'Reverted')
@@ -217,7 +223,9 @@ class PageTestCase(BaseTestCase):
 
         # Calling the edit form of the current revision, will display the regular
         # edit form.
-        page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2})
+        page_url = reverse(
+            'wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2}
+        )
         response = self.client.get(page_url, follow=True)
         self.assertContains(response, rev2)
         self.assertNotContains(response, 'Reverted')
@@ -243,22 +251,32 @@ class PageTestCase(BaseTestCase):
         # Need to be logged in to edit a Page. The user also needs edit
         # permission to see the edit page
         user = self.login_staffuser_noperm()
-        user.user_permissions.add(Permission.objects.get(codename='change_wikipage'))
-        user.user_permissions.add(Permission.objects.get(codename='change_revision'))
+        user.user_permissions.add(
+            Permission.objects.get(codename='change_wikipage')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='change_revision')
+        )
 
         # The user has no permission at all so this will fail. The delete
         # form is not even displayed then. So this is silently ignored,
         data = {'delete': 'rev'}
-        page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2})
+        page_url = reverse(
+            'wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2}
+        )
         self.client.post(page_url, data, follow=False)
         self.assertEqual(WikiPage.objects.count(), 1)
         self.assertEqual(Revision.objects.count(), 2)
 
         # Give the user delete_revision permission so they can delete it.
-        user.user_permissions.add(Permission.objects.get(codename='delete_revision'))
+        user.user_permissions.add(
+            Permission.objects.get(codename='delete_revision')
+        )
 
         data = {'delete': 'rev'}
-        page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2})
+        page_url = reverse(
+            'wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 2}
+        )
         self.client.post(page_url, data, follow=True)
 
         self.assertEqual(WikiPage.objects.count(), 1)
@@ -268,7 +286,9 @@ class PageTestCase(BaseTestCase):
         # this revision, it will also delete the page - but only if the user
         # has aside 'delete_revision' permission also 'delete_wikipage' permission.
         data = {'delete': 'rev'}
-        page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1})
+        page_url = reverse(
+            'wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1}
+        )
         self.client.post(page_url, data, follow=True)
 
         self.assertEqual(WikiPage.objects.count(), 1)
@@ -276,10 +296,14 @@ class PageTestCase(BaseTestCase):
 
         # Give the user delete_wikipage permission so they can delete the
         # entire page, by deleting the last revision of it
-        user.user_permissions.add(Permission.objects.get(codename='delete_wikipage'))
+        user.user_permissions.add(
+            Permission.objects.get(codename='delete_wikipage')
+        )
 
         data = {'delete': 'rev'}
-        page_url = reverse('wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1})
+        page_url = reverse(
+            'wakawaka_edit', kwargs={'slug': 'WikiIndex', 'rev_id': 1}
+        )
         self.client.post(page_url, data, follow=True)
 
         # Since the page does not exist anymore, the user is redirected to
@@ -292,10 +316,18 @@ class PageTestCase(BaseTestCase):
         If the user has all permissions they can delete the page right away.
         """
         user = self.login_staffuser_noperm()
-        user.user_permissions.add(Permission.objects.get(codename='change_wikipage'))
-        user.user_permissions.add(Permission.objects.get(codename='change_revision'))
-        user.user_permissions.add(Permission.objects.get(codename='delete_wikipage'))
-        user.user_permissions.add(Permission.objects.get(codename='delete_revision'))
+        user.user_permissions.add(
+            Permission.objects.get(codename='change_wikipage')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='change_revision')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='delete_wikipage')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='delete_revision')
+        )
 
         # Create one page with two revisions upfront
         self.create_wikipage('WikiIndex', 'Some content', 'Other content')
@@ -314,10 +346,18 @@ class PageTestCase(BaseTestCase):
         passes no or an invalid value, nothing happens.
         """
         user = self.login_staffuser_noperm()
-        user.user_permissions.add(Permission.objects.get(codename='change_wikipage'))
-        user.user_permissions.add(Permission.objects.get(codename='change_revision'))
-        user.user_permissions.add(Permission.objects.get(codename='delete_wikipage'))
-        user.user_permissions.add(Permission.objects.get(codename='delete_revision'))
+        user.user_permissions.add(
+            Permission.objects.get(codename='change_wikipage')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='change_revision')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='delete_wikipage')
+        )
+        user.user_permissions.add(
+            Permission.objects.get(codename='delete_revision')
+        )
 
         # Create one page with two revisions upfront
         self.create_wikipage('WikiIndex', 'Some content', 'Other content')

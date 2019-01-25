@@ -1,11 +1,12 @@
 from __future__ import unicode_literals
 
+from distutils.version import StrictVersion
+
 from django import get_version
 from django.contrib.auth.models import User
 from django.test import testcases
-from distutils.version import StrictVersion
 
-from wakawaka.models import WikiPage, Revision
+from wakawaka.models import Revision, WikiPage
 
 DJANGO_VERSION = get_version()
 

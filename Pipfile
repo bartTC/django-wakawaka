@@ -5,7 +5,17 @@ name = "pypi"
 
 [packages]
 django-wakawaka = {path = "."}
-docutils = "*"
-pygments = "*"
+
+[dev-packages]
 coverage = "*"
 codacy-coverage = "*"
+ipdb = "*"
+isort = "*"
+black = "*"
+
+[scripts]
+test = "./runtests.py"
+cleanup = "sh -c \"black --skip-string-normalization --line-length=80 --exclude='/(migrations)/' wakawaka && isort -rc wakawaka\""
+
+[pipenv]
+allow_prereleases = true

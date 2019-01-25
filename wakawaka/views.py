@@ -5,18 +5,15 @@ import difflib
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import (
-    Http404,
-    HttpResponseRedirect,
-    HttpResponseBadRequest,
-    HttpResponseForbidden,
-)
-from django.shortcuts import render, get_object_or_404
+from django.http import (Http404, HttpResponseBadRequest,
+                         HttpResponseForbidden, HttpResponseRedirect)
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
-from wakawaka.forms import WikiPageForm, DeleteWikiPageForm
-from wakawaka.models import WikiPage, Revision
+from wakawaka.forms import DeleteWikiPageForm, WikiPageForm
+from wakawaka.models import Revision, WikiPage
 
 
 def index(request):
@@ -29,14 +26,15 @@ def index(request):
 
 
 def page(
-    request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None
+    request,
+    slug,
+    rev_id=None,
+    template_name='wakawaka/page.html',
+    extra_context=None,
 ):
     """
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
     """
-    if extra_context is None:
-        extra_context = {}
-
     try:
         queryset = WikiPage.objects.all()
         page = queryset.get(slug=slug)
@@ -59,7 +57,7 @@ def page(
             return HttpResponseRedirect(redirect_to)
         raise Http404
     template_context = {'page': page, 'rev': rev}
-    template_context.update(extra_context)
+    template_context.update(extra_context or {})
     return render(request, template_name, template_context)
 
 
@@ -75,9 +73,6 @@ def edit(
     """
     Displays the form for editing and deleting a page.
     """
-    if extra_context is None:
-        extra_context = {}
-
     # Get the page for slug and get a specific revision, if given
     try:
         queryset = WikiPage.objects.all()
@@ -127,9 +122,9 @@ def edit(
     # Don't display the delete form if the user has nor permission
     delete_form = None
     # The user has permission, then do
-    if request.user.has_perm('wakawaka.delete_wikipage') or request.user.has_perm(
-        'wakawaka.delete_revision'
-    ):
+    if request.user.has_perm(
+        'wakawaka.delete_wikipage'
+    ) or request.user.has_perm('wakawaka.delete_revision'):
         delete_form = wiki_delete_form(request)
         if request.method == 'POST' and request.POST.get('delete'):
             delete_form = wiki_delete_form(request, request.POST)
@@ -143,7 +138,10 @@ def edit(
         if form.is_valid():
             # Check if the content is changed, except there is a rev_id and the
             # user possibly only reverted the HEAD to it
-            if not rev_id and initial['content'] == form.cleaned_data['content']:
+            if (
+                not rev_id
+                and initial['content'] == form.cleaned_data['content']
+            ):
                 form.errors['content'] = (_('You have made no changes!'),)
 
             # Save the form and redirect to the page view
@@ -163,7 +161,8 @@ def edit(
 
                 redirect_to = reverse('wakawaka_page', kwargs=kwargs)
                 messages.success(
-                    request, ugettext('Your changes to %s were saved' % page.slug)
+                    request,
+                    ugettext('Your changes to %s were saved' % page.slug),
                 )
                 return HttpResponseRedirect(redirect_to)
 
@@ -173,7 +172,7 @@ def edit(
         'page': page,
         'rev': rev,
     }
-    template_context.update(extra_context)
+    template_context.update(extra_context or {})
     return render(request, template_name, template_context)
 
 
@@ -183,25 +182,20 @@ def revisions(
     """
     Displays the list of all revisions for a specific WikiPage
     """
-    if extra_context is None:
-        extra_context = {}
-
     queryset = WikiPage.objects.all()
     page = get_object_or_404(queryset, slug=slug)
 
     template_context = {'page': page}
-    template_context.update(extra_context)
+    template_context.update(extra_context or {})
     return render(request, template_name, template_context)
 
 
-def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
+def changes(
+    request, slug, template_name='wakawaka/changes.html', extra_context=None
+):
     """
     Displays the changes between two revisions.
     """
-
-    if extra_context is None:
-        extra_context = {}
-
     rev_a_id = request.GET.get('a', None)
     rev_b_id = request.GET.get('b', None)
 
@@ -230,8 +224,13 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
     else:
         difftext = _(u'No changes were made between this two files.')
 
-    template_context = {'page': page, 'diff': difftext, 'rev_a': rev_a, 'rev_b': rev_b}
-    template_context.update(extra_context)
+    template_context = {
+        'page': page,
+        'diff': difftext,
+        'rev_a': rev_a,
+        'rev_b': rev_b,
+    }
+    template_context.update(extra_context or {})
     return render(request, template_name, template_context)
 
 
@@ -242,22 +241,18 @@ def revision_list(
     """
     Displays a list of all recent revisions.
     """
-    if extra_context is None:
-        extra_context = {}
-
     revision_list = Revision.objects.all()
     template_context = {'revision_list': revision_list}
-    template_context.update(extra_context)
+    template_context.update(extra_context or {})
     return render(request, template_name, template_context)
 
 
-def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
+def page_list(
+    request, template_name='wakawaka/page_list.html', extra_context=None
+):
     """
     Displays all Pages
     """
-    if extra_context is None:
-        extra_context = {}
-
     page_list = WikiPage.objects.all()
     page_list = page_list.order_by('slug')
 
@@ -265,5 +260,5 @@ def page_list(request, template_name='wakawaka/page_list.html', extra_context=No
         'page_list': page_list,
         'index_slug': getattr(settings, 'WAKAWAKA_DEFAULT_INDEX', 'WikiIndex'),
     }
-    template_context.update(extra_context)
+    template_context.update(extra_context or {})
     return render(request, template_name, template_context)

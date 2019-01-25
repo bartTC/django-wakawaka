@@ -2,9 +2,10 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.contrib import messages
-from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _, ugettext
+from django.urls import reverse
+from django.utils.translation import ugettext
+from django.utils.translation import ugettext_lazy as _
 
 from wakawaka.models import Revision
 
@@ -14,7 +15,9 @@ class WikiPageForm(forms.Form):
         label=_('Content'), widget=forms.Textarea(attrs={'rows': 30})
     )
     message = forms.CharField(
-        label=_('Change message (optional)'), widget=forms.TextInput, required=False
+        label=_('Change message (optional)'),
+        widget=forms.TextInput,
+        required=False,
     )
 
     def save(self, request, page, *args, **kwargs):
@@ -41,9 +44,9 @@ class DeleteWikiPageForm(forms.Form):
                 ('rev', _('Delete this revision'))
             )
 
-        if request.user.has_perm('wakawaka.delete_revision') and request.user.has_perm(
-            'wakawaka.delete_wikipage'
-        ):
+        if request.user.has_perm(
+            'wakawaka.delete_revision'
+        ) and request.user.has_perm('wakawaka.delete_wikipage'):
             self.base_fields['delete'].choices.append(
                 ('page', _('Delete the page with all revisions'))
             )
@@ -71,7 +74,9 @@ class DeleteWikiPageForm(forms.Form):
             and request.user.has_perm('wakawaka.delete_wikipage')
         ):
             self._delete_page(page)
-            messages.success(request, ugettext('The page %s was deleted' % page.slug))
+            messages.success(
+                request, ugettext('The page %s was deleted' % page.slug)
+            )
             return HttpResponseRedirect(reverse('wakawaka_index'))
 
         # Revision handling
@@ -85,7 +90,8 @@ class DeleteWikiPageForm(forms.Form):
             ):
                 self._delete_revision(rev)
                 messages.success(
-                    request, ugettext('The revision for %s was deleted' % page.slug)
+                    request,
+                    ugettext('The revision for %s was deleted' % page.slug),
                 )
                 return HttpResponseRedirect(
                     reverse('wakawaka_page', kwargs={'slug': page.slug})

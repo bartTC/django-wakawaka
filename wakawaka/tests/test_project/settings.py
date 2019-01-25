@@ -1,4 +1,8 @@
 import os
+from distutils.version import StrictVersion
+
+# Django 1.8/1.9 Middleware style
+from django import get_version
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -28,9 +32,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Django 1.8/1.9 Middleware style
-from django import get_version
-from distutils.version import StrictVersion
 
 if StrictVersion(get_version()) < StrictVersion('1.10'):
     MIDDLEWARE_CLASSES = MIDDLEWARE

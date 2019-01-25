@@ -36,7 +36,8 @@ class TemplateTagTestCase(BaseTestCase):
         self.create_wikipage('CarrotCake/WithButter')
         f = wikify('Check CarrotCake/WithButter out!')
         self.assertEqual(
-            f, 'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!'
+            f,
+            'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!',
         )
 
     def test_invalid_wikiname_single(self):
@@ -76,7 +77,9 @@ class TemplateTagTestCase(BaseTestCase):
             # Page exists
             self.create_wikipage('AWESOMEWiki')
             f = wikify('Check AWESOMEWiki out!')
-            self.assertEqual(f, 'Check <a href="/AWESOMEWiki/">AWESOMEWiki</a> out!')
+            self.assertEqual(
+                f, 'Check <a href="/AWESOMEWiki/">AWESOMEWiki</a> out!'
+            )
 
             # Valid slug, but page does not exist
             f = wikify('Check AWESOMEBeansoup out!')

@@ -14,8 +14,12 @@ class ChangesTestCase(BaseTestCase):
         super(ChangesTestCase, self).setUp()
 
         # Create one page with two revisions
-        self.page = self.create_wikipage('WikiIndex', 'First Content', 'Second Content')
-        self.page_url = reverse('wakawaka_changes', kwargs={'slug': 'WikiIndex'})
+        self.page = self.create_wikipage(
+            'WikiIndex', 'First Content', 'Second Content'
+        )
+        self.page_url = reverse(
+            'wakawaka_changes', kwargs={'slug': 'WikiIndex'}
+        )
 
     def test_no_rev_ids_given(self):
         response = self.client.get(self.page_url)
