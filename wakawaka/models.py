@@ -1,13 +1,14 @@
 from __future__ import unicode_literals
 
+import six
+
 from django.conf import settings
 from django.db import models
-from django.utils.six import python_2_unicode_compatible
 from django.utils.translation import ugettext
 from django.utils.translation import ugettext_lazy as _
 
 
-@python_2_unicode_compatible
+@six.python_2_unicode_compatible
 class WikiPage(models.Model):
     slug = models.CharField(_('slug'), max_length=255)
     created = models.DateTimeField(_('created'), auto_now_add=True)
@@ -26,7 +27,7 @@ class WikiPage(models.Model):
         return self.revisions.latest()
 
 
-@python_2_unicode_compatible
+@six.python_2_unicode_compatible
 class Revision(models.Model):
     page = models.ForeignKey(
         WikiPage, related_name='revisions', on_delete=models.CASCADE
