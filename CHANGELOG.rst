@@ -2,6 +2,12 @@
 Changelog:
 ==========
 
+v1.2 (2020-01-08):
+
+- Dropped support for Python 2.7.
+- Added support for Python 3.8.
+- Added support for Django 2.2 and 3.0.
+
 v1.1 (2019-01-21):
 
 - Django 2.1 compatibility and and further cleanup.

@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django-wakawaka = {path = "."}
+django-wakawaka = {extras = ["tests"],path = "."}
 
 [dev-packages]
 coverage = "*"
@@ -12,9 +12,10 @@ codacy-coverage = "*"
 ipdb = "*"
 isort = "*"
 black = "*"
+tox = "*"
 
 [scripts]
-test = "./runtests.py"
+tests = "pytest wakawaka/"
 cleanup = "sh -c \"black --skip-string-normalization --exclude='/(migrations)/' wakawaka && isort -rc wakawaka\""
 
 [pipenv]

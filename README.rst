@@ -98,7 +98,7 @@ To run the testsuite manually in your development environment, install the
 project using pipenv_::
 
     $ pipenv install
-    $ pipenv run ./runtests.py
+    $ pipenv run tests
 
 
 Example Project:
