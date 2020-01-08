@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 
 class WikiPage(models.Model):
@@ -46,7 +46,7 @@ class Revision(models.Model):
         get_latest_by = 'modified'
 
     def __str__(self):
-        return ugettext('Revision %(created)s for %(page_slug)s') % {
+        return gettext('Revision %(created)s for %(page_slug)s') % {
             'created': self.created.strftime('%Y%m%d-%H%M'),
             'page_slug': self.page.slug,
         }

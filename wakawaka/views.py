@@ -9,8 +9,8 @@ from django.http import (
 )
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.utils.translation import ugettext
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext
+from django.utils.translation import gettext_lazy as _
 
 from wakawaka.forms import DeleteWikiPageForm, WikiPageForm
 from wakawaka.models import Revision, WikiPage
@@ -81,7 +81,7 @@ def edit(
             ('wakawaka.change_wikipage', 'wakawaka.change_revision')
         ):
             return HttpResponseForbidden(
-                ugettext('You don\'t have permission to edit pages.')
+                gettext('You don\'t have permission to edit pages.')
             )
 
         if rev_id:
@@ -104,7 +104,7 @@ def edit(
             ('wakawaka.add_wikipage', 'wakawaka.add_revision')
         ):
             return HttpResponseForbidden(
-                ugettext('You don\'t have permission to add wiki pages.')
+                gettext('You don\'t have permission to add wiki pages.')
             )
 
         page = WikiPage(slug=slug)
@@ -154,7 +154,7 @@ def edit(
 
                 redirect_to = reverse('wakawaka_page', kwargs=kwargs)
                 messages.success(
-                    request, ugettext('Your changes to %s were saved' % page.slug),
+                    request, gettext('Your changes to %s were saved' % page.slug),
                 )
                 return HttpResponseRedirect(redirect_to)
 
