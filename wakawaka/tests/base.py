@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from distutils.version import StrictVersion
 
 from django import get_version

@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from wakawaka.templatetags.wakawaka_tags import wikify
 from wakawaka.tests.base import BaseTestCase
 
