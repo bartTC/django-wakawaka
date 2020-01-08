@@ -22,9 +22,7 @@ urlpatterns = [
         name='wakawaka_revision_list',
     ),
     # Changes between two revisions, revision id's come from GET
-    url(
-        r'^(?P<slug>%s)/changes/$' % WIKI_SLUG, changes, name='wakawaka_changes'
-    ),
+    url(r'^(?P<slug>%s)/changes/$' % WIKI_SLUG, changes, name='wakawaka_changes'),
     # Edit Form
     url(
         r'^(?P<slug>%s)/edit/(?P<rev_id>\d+)/$' % WIKI_SLUG,
@@ -32,15 +30,9 @@ urlpatterns = [
         name='wakawaka_edit',
     ),
     url(
-        r'^(?P<slug>%s)/edit/$' % WIKI_SLUG,
-        login_required(edit),
-        name='wakawaka_edit',
+        r'^(?P<slug>%s)/edit/$' % WIKI_SLUG, login_required(edit), name='wakawaka_edit',
     ),
     # Page
-    url(
-        r'^(?P<slug>%s)/rev(?P<rev_id>\d+)/$' % WIKI_SLUG,
-        page,
-        name='wakawaka_page',
-    ),
+    url(r'^(?P<slug>%s)/rev(?P<rev_id>\d+)/$' % WIKI_SLUG, page, name='wakawaka_page',),
     url(r'^(?P<slug>%s)/$' % WIKI_SLUG, page, name='wakawaka_page'),
 ]

@@ -19,9 +19,7 @@ class IndexTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 302)
 
         if self.is_django_18():
-            self.assertEqual(
-                response['Location'], 'http://testserver/WikiIndex/'
-            )
+            self.assertEqual(response['Location'], 'http://testserver/WikiIndex/')
         else:
             self.assertEqual(response['Location'], '/WikiIndex/')
 

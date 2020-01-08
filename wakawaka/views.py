@@ -28,11 +28,7 @@ def index(request):
 
 
 def page(
-    request,
-    slug,
-    rev_id=None,
-    template_name='wakawaka/page.html',
-    extra_context=None,
+    request, slug, rev_id=None, template_name='wakawaka/page.html', extra_context=None,
 ):
     """
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
@@ -124,9 +120,9 @@ def edit(
     # Don't display the delete form if the user has nor permission
     delete_form = None
     # The user has permission, then do
-    if request.user.has_perm(
-        'wakawaka.delete_wikipage'
-    ) or request.user.has_perm('wakawaka.delete_revision'):
+    if request.user.has_perm('wakawaka.delete_wikipage') or request.user.has_perm(
+        'wakawaka.delete_revision'
+    ):
         delete_form = wiki_delete_form(request)
         if request.method == 'POST' and request.POST.get('delete'):
             delete_form = wiki_delete_form(request, request.POST)
@@ -140,10 +136,7 @@ def edit(
         if form.is_valid():
             # Check if the content is changed, except there is a rev_id and the
             # user possibly only reverted the HEAD to it
-            if (
-                not rev_id
-                and initial['content'] == form.cleaned_data['content']
-            ):
+            if not rev_id and initial['content'] == form.cleaned_data['content']:
                 form.errors['content'] = (_('You have made no changes!'),)
 
             # Save the form and redirect to the page view
@@ -163,8 +156,7 @@ def edit(
 
                 redirect_to = reverse('wakawaka_page', kwargs=kwargs)
                 messages.success(
-                    request,
-                    ugettext('Your changes to %s were saved' % page.slug),
+                    request, ugettext('Your changes to %s were saved' % page.slug),
                 )
                 return HttpResponseRedirect(redirect_to)
 
@@ -192,9 +184,7 @@ def revisions(
     return render(request, template_name, template_context)
 
 
-def changes(
-    request, slug, template_name='wakawaka/changes.html', extra_context=None
-):
+def changes(request, slug, template_name='wakawaka/changes.html', extra_context=None):
     """
     Displays the changes between two revisions.
     """
@@ -249,9 +239,7 @@ def revision_list(
     return render(request, template_name, template_context)
 
 
-def page_list(
-    request, template_name='wakawaka/page_list.html', extra_context=None
-):
+def page_list(request, template_name='wakawaka/page_list.html', extra_context=None):
     """
     Displays all Pages
     """

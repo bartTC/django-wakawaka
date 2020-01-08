@@ -15,7 +15,7 @@ black = "*"
 
 [scripts]
 test = "./runtests.py"
-cleanup = "sh -c \"black --skip-string-normalization --line-length=80 --exclude='/(migrations)/' wakawaka && isort -rc wakawaka\""
+cleanup = "sh -c \"black --skip-string-normalization --exclude='/(migrations)/' wakawaka && isort -rc wakawaka\""
 
 [pipenv]
 allow_prereleases = true
