@@ -212,7 +212,7 @@ def changes(request, slug, template_name='wakawaka/changes.html', extra_context=
         )
         difftext = '\n'.join(d)
     else:
-        difftext = _(u'No changes were made between this two files.')
+        difftext = _('No changes were made between this two files.')
 
     template_context = {
         'page': page,

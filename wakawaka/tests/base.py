@@ -19,7 +19,7 @@ class BaseTestCase(testcases.TestCase):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             user = User.objects.create(
-                username=username, email='{}@example.com'.format(username)
+                username=username, email=f'{username}@example.com'
             )
             user.set_password(password)
         return user
@@ -67,7 +67,7 @@ class BaseTestCase(testcases.TestCase):
             Revision.objects.create(
                 page=page,
                 content=rev,
-                message='Created via API: {}'.format(rev),
+                message=f'Created via API: {rev}',
                 creator_ip='127.0.0.1',
             )
         return page

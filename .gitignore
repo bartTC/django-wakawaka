@@ -1,2 +1,4 @@
 test_project.sqlite3
-coverage.xml
+/build
+/dist
+*.egg-info

@@ -7,16 +7,16 @@ name = "pypi"
 django-wakawaka = {editable = true,extras = ["tests"],path = "."}
 
 [dev-packages]
-coverage = "*"
-codacy-coverage = "*"
 ipdb = "*"
-isort = "*"
 black = "*"
 tox = "*"
+wheel = "*"
+setuptools = "*"
+pytest = "*"
+pytest-django = "*"
 
 [scripts]
-tests = "pytest --workers 4 wakawaka/"
-cleanup = "sh -c \"black --skip-string-normalization --exclude='/(migrations)/' wakawaka && isort -rc wakawaka\""
+tests = "pytest"
+cleanup = "sh -c \"ruff --fix wakawaka && black wakawaka\""
+runserver = "sh -c \"django-admin migrate --noinput && django-admin runserver\""
 
-[pipenv]
-allow_prereleases = true

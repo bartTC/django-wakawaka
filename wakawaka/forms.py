@@ -47,7 +47,7 @@ class DeleteWikiPageForm(forms.Form):
                 ('page', _('Delete the page with all revisions'))
             )
 
-        super(DeleteWikiPageForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def _delete_page(self, page):
         page.delete()

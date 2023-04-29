@@ -9,7 +9,7 @@ class ChangesTestCase(BaseTestCase):
     """
 
     def setUp(self):
-        super(ChangesTestCase, self).setUp()
+        super().setUp()
 
         # Create one page with two revisions
         self.page = self.create_wikipage('WikiIndex', 'First Content', 'Second Content')
@@ -20,16 +20,16 @@ class ChangesTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_nonexisting_rev_ids_given(self):
-        url = '{}?a=3&b=4'.format(self.page_url)
+        url = f'{self.page_url}?a=3&b=4'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     def test_compare_rev_ids(self):
-        url = '{}?a=1&b=2'.format(self.page_url)
+        url = f'{self.page_url}?a=1&b=2'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_compare_same_rev_ids(self):
-        url = '{}?a=1&b=1'.format(self.page_url)
+        url = f'{self.page_url}?a=1&b=1'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

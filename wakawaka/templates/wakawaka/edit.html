@@ -49,5 +49,8 @@
 
 	<h2>{% trans "Revisions for this page" %}</h2>
 
-	{% include "wakawaka/revision_table.html" %}
+  {# 'Page' instance needs to have a primary key value before this relationship can be used. #}
+  {% if page.pk %}
+	  {% include "wakawaka/revision_table.html" %}
+  {% endif %}
 {% endblock %}

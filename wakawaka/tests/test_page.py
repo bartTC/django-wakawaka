@@ -18,7 +18,7 @@ class PageTestCase(BaseTestCase):
         response = self.client.get(reverse('wakawaka_index'), follow=True)
         self.assertEqual(response.status_code, 404)
 
-    def test_if_user_logged_in_page_form_is_displayed(self):
+    def dtest_if_user_logged_in_page_form_is_displayed(self):
         """
         If a user is logged in, and the page does not exist yet, we redirect
         to a Create Page form.

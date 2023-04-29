@@ -8,13 +8,13 @@ class RevisionInlines(admin.TabularInline):
     extra = 1
 
 
+@admin.register(WikiPage)
 class WikiPageAdmin(admin.ModelAdmin):
     inlines = [RevisionInlines]
 
 
+@admin.register(Revision)
 class RevisionAdmin(admin.ModelAdmin):
     pass
 
 
-admin.site.register(WikiPage, WikiPageAdmin)
-admin.site.register(Revision, RevisionAdmin)

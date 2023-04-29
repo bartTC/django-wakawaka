@@ -9,25 +9,26 @@
 	<th>{% trans "Modified by" %}</th>
 	<th>&nbsp;</th>
 </tr>
+
 {% for rev in page.revisions.all %}
 <tr>
 	<td class="compare">
 		<input type="radio" name="a" value="{{ rev.pk }}"
 			{% if rev_a %}
-				{% ifequal rev_a.pk rev.pk %}checked{% endifequal %}
+				{% if rev_a.pk == rev.pk %}checked{% endif %}
 			{% else %}
-				{% ifequal forloop.counter 1 %}checked{% endifequal %}
+				{% if forloop.counter == 1 %}checked{% endif %}
 			{% endif %}
 		/>
 		<input type="radio" name="b" value="{{ rev.pk }}"
 			{% if rev_b %}
-				{% ifequal rev_b.pk rev.pk %}checked{% endifequal %}
+				{% if rev_b.pk == rev.pk %}checked{% endif %}
 			{% else %}
-				{% ifequal page.revisions.all|length 1 %}
+				{% if page.revisions.all|length == 1 %}
 					checked
 				{% else %}
-					{% ifequal forloop.counter 2 %}checked{% endifequal %}
-				{% endifequal %}
+					{% if forloop.counter == 2 %}checked{% endif %}
+				{% endif %}
 			{% endif %}
 		/>
 	</td>

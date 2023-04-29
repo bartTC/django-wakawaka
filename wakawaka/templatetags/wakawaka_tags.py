@@ -19,10 +19,10 @@ def replace_wikiwords(value):
         try:
             page = WikiPage.objects.get(slug=slug)
             url = reverse('wakawaka_page', kwargs={'slug': slug})
-            return r'<a href="%s">%s</a>' % (url, page.slug)
+            return r'<a href="{}">{}</a>'.format(url, page.slug)
         except ObjectDoesNotExist:
             url = reverse('wakawaka_edit', kwargs={'slug': slug})
-            return r'<a class="doesnotexist" href="%s">%s</a>' % (url, slug)
+            return r'<a class="doesnotexist" href="{}">{}</a>'.format(url, slug)
 
     return mark_safe(WIKI_WORDS_REGEX.sub(replace_wikiword, value))
 
