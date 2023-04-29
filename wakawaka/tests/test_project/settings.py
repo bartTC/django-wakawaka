@@ -33,10 +33,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
-if StrictVersion(get_version()) < StrictVersion("1.10"):
-    MIDDLEWARE_CLASSES = MIDDLEWARE
-
 ROOT_URLCONF = "wakawaka.tests.test_project.urls"
 
 TEMPLATES = [

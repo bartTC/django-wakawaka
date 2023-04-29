@@ -15,11 +15,7 @@ class IndexTestCase(BaseTestCase):
         """
         response = self.client.get(reverse("wakawaka_index"))
         self.assertEqual(response.status_code, 302)
-
-        if self.is_django_18():
-            self.assertEqual(response["Location"], "http://testserver/WikiIndex/")
-        else:
-            self.assertEqual(response["Location"], "/WikiIndex/")
+        self.assertEqual(response["Location"], "/WikiIndex/")
 
     def test_wikiindex_is_a_setting(self):
         """
@@ -28,11 +24,4 @@ class IndexTestCase(BaseTestCase):
         with self.settings(WAKAWAKA_DEFAULT_INDEX="WikiWukuIndex"):
             response = self.client.get(reverse("wakawaka_index"))
             self.assertEqual(response.status_code, 302)
-
-            if self.is_django_18():
-                self.assertEqual(
-                    response["Location"],
-                    "http://testserver/WikiWukuIndex/",
-                )
-            else:
-                self.assertEqual(response["Location"], "/WikiWukuIndex/")
+            self.assertEqual(response["Location"], "/WikiWukuIndex/")

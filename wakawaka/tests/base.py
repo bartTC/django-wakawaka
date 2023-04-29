@@ -42,12 +42,6 @@ class BaseTestCase(testcases.TestCase):
         self.client.login(username=username, password=password)
         return user
 
-    def is_django_18(self):
-        """
-        :return bool: Whether the current Django version is <= 1.8
-        """
-        return not StrictVersion(DJANGO_VERSION) >= StrictVersion("1.9")
-
     def create_wikipage(self, slug, *args):
         """
         Creates a WikiPage using the given slug. Creates a Revision with the
