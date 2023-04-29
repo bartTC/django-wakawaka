@@ -14,13 +14,13 @@ class RevisionsTestCase(BaseTestCase):
         revisions of all pages.
         """
         # Create a couple of Wiki pages
-        self.create_wikipage('WikiIndex', 'First Content', 'Second Content')
-        self.create_wikipage('CarrotCake', 'Carrot Content')
+        self.create_wikipage("WikiIndex", "First Content", "Second Content")
+        self.create_wikipage("CarrotCake", "Carrot Content")
 
-        response = self.client.get(reverse('wakawaka_revision_list'))
-        self.assertContains(response, 'Created via API: First Content')
-        self.assertContains(response, 'Created via API: Second Content')
-        self.assertContains(response, 'Created via API: Carrot Content')
+        response = self.client.get(reverse("wakawaka_revision_list"))
+        self.assertContains(response, "Created via API: First Content")
+        self.assertContains(response, "Created via API: Second Content")
+        self.assertContains(response, "Created via API: Carrot Content")
 
     def test_revisions_for_slug(self):
         """
@@ -28,12 +28,12 @@ class RevisionsTestCase(BaseTestCase):
         revisions of this page.
         """
         # Create a couple of Wiki pages
-        self.create_wikipage('WikiIndex', 'First Content', 'Second Content')
-        self.create_wikipage('CarrotCake', 'Carrot Content')
+        self.create_wikipage("WikiIndex", "First Content", "Second Content")
+        self.create_wikipage("CarrotCake", "Carrot Content")
 
         response = self.client.get(
-            reverse('wakawaka_revision_list', kwargs={'slug': 'WikiIndex'})
+            reverse("wakawaka_revision_list", kwargs={"slug": "WikiIndex"}),
         )
-        self.assertContains(response, 'Created via API: First Content')
-        self.assertContains(response, 'Created via API: Second Content')
-        self.assertNotContains(response, 'Created via API: Carrot Content')
+        self.assertContains(response, "Created via API: First Content")
+        self.assertContains(response, "Created via API: Second Content")
+        self.assertNotContains(response, "Created via API: Carrot Content")

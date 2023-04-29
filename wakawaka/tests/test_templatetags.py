@@ -26,24 +26,25 @@ class TemplateTagTestCase(BaseTestCase):
     """
 
     def test_valid_wikiname_single(self):
-        self.create_wikipage('WikiIndex')
-        f = wikify('Check WikiIndex out!')
+        self.create_wikipage("WikiIndex")
+        f = wikify("Check WikiIndex out!")
         self.assertEqual(f, 'Check <a href="/WikiIndex/">WikiIndex</a> out!')
 
     def test_valid_wikiname_slashed(self):
-        self.create_wikipage('CarrotCake/WithButter')
-        f = wikify('Check CarrotCake/WithButter out!')
+        self.create_wikipage("CarrotCake/WithButter")
+        f = wikify("Check CarrotCake/WithButter out!")
         self.assertEqual(
-            f, 'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!',
+            f,
+            'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!',
         )
 
     def test_invalid_wikiname_single(self):
-        f = wikify('Check Carrotcake out!')
-        self.assertEqual(f, 'Check Carrotcake out!')
+        f = wikify("Check Carrotcake out!")
+        self.assertEqual(f, "Check Carrotcake out!")
 
     def test_invalid_wikiname_slashed(self):
-        f = wikify('Check Carrotcake/Withbutter out!')
-        self.assertEqual(f, 'Check Carrotcake/Withbutter out!')
+        f = wikify("Check Carrotcake/Withbutter out!")
+        self.assertEqual(f, "Check Carrotcake/Withbutter out!")
 
     def test_valid_wikiname_no_page(self):
         """
@@ -51,7 +52,7 @@ class TemplateTagTestCase(BaseTestCase):
         to the edit page , so the user can go there, and create the page.
         Those links have a HTML class `doesnotexist` attached.
         """
-        f = wikify('Check WikiIndex out!')
+        f = wikify("Check WikiIndex out!")
         self.assertEqual(
             f,
             'Check <a class="doesnotexist" href="/WikiIndex/edit/">WikiIndex</a> out!',
@@ -68,16 +69,15 @@ class TemplateTagTestCase(BaseTestCase):
         """
         # All pages must start with "AWESOME" and no slash is allowed
         # followed by an uppercase word.
-        custom_slug = r'AWESOME[A-Z][a-z]+)'
+        custom_slug = r"AWESOME[A-Z][a-z]+)"
         with self.settings(WAKAWAKA_SLUG_REGEX=custom_slug):
-
             # Page exists
-            self.create_wikipage('AWESOMEWiki')
-            f = wikify('Check AWESOMEWiki out!')
+            self.create_wikipage("AWESOMEWiki")
+            f = wikify("Check AWESOMEWiki out!")
             self.assertEqual(f, 'Check <a href="/AWESOMEWiki/">AWESOMEWiki</a> out!')
 
             # Valid slug, but page does not exist
-            f = wikify('Check AWESOMEBeansoup out!')
+            f = wikify("Check AWESOMEBeansoup out!")
             self.assertEqual(
                 f,
                 'Check <a class="doesnotexist" href="/AWESOMEBeansoup/edit/">AwesomeBeans</a> out!',

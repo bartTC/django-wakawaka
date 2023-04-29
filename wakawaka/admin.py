@@ -16,5 +16,3 @@ class WikiPageAdmin(admin.ModelAdmin):
 @admin.register(Revision)
 class RevisionAdmin(admin.ModelAdmin):
     pass
-
-

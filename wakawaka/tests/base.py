@@ -19,13 +19,14 @@ class BaseTestCase(testcases.TestCase):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             user = User.objects.create(
-                username=username, email=f'{username}@example.com'
+                username=username,
+                email=f"{username}@example.com",
             )
             user.set_password(password)
         return user
 
     def login_superuser(self, create=True):
-        username, password = 'superuser', 'foobar'
+        username, password = "superuser", "foobar"
         user = self._create_user(username, password)
         user.is_superuser = True
         user.is_staff = True
@@ -34,7 +35,7 @@ class BaseTestCase(testcases.TestCase):
         return user
 
     def login_staffuser_noperm(self, create=True):
-        username, password = 'staffuser', 'foobar'
+        username, password = "staffuser", "foobar"
         user = self._create_user(username, password)
         user.is_staff = True
         user.save()
@@ -45,7 +46,7 @@ class BaseTestCase(testcases.TestCase):
         """
         :return bool: Whether the current Django version is <= 1.8
         """
-        return not StrictVersion(DJANGO_VERSION) >= StrictVersion('1.9')
+        return not StrictVersion(DJANGO_VERSION) >= StrictVersion("1.9")
 
     def create_wikipage(self, slug, *args):
         """
@@ -67,7 +68,7 @@ class BaseTestCase(testcases.TestCase):
             Revision.objects.create(
                 page=page,
                 content=rev,
-                message=f'Created via API: {rev}',
-                creator_ip='127.0.0.1',
+                message=f"Created via API: {rev}",
+                creator_ip="127.0.0.1",
             )
         return page
