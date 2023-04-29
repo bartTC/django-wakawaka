@@ -1,12 +1,13 @@
 import os
+import pathlib
 from distutils.version import StrictVersion
 
 # Django 1.8/1.9 Middleware style
 from django import get_version
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
-SECRET_KEY = "@9^=k1pya3su*bgfr3%3n8=^-orkzuqrfwj_5-f+g5(&p05lr)"
+SECRET_KEY = "@9^=k1pya3su*bgfr3%3n8=^-orkzuqrfwj_5-f+g5(&p05lr)"  # noqa: S105 Possible hardcoded password
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -63,7 +64,7 @@ WSGI_APPLICATION = "wakawaka.tests.test_project.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "test_project.sqlite3"),
+        "NAME": BASE_DIR / "test_project.sqlite3",
     },
 }
 
@@ -73,3 +74,4 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / ".static"

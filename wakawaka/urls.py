@@ -34,7 +34,7 @@ urlpatterns = [
     ),
     # Page
     re_path(
-        r"^(?P<slug>%s)/rev(?P<rev_id>\d+)/$" % WIKI_SLUG, page, name="wakawaka_page"
+        r"^(?P<slug>%s)/rev(?P<rev_id>\d+)/$" % WIKI_SLUG, page, name="wakawaka_page",
     ),
     re_path(r"^(?P<slug>%s)/$" % WIKI_SLUG, page, name="wakawaka_page"),
 ]

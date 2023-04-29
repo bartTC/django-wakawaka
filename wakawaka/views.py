@@ -1,10 +1,15 @@
+from __future__ import annotations
+
 import difflib
 
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms import BaseForm
 from django.http import (
     Http404,
+    HttpRequest,
+    HttpResponse,
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseRedirect,
@@ -18,7 +23,7 @@ from wakawaka.forms import DeleteWikiPageForm, WikiPageForm
 from wakawaka.models import Revision, WikiPage
 
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponseRedirect:
     """
     Redirects to the default wiki index name.
     """
@@ -28,12 +33,12 @@ def index(request):
 
 
 def page(
-    request,
-    slug,
-    rev_id=None,
-    template_name="wakawaka/page.html",
-    extra_context=None,
-):
+    request: HttpRequest,
+    slug: str,
+    rev_id: int | None = None,
+    template_name: str = "wakawaka/page.html",
+    extra_context: dict | None = None,
+) -> HttpResponse:
     """
     Displays a wiki page. Redirects to the edit view if the page doesn't exist.
     """
@@ -64,14 +69,14 @@ def page(
 
 
 def edit(
-    request,
-    slug,
-    rev_id=None,
-    template_name="wakawaka/edit.html",
-    extra_context=None,
-    wiki_page_form=WikiPageForm,
-    wiki_delete_form=DeleteWikiPageForm,
-):
+    request: HttpRequest,
+    slug: str,
+    rev_id: int | None = None,
+    template_name: str = "wakawaka/edit.html",
+    extra_context: dict | None = None,
+    wiki_page_form: BaseForm = WikiPageForm,
+    wiki_delete_form: BaseForm = DeleteWikiPageForm,
+) -> HttpResponse:
     """
     Displays the form for editing and deleting a page.
     """
@@ -98,7 +103,7 @@ def edit(
                 rev.is_not_current = True
                 initial = {
                     "content": rev.content,
-                    "message": _('Reverted to "%s"' % rev.message),
+                    "message": _('Reverted to "%s"') % rev.message,
                 }
 
     # This page does not exist, create a dummy page
@@ -116,7 +121,7 @@ def edit(
         page.is_initial = True
         rev = None
         initial = {
-            "content": _("Describe your new page %s here..." % slug),
+            "content": _("Describe your new page %s here...") % slug,
             "message": _("Initial revision"),
         }
 
@@ -160,7 +165,7 @@ def edit(
                 redirect_to = reverse("wakawaka_page", kwargs=kwargs)
                 messages.success(
                     request,
-                    gettext("Your changes to %s were saved" % page.slug),
+                    gettext("Your changes to %s were saved") % page.slug,
                 )
                 return HttpResponseRedirect(redirect_to)
 
@@ -175,11 +180,11 @@ def edit(
 
 
 def revisions(
-    request,
-    slug,
-    template_name="wakawaka/revisions.html",
-    extra_context=None,
-):
+    request: HttpRequest,
+    slug: str,
+    template_name: str = "wakawaka/revisions.html",
+    extra_context: dict | None = None,
+) -> HttpResponse:
     """
     Displays the list of all revisions for a specific WikiPage
     """
@@ -191,7 +196,12 @@ def revisions(
     return render(request, template_name, template_context)
 
 
-def changes(request, slug, template_name="wakawaka/changes.html", extra_context=None):
+def changes(
+    request: HttpRequest,
+    slug: str,
+    template_name: str = "wakawaka/changes.html",
+    extra_context: dict | None = None,
+):
     """
     Displays the changes between two revisions.
     """
@@ -235,10 +245,10 @@ def changes(request, slug, template_name="wakawaka/changes.html", extra_context=
 
 # Some useful views
 def revision_list(
-    request,
-    template_name="wakawaka/revision_list.html",
-    extra_context=None,
-):
+    request: HttpRequest,
+    template_name: str = "wakawaka/revision_list.html",
+    extra_context: dict | None = None,
+) -> HttpResponse:
     """
     Displays a list of all recent revisions.
     """
@@ -248,7 +258,11 @@ def revision_list(
     return render(request, template_name, template_context)
 
 
-def page_list(request, template_name="wakawaka/page_list.html", extra_context=None):
+def page_list(
+    request: HttpRequest,
+    template_name: str = "wakawaka/page_list.html",
+    extra_context: dict | None = None,
+) -> HttpResponse:
     """
     Displays all Pages
     """

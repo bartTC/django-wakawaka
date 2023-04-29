@@ -2,6 +2,11 @@
 Changelog:
 ==========
 
+v1.3 (2022-04-30):
+
+- Added support for Django 3.2 to 4.2.
+- Added support for Python 3.8 to 3.11.
+
 v1.2 (2020-01-08):
 
 - Dropped support for Python 2.7.

@@ -73,7 +73,7 @@ class DeleteWikiPageForm(forms.Form):
             and request.user.has_perm("wakawaka.delete_wikipage")
         ):
             self._delete_page(page)
-            messages.success(request, gettext("The page %s was deleted" % page.slug))
+            messages.success(request, gettext("The page %s was deleted") % page.slug)
             return HttpResponseRedirect(reverse("wakawaka_index"))
 
         # Revision handling
@@ -87,7 +87,7 @@ class DeleteWikiPageForm(forms.Form):
                 self._delete_revision(rev)
                 messages.success(
                     request,
-                    gettext("The revision for %s was deleted" % page.slug),
+                    gettext("The revision for %s was deleted") % page.slug,
                 )
                 return HttpResponseRedirect(
                     reverse("wakawaka_page", kwargs={"slug": page.slug}),
@@ -102,9 +102,9 @@ class DeleteWikiPageForm(forms.Form):
                     request,
                     gettext(
                         "You can not delete this revison for %s because it's the "
-                        "only one and you have no permission to delete the whole page."
-                        % page.slug,
-                    ),
+                        "only one and you have no permission to delete the whole page.",
+                    )
+                    % page.slug,
                 )
                 return HttpResponseRedirect(
                     reverse("wakawaka_page", kwargs={"slug": page.slug}),
@@ -120,9 +120,9 @@ class DeleteWikiPageForm(forms.Form):
                 messages.success(
                     request,
                     gettext(
-                        "The page for %s was deleted because you deleted the only revision"
-                        % page.slug,
-                    ),
+                        "The page for %s was deleted because you deleted the only revision",
+                    )
+                    % page.slug,
                 )
                 return HttpResponseRedirect(reverse("wakawaka_index"))
             return None

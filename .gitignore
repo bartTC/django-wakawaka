@@ -2,3 +2,4 @@ test_project.sqlite3
 /build
 /dist
 *.egg-info
+/wakawaka/tests/test_project/.static
