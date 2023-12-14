@@ -1,4 +1,3 @@
-from distutils.version import StrictVersion
 
 from django import get_version
 from django.contrib.auth.models import User
