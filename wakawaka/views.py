@@ -71,7 +71,7 @@ def page(
     return render(request, template_name, template_context)
 
 
-def edit(
+def edit(  # noqa: C901 PLR0912 PLR0913 - Too complex, too many arguments, too many branches
     request: HttpRequest,
     slug: str,
     rev_id: int | None = None,
