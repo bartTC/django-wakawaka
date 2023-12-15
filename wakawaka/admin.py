@@ -10,7 +10,7 @@ class RevisionInlines(admin.TabularInline):
 
 @admin.register(WikiPage)
 class WikiPageAdmin(admin.ModelAdmin):
-    inlines = [RevisionInlines]
+    inlines = (RevisionInlines,)
 
 
 @admin.register(Revision)

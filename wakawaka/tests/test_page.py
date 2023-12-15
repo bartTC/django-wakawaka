@@ -11,14 +11,14 @@ class PageTestCase(BaseTestCase):
     Wiki Page display, editing and deleting.
     """
 
-    def test_if_user_not_logged_in_404(self):
+    def test_if_user_not_logged_in_404(self) -> None:
         """
         Pages which don't exist, and the user is not logged in, display 404.
         """
         response = self.client.get(reverse("wakawaka_index"), follow=True)
-        self.assertEqual(response.status_code, 404)
+        assert response.status_code == 404
 
-    def dtest_if_user_logged_in_page_form_is_displayed(self):
+    def test_if_user_logged_in_page_form_is_displayed(self) -> None:
         """
         If a user is logged in, and the page does not exist yet, we redirect
         to a Create Page form.
@@ -27,11 +27,11 @@ class PageTestCase(BaseTestCase):
 
         # Calling /WikiIndex/ will result in a redirect to /edit/
         response = self.client.get(reverse("wakawaka_index"), follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue("form" in response.context)
-        self.assertTrue(isinstance(response.context["form"], WikiPageForm))
+        assert response.status_code == 200
+        assert "form" in response.context
+        assert isinstance(response.context["form"], WikiPageForm)
 
-    def test_model_str_methods(self):
+    def test_model_str_methods(self) -> None:
         """
         Models __str__ methods are fine.
         """
@@ -40,14 +40,14 @@ class PageTestCase(BaseTestCase):
             "This is the first revision",
             "This is the second revision",
         )
-        self.assertTrue(isinstance(page.__str__(), str))
-        self.assertTrue(isinstance(page.current.__str__(), str))
+        assert isinstance(page.__str__(), str)
+        assert isinstance(page.current.__str__(), str)
 
     # --------------------------------------------------------------------------
     # Page form creation and permissions
     # --------------------------------------------------------------------------
 
-    def test_page_form_invalid(self):
+    def test_page_form_invalid(self) -> None:
         """
         At a bare minimum, the PageForm needs a 'content' field. Otherwise
         the form is displayed again, having errors.
@@ -57,15 +57,18 @@ class PageTestCase(BaseTestCase):
         data = {}
         edit_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex"})
         response = self.client.post(edit_url, data, follow=True)
-        self.assertTrue("form" in response.context)
-        self.assertTrue(isinstance(response.context["form"], WikiPageForm))
+        assert "form" in response.context
+        assert isinstance(response.context["form"], WikiPageForm)
 
-    def test_page_form_valid(self):
+    def test_page_form_valid(self) -> None:
         """
         Having a valid 'content' POST object will create that page.
         """
         content = "This is the content of the new WikiIndex page"
-        formatted = '<p>This is the content of the new <a href="/WikiIndex/">WikiIndex</a> page</p>'
+        formatted = (
+            "<p>This is the content of the new "
+            '<a href="/WikiIndex/">WikiIndex</a> page</p>'
+        )
 
         self.login_superuser()
 
@@ -78,10 +81,10 @@ class PageTestCase(BaseTestCase):
         self.assertContains(response, formatted)
 
         # One Page with one revision was created
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(WikiPage.objects.all()[0].revisions.count(), 1)
+        assert WikiPage.objects.count() == 1
+        assert WikiPage.objects.all()[0].revisions.count() == 1
 
-    def test_page_add_only_if_perm(self):
+    def test_page_add_only_if_perm(self) -> None:
         """
         The user needs 'add_wikipage' and 'add_revision' permission to add
         add a page.
@@ -92,7 +95,7 @@ class PageTestCase(BaseTestCase):
         data = {"content": "This is the content of the new WikiIndex page"}
         edit_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex"})
         response = self.client.post(edit_url, data, follow=True)
-        self.assertEqual(response.status_code, 403)
+        assert response.status_code == 403
 
         page_perm = Permission.objects.get(codename="add_wikipage")
         rev_perm = Permission.objects.get(codename="add_revision")
@@ -100,14 +103,14 @@ class PageTestCase(BaseTestCase):
         # Just the page perm is not enough
         user.user_permissions.add(page_perm)
         response = self.client.post(edit_url, data, follow=True)
-        self.assertEqual(response.status_code, 403)
+        assert response.status_code == 403
 
         # Page perm and rev perm is ok
         user.user_permissions.add(rev_perm)
         response = self.client.post(edit_url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
-    def test_page_edit_only_if_perm(self):
+    def test_page_edit_only_if_perm(self) -> None:
         """
         Users need at least 'wakawaka.change_wikipage' and
         'wakawaka.change_revision' permission to edit a page.
@@ -125,23 +128,23 @@ class PageTestCase(BaseTestCase):
 
         # User with no perm can't edit
         response = self.client.post(edit_url, data, follow=True)
-        self.assertEqual(response.status_code, 403)
+        assert response.status_code == 403
 
         # Just the page perm is not enough
         user.user_permissions.add(page_perm)
         response = self.client.post(edit_url, data, follow=True)
-        self.assertEqual(response.status_code, 403)
+        assert response.status_code == 403
 
         # Page perm and rev perm is ok
         user.user_permissions.add(rev_perm)
         response = self.client.post(edit_url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
+        assert response.status_code == 200
 
     # --------------------------------------------------------------------------
     # Page revisions
     # --------------------------------------------------------------------------
 
-    def test_editing_again_creates_revision(self):
+    def test_editing_again_creates_revision(self) -> None:
         """
         Submitting a page edit form multiple times creates a separate revision
         automatically.
@@ -157,8 +160,8 @@ class PageTestCase(BaseTestCase):
         self.client.post(edit_url, data2, follow=True)
 
         # One Page with one revision was created
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(WikiPage.objects.all()[0].revisions.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert WikiPage.objects.all()[0].revisions.count() == 2
 
         # We can call each revision individually. The last change is displayed
         # when calling without a revision
@@ -174,7 +177,7 @@ class PageTestCase(BaseTestCase):
         response = self.client.get(page_url, follow=True)
         self.assertContains(response, data1["content"])
 
-    def test_edit_page_with_same_content_does_not_work(self):
+    def test_edit_page_with_same_content_does_not_work(self) -> None:
         """
         Saving a page revision with the same content as before, won't create a
         new revision.
@@ -189,11 +192,11 @@ class PageTestCase(BaseTestCase):
         edit_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex"})
         self.client.post(edit_url, data2, follow=True)
 
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(WikiPage.objects.all()[0].revisions.count(), 1)
-        self.assertEqual(Revision.objects.count(), 1)
+        assert WikiPage.objects.count() == 1
+        assert WikiPage.objects.all()[0].revisions.count() == 1
+        assert Revision.objects.count() == 1
 
-    def test_edit_revision_reverts_content(self):
+    def test_edit_revision_reverts_content(self) -> None:
         """
         If the user calls the revision edit page form, and submits it, it
         will automatically revert the content to this revision.
@@ -224,7 +227,7 @@ class PageTestCase(BaseTestCase):
     # --------------------------------------------------------------------------
     # Page deletion
     # --------------------------------------------------------------------------
-    def test_user_needs_delete_perm_for_page(self):
+    def test_user_needs_delete_perm_for_page(self) -> None:
         """
         Deleting an entire page needs both 'delete_revision' and 'delete_wikipage'
         permission.
@@ -235,8 +238,8 @@ class PageTestCase(BaseTestCase):
         """
         # Create one page with two revisions upfront
         self.create_wikipage("WikiIndex", "Some content", "Other content")
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 2
 
         # Need to be logged in to edit a Page. The user also needs edit
         # permission to see the edit page
@@ -249,8 +252,8 @@ class PageTestCase(BaseTestCase):
         data = {"delete": "rev"}
         page_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex", "rev_id": 2})
         self.client.post(page_url, data, follow=False)
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 2
 
         # Give the user delete_revision permission so they can delete it.
         user.user_permissions.add(Permission.objects.get(codename="delete_revision"))
@@ -259,8 +262,8 @@ class PageTestCase(BaseTestCase):
         page_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex", "rev_id": 2})
         self.client.post(page_url, data, follow=True)
 
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 1)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 1
 
         # If a page has only one Revision set, and the user tries to delete
         # this revision, it will also delete the page - but only if the user
@@ -269,8 +272,8 @@ class PageTestCase(BaseTestCase):
         page_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex", "rev_id": 1})
         self.client.post(page_url, data, follow=True)
 
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 1)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 1
 
         # Give the user delete_wikipage permission so they can delete the
         # entire page, by deleting the last revision of it
@@ -282,10 +285,10 @@ class PageTestCase(BaseTestCase):
 
         # Since the page does not exist anymore, the user is redirected to
         # the index page.
-        self.assertEqual(WikiPage.objects.count(), 0)
-        self.assertEqual(Revision.objects.count(), 0)
+        assert WikiPage.objects.count() == 0
+        assert Revision.objects.count() == 0
 
-    def test_delete_page(self):
+    def test_delete_page(self) -> None:
         """
         If the user has all permissions they can delete the page right away.
         """
@@ -297,16 +300,16 @@ class PageTestCase(BaseTestCase):
 
         # Create one page with two revisions upfront
         self.create_wikipage("WikiIndex", "Some content", "Other content")
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 2
 
         data = {"delete": "page"}
         page_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex"})
         self.client.post(page_url, data, follow=False)
-        self.assertEqual(WikiPage.objects.count(), 0)
-        self.assertEqual(Revision.objects.count(), 0)
+        assert WikiPage.objects.count() == 0
+        assert Revision.objects.count() == 0
 
-    def test_delete_bad_value(self):
+    def test_delete_bad_value(self) -> None:
         """
         Deleting a page or revision still needs to be set. If the delete form
         passes no or an invalid value, nothing happens.
@@ -319,19 +322,19 @@ class PageTestCase(BaseTestCase):
 
         # Create one page with two revisions upfront
         self.create_wikipage("WikiIndex", "Some content", "Other content")
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 2
 
         # No value
         data = {"delete": ""}
         page_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex"})
         self.client.post(page_url, data, follow=False)
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 2
 
         # Invalid value
         data = {"delete": "foobar"}
         page_url = reverse("wakawaka_edit", kwargs={"slug": "WikiIndex"})
         self.client.post(page_url, data, follow=False)
-        self.assertEqual(WikiPage.objects.count(), 1)
-        self.assertEqual(Revision.objects.count(), 2)
+        assert WikiPage.objects.count() == 1
+        assert Revision.objects.count() == 2

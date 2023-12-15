@@ -8,7 +8,7 @@ class RevisionsTestCase(BaseTestCase):
     The Revisions view displays the list of revisions of a given page.
     """
 
-    def test_revisions(self):
+    def test_revisions(self) -> None:
         """
         Calling the revisions view without a slug, displays all
         revisions of all pages.
@@ -22,7 +22,7 @@ class RevisionsTestCase(BaseTestCase):
         self.assertContains(response, "Created via API: Second Content")
         self.assertContains(response, "Created via API: Carrot Content")
 
-    def test_revisions_for_slug(self):
+    def test_revisions_for_slug(self) -> None:
         """
         Calling the Revisions View with a slug will only display the
         revisions of this page.

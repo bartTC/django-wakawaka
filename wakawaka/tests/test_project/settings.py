@@ -1,7 +1,6 @@
 import pathlib
 
 # Django 1.8/1.9 Middleware style
-from django import get_version
 
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 

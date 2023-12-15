@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import difflib
+from typing import TYPE_CHECKING
 
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.forms import BaseForm
 from django.http import (
     Http404,
     HttpRequest,
@@ -21,6 +21,9 @@ from django.utils.translation import gettext_lazy as _
 
 from wakawaka.forms import DeleteWikiPageForm, WikiPageForm
 from wakawaka.models import Revision, WikiPage
+
+if TYPE_CHECKING:
+    from django.forms import BaseForm
 
 
 def index(request: HttpRequest) -> HttpResponseRedirect:
@@ -57,12 +60,12 @@ def page(
 
     # The Page does not exist, redirect to the edit form or
     # deny, if the user has no permission to add pages
-    except WikiPage.DoesNotExist:
+    except WikiPage.DoesNotExist as e:
         if request.user.is_authenticated:
             kwargs = {"slug": slug}
             redirect_to = reverse("wakawaka_edit", kwargs=kwargs)
             return HttpResponseRedirect(redirect_to)
-        raise Http404
+        raise Http404 from e
     template_context = {"page": page, "rev": rev}
     template_context.update(extra_context or {})
     return render(request, template_name, template_context)
@@ -83,9 +86,9 @@ def edit(
     # Get the page for slug and get a specific revision, if given
     try:
         queryset = WikiPage.objects.all()
-        page = queryset.get(slug=slug)
-        rev = page.current
-        initial = {"content": page.current.content}
+        page_obj = queryset.get(slug=slug)
+        rev = page_obj.current
+        initial = {"content": page_obj.current.content}
 
         # Do not allow editing wiki pages if the user has no permission
         if not request.user.has_perms(
@@ -117,8 +120,8 @@ def edit(
                 gettext("You don't have permission to add wiki pages."),
             )
 
-        page = WikiPage(slug=slug)
-        page.is_initial = True
+        page_obj = WikiPage(slug=slug)
+        page_obj.is_initial = True
         rev = None
         initial = {
             "content": _("Describe your new page %s here...") % slug,
@@ -133,9 +136,9 @@ def edit(
     ):
         delete_form = wiki_delete_form(request)
         if request.method == "POST" and request.POST.get("delete"):
-            delete_form = wiki_delete_form(request, request.POST)
+            delete_form = wiki_delete_form(request, data=request.POST)
             if delete_form.is_valid():
-                return delete_form.delete_wiki(request, page, rev)
+                return delete_form.delete_wiki(request, page_obj, rev)
 
     # Page add/edit form
     form = wiki_page_form(initial=initial)
@@ -152,27 +155,27 @@ def edit(
                 try:
                     # Check that the page already exist
                     queryset = WikiPage.objects.all()
-                    page = queryset.get(slug=slug)
+                    page_obj = queryset.get(slug=slug)
                 except WikiPage.DoesNotExist:
                     # Must be a new one, create that page
-                    page = WikiPage(slug=slug)
-                    page.save()
+                    page_obj = WikiPage(slug=slug)
+                    page_obj.save()
 
-                form.save(request, page)
+                form.save(request, page_obj)
 
-                kwargs = {"slug": page.slug}
+                kwargs = {"slug": page_obj.slug}
 
                 redirect_to = reverse("wakawaka_page", kwargs=kwargs)
                 messages.success(
                     request,
-                    gettext("Your changes to %s were saved") % page.slug,
+                    gettext("Your changes to %s were saved") % page_obj.slug,
                 )
                 return HttpResponseRedirect(redirect_to)
 
     template_context = {
         "form": form,
         "delete_form": delete_form,
-        "page": page,
+        "page": page_obj,
         "rev": rev,
     }
     template_context.update(extra_context or {})
@@ -201,7 +204,7 @@ def changes(
     slug: str,
     template_name: str = "wakawaka/changes.html",
     extra_context: dict | None = None,
-):
+) -> HttpResponse:
     """
     Displays the changes between two revisions.
     """
@@ -218,8 +221,8 @@ def changes(
         rev_a = revision_queryset.get(pk=rev_a_id)
         rev_b = revision_queryset.get(pk=rev_b_id)
         page = wikipage_queryset.get(slug=slug)
-    except ObjectDoesNotExist:
-        raise Http404
+    except ObjectDoesNotExist as e:
+        raise Http404 from e
 
     if rev_a.content != rev_b.content:
         d = difflib.unified_diff(
@@ -252,8 +255,8 @@ def revision_list(
     """
     Displays a list of all recent revisions.
     """
-    revision_list = Revision.objects.all()
-    template_context = {"revision_list": revision_list}
+    revisions = Revision.objects.all()
+    template_context = {"revision_list": revisions}
     template_context.update(extra_context or {})
     return render(request, template_name, template_context)
 
@@ -266,11 +269,10 @@ def page_list(
     """
     Displays all Pages
     """
-    page_list = WikiPage.objects.all()
-    page_list = page_list.order_by("slug")
+    pages = WikiPage.objects.order_by("slug")
 
     template_context = {
-        "page_list": page_list,
+        "page_list": pages,
         "index_slug": getattr(settings, "WAKAWAKA_DEFAULT_INDEX", "WikiIndex"),
     }
     template_context.update(extra_context or {})

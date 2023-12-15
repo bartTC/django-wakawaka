@@ -25,40 +25,40 @@ class TemplateTagTestCase(BaseTestCase):
         CarrotCake|WithButter
     """
 
-    def test_valid_wikiname_single(self):
+    def test_valid_wikiname_single(self) -> None:
         self.create_wikipage("WikiIndex")
         f = wikify("Check WikiIndex out!")
-        self.assertEqual(f, 'Check <a href="/WikiIndex/">WikiIndex</a> out!')
+        assert f == 'Check <a href="/WikiIndex/">WikiIndex</a> out!'
 
-    def test_valid_wikiname_slashed(self):
+    def test_valid_wikiname_slashed(self) -> None:
         self.create_wikipage("CarrotCake/WithButter")
         f = wikify("Check CarrotCake/WithButter out!")
-        self.assertEqual(
-            f,
-            'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!',
+        assert (
+            f
+            == 'Check <a href="/CarrotCake/WithButter/">CarrotCake/WithButter</a> out!'
         )
 
-    def test_invalid_wikiname_single(self):
+    def test_invalid_wikiname_single(self) -> None:
         f = wikify("Check Carrotcake out!")
-        self.assertEqual(f, "Check Carrotcake out!")
+        assert f == "Check Carrotcake out!"
 
-    def test_invalid_wikiname_slashed(self):
+    def test_invalid_wikiname_slashed(self) -> None:
         f = wikify("Check Carrotcake/Withbutter out!")
-        self.assertEqual(f, "Check Carrotcake/Withbutter out!")
+        assert f == "Check Carrotcake/Withbutter out!"
 
-    def test_valid_wikiname_no_page(self):
+    def test_valid_wikiname_no_page(self) -> None:
         """
         If a Page does not exist, the link is generated nonetheless, going
         to the edit page , so the user can go there, and create the page.
         Those links have a HTML class `doesnotexist` attached.
         """
         f = wikify("Check WikiIndex out!")
-        self.assertEqual(
-            f,
-            'Check <a class="doesnotexist" href="/WikiIndex/edit/">WikiIndex</a> out!',
+        assert f == (
+            'Check <a class="doesnotexist" '
+            'href="/WikiIndex/edit/">WikiIndex</a> out!'
         )
 
-    def __defunctest_custom_wikiword_regex(self):
+    def __defunctest_custom_wikiword_regex(self) -> None:
         """
         This test does not work, because the urlpattern is generated
         before self.settings() takes places and overwrites it. I leave
@@ -74,11 +74,11 @@ class TemplateTagTestCase(BaseTestCase):
             # Page exists
             self.create_wikipage("AWESOMEWiki")
             f = wikify("Check AWESOMEWiki out!")
-            self.assertEqual(f, 'Check <a href="/AWESOMEWiki/">AWESOMEWiki</a> out!')
+            assert f == 'Check <a href="/AWESOMEWiki/">AWESOMEWiki</a> out!'
 
             # Valid slug, but page does not exist
             f = wikify("Check AWESOMEBeansoup out!")
-            self.assertEqual(
-                f,
-                'Check <a class="doesnotexist" href="/AWESOMEBeansoup/edit/">AwesomeBeans</a> out!',
+            assert f == (
+                'Check <a class="doesnotexist" '
+                'href="/AWESOMEBeansoup/edit/">AwesomeBeans</a> out!'
             )

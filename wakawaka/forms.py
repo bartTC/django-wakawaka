@@ -1,11 +1,15 @@
+from __future__ import annotations
+
+from typing import Any
+
 from django import forms
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
-from wakawaka.models import Revision
+from wakawaka.models import Revision, WikiPage
 
 
 class WikiPageForm(forms.Form):
@@ -19,7 +23,9 @@ class WikiPageForm(forms.Form):
         required=False,
     )
 
-    def save(self, request, page, *args, **kwargs):
+    def save(
+        self, request: HttpRequest, page: WikiPage, *args: Any, **kwargs: Any
+    ) -> None:
         Revision.objects.create(
             page=page,
             creator=request.user,
@@ -32,7 +38,7 @@ class WikiPageForm(forms.Form):
 class DeleteWikiPageForm(forms.Form):
     delete = forms.ChoiceField(label=_("Delete"), choices=())
 
-    def __init__(self, request, *args, **kwargs) -> None:
+    def __init__(self, request: HttpRequest, *args: Any, **kwargs: Any) -> None:
         """
         Override the __init__ to display only delete choices the user has
         permission for.
@@ -52,13 +58,15 @@ class DeleteWikiPageForm(forms.Form):
 
         super().__init__(*args, **kwargs)
 
-    def _delete_page(self, page):
+    def _delete_page(self, page: WikiPage) -> None:
         page.delete()
 
-    def _delete_revision(self, rev):
+    def _delete_revision(self, rev: Revision) -> None:
         rev.delete()
 
-    def delete_wiki(self, request, page, rev):
+    def delete_wiki(
+        self, request: HttpRequest, page: WikiPage, rev: Revision
+    ) -> HttpResponseRedirect | None:
         """
         Deletes the page with all revisions or the revision, based on the
         users choice.
@@ -120,10 +128,10 @@ class DeleteWikiPageForm(forms.Form):
                 messages.success(
                     request,
                     gettext(
-                        "The page for %s was deleted because you deleted the only revision",
+                        "The page for %s was deleted because "
+                        "you deleted the only revision",
                     )
                     % page.slug,
                 )
                 return HttpResponseRedirect(reverse("wakawaka_index"))
-            return None
         return None

@@ -1,3 +1,4 @@
+from typing import Any
 
 from django import get_version
 from django.contrib.auth.models import User
@@ -13,7 +14,7 @@ class BaseTestCase(testcases.TestCase):
     General integrity tests around the project.
     """
 
-    def _create_user(self, username, password):
+    def _create_user(self, username: str, password: str) -> User:
         try:
             user = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -24,7 +25,7 @@ class BaseTestCase(testcases.TestCase):
             user.set_password(password)
         return user
 
-    def login_superuser(self, create=True):
+    def login_superuser(self) -> User:
         username, password = "superuser", "foobar"
         user = self._create_user(username, password)
         user.is_superuser = True
@@ -33,7 +34,7 @@ class BaseTestCase(testcases.TestCase):
         self.client.login(username=username, password=password)
         return user
 
-    def login_staffuser_noperm(self, create=True):
+    def login_staffuser_noperm(self) -> User:
         username, password = "staffuser", "foobar"
         user = self._create_user(username, password)
         user.is_staff = True
@@ -41,7 +42,7 @@ class BaseTestCase(testcases.TestCase):
         self.client.login(username=username, password=password)
         return user
 
-    def create_wikipage(self, slug, *args):
+    def create_wikipage(self, slug: str, *args: Any) -> WikiPage:
         """
         Creates a WikiPage using the given slug. Creates a Revision with the
         content of each additional argument. Example::

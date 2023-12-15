@@ -2,6 +2,12 @@
 Changelog:
 ==========
 
+v1.4 (2023-12-15):
+
+- Added support for Django 5.0.
+- Added support for Python 3.12
+- Type Annotations
+
 v1.3 (2022-04-30):
 
 - Added support for Django 3.2 to 4.2.
