@@ -3,3 +3,4 @@ test_project.sqlite3
 /dist
 *.egg-info
 /wakawaka/tests/test_project/.static
+poetry.lock

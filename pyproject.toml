@@ -1,7 +1,42 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta:__legacy__"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
+# Quality Tools ------------------------------------------------------------------------
+[tool.poetry]
+name = "django-wakawaka"
+version = "1.4"
+packages = [{include = "wakawaka"}]
+description = "A simple Django based wiki system."
+authors = ["Martin Mahner <martin@mahner.org>"]
+license = "MIT"
+readme = ["README.md", "CHANGELOG.md"]
+homepage = "https://github.com/bartTC/django-wakawaka/"
+keywords = ["django", "wiki"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Django",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = ">=3.2"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "*"
+pytest-django = "*"
+
+# Quality Tools ------------------------------------------------------------------------
 [tool.ruff]
 target-version = "py38"
 exclude = ["migrations"]
@@ -27,11 +62,7 @@ ignore = [
 ]
 
 [tool.pytest.ini_options]
-python_files = [
-  "tests.py",
-  "test_*.py",
-  "*_tests.py",
-]
+python_files = ["test_*.py",]
 addopts = """
     --ds=wakawaka.tests.test_project.settings
     --nomigrations

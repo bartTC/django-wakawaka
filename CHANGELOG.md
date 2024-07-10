@@ -1,6 +1,8 @@
-==========
-Changelog:
-==========
+# Changelog:
+
+v1.5 (WIP):
+
+- Switch from pipenv to a Poetry build system
 
 v1.4 (2023-12-15):
 
