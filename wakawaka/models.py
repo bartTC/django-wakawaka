@@ -39,7 +39,7 @@ class Revision(models.Model):
         related_name="wakawaka_revisions",
         on_delete=models.CASCADE,
     )
-    creator_ip = models.GenericIPAddressField(_("creator ip"))
+    creator_ip = models.GenericIPAddressField(_("creator ip"), blank=True, null=True)
     created = models.DateTimeField(_("created"), auto_now_add=True)
     modified = models.DateTimeField(_("modified"), auto_now=True)
 

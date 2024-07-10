@@ -29,7 +29,7 @@ class WikiPageForm(forms.Form):
         Revision.objects.create(
             page=page,
             creator=request.user,
-            creator_ip=request.META["REMOTE_ADDR"],
+            creator_ip=request.META.get("REMOTE_ADDR"),
             content=self.cleaned_data["content"],
             message=self.cleaned_data["message"],
         )
