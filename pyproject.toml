@@ -40,8 +40,8 @@ pytest-django = "*"
 [tool.ruff]
 target-version = "py38"
 exclude = ["migrations"]
-select = ["ALL"]
-ignore = [
+lint.select = ["ALL"]
+lint.ignore = [
   "ANN101",   # Missing Type Annotation for "self"
   "ANN401",   # Dynamically typed expressions (typing.Any) are disallowed in `**kwargs`"
   "ARG001",   # Unused function argument (request, ...)

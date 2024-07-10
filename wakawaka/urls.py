@@ -16,30 +16,30 @@ urlpatterns = [
     path("index/", views.page_list, name="wakawaka_page_list"),
     # Revision list for page
     re_path(
-        r"^(?P<slug>%s)/history/$" % WIKI_SLUG,
+        rf"^(?P<slug>{WIKI_SLUG})/history/$",
         views.revisions,
         name="wakawaka_revision_list",
     ),
     # Changes between two revisions, revision id's come from GET
     re_path(
-        r"^(?P<slug>%s)/changes/$" % WIKI_SLUG, views.changes, name="wakawaka_changes"
+        rf"^(?P<slug>{WIKI_SLUG})/changes/$", views.changes, name="wakawaka_changes"
     ),
     # Edit Form
     re_path(
-        r"^(?P<slug>%s)/edit/(?P<rev_id>\d+)/$" % WIKI_SLUG,
+        rf"^(?P<slug>{WIKI_SLUG})/edit/(?P<rev_id>\d+)/$",
         login_required(views.edit),
         name="wakawaka_edit",
     ),
     re_path(
-        r"^(?P<slug>%s)/edit/$" % WIKI_SLUG,
+        rf"^(?P<slug>{WIKI_SLUG})/edit/$",
         login_required(views.edit),
         name="wakawaka_edit",
     ),
     # Page
     re_path(
-        r"^(?P<slug>%s)/rev(?P<rev_id>\d+)/$" % WIKI_SLUG,
+        rf"^(?P<slug>{WIKI_SLUG})/rev(?P<rev_id>\d+)/$",
         views.page,
         name="wakawaka_page",
     ),
-    re_path(r"^(?P<slug>%s)/$" % WIKI_SLUG, views.page, name="wakawaka_page"),
+    re_path(rf"^(?P<slug>{WIKI_SLUG})/$", views.page, name="wakawaka_page"),
 ]

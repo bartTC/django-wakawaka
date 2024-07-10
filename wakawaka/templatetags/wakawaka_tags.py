@@ -10,7 +10,7 @@ from wakawaka.urls import WIKI_SLUG
 
 register = Library()
 
-WIKI_WORDS_REGEX = re.compile(r"\b%s\b" % WIKI_SLUG, re.UNICODE)
+WIKI_WORDS_REGEX = re.compile(rf"\b{WIKI_SLUG}\b", re.UNICODE)
 
 
 def replace_wikiwords(value: str) -> SafeString:
