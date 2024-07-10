@@ -1,9 +1,0 @@
-include *.in
-include *.py
-include *.rst
-include pyproject.toml
-include LICENSE
-include tox.ini
-recursive-include docs *.png
-recursive-include wakawaka *.html
-recursive-include wakawaka *.po
