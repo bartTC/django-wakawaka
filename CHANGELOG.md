@@ -1,8 +1,9 @@
 # Changelog:
 
-v1.5 (WIP):
+v1.5 (2024-07-10):
 
 - Switch from pipenv to a Poetry build system
+- The IP Address field is now optional
 
 v1.4 (2023-12-15):
 

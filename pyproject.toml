@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 # Quality Tools ------------------------------------------------------------------------
 [tool.poetry]
 name = "django-wakawaka"
-version = "1.4"
+version = "1.5"
 packages = [{include = "wakawaka"}]
 description = "A simple Django based wiki system."
 authors = ["Martin Mahner <martin@mahner.org>"]
