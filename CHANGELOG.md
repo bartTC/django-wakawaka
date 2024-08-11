@@ -1,5 +1,9 @@
 # Changelog:
 
+WIP
+
+- Added support for Django 5.1.
+
 v1.5 (2024-07-10):
 
 - Switch from pipenv to a Poetry build system
