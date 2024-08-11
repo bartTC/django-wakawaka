@@ -1,37 +1,38 @@
 [![](https://badge.fury.io/py/django-wakawaka.svg)](https://badge.fury.io/py/django-wakawaka)
 
-*Compatibility Matrix:*
+_Compatibility Matrix:_
 
 | Py/Dj     | 3.8 | 3.9 | 3.10 | 3.11 | 3.12 |
-|-----------|-----|-----|------|------|------|
+| --------- | --- | --- | ---- | ---- | ---- |
 | 3.2 (LTS) | ✓   | ✓   | ✓    | ✓    | ✓    |
 | 4.0       | ✓   | ✓   | ✓    | ✓    | ✓    |
 | 4.1       | ✓   | ✓   | ✓    | ✓    | ✓    |
 | 4.2 (LTS) | ✓   | ✓   | ✓    | ✓    | ✓    |
 | 5.0       |     |     | ✓    | ✓    | ✓    |
+| 5.1       |     |     | ✓    | ✓    | ✓    |
 
 # django-wakawaka
 
 django-wakawaka is a super simple wiki system written in Python using the
 Django framework.
 
-* Links between Wiki pages are automatically resolved by their CamelCase naming
+- Links between Wiki pages are automatically resolved by their CamelCase naming
   scheme.
 
-* It automatically keeps track of revision changes of a Page, while
+- It automatically keeps track of revision changes of a Page, while
   providing the ability to revert to earlier states.
 
-* It also has a quite comprehensive permission integration, taking care of
+- It also has a quite comprehensive permission integration, taking care of
   Django's default create/edit/delete permissions.
 
-* Wakawaka is an application and indented to be placed in an existing project.
+- Wakawaka is an application and indented to be placed in an existing project.
 
-Some screenshots from the *Example Project*:
+Some screenshots from the _Example Project_:
 
-* [WikiIndex Page][WikiIndex Page]
-* [Revision List][Revision List]
-* [Page History][Page History]
-* [Page List][Page List]
+- [WikiIndex Page][WikiIndex Page]
+- [Revision List][Revision List]
+- [Page History][Page History]
+- [Page List][Page List]
 
 [WikiIndex Page]: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/overview.png
 [Revision List]: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/revisions.png
@@ -61,7 +62,7 @@ Example:
     WAKAWAKA_DEFAULT_INDEX = 'Home'
 
 Words that are written in CamelCase (a pair of one upper letter followed by
-*n* lower letters) are automatically treated as internal wiki links. You can
+_n_ lower letters) are automatically treated as internal wiki links. You can
 change this behaviour by adding a setting `WAKAWAKA_SLUG_REGEX` to your
 settings.py. This holds a regular expression of the wiki name format. Default:
 
@@ -70,7 +71,7 @@ settings.py. This holds a regular expression of the wiki name format. Default:
 ### Attachments:
 
 Wakawaka does not provide the ability to store file attachments to wiki pages.
-To do so, have a look on the side project [django-attachments][django-attachments] 
+To do so, have a look on the side project [django-attachments][django-attachments]
 which provides a unobstrusive way to add attachments to models.
 
 ## Testing and Development:
@@ -86,7 +87,6 @@ project using [Poetry][poetry]:
 
     $ poetry install
     $ pipenv run pytest
-
 
 ## Example Project:
 
