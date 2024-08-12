@@ -54,7 +54,7 @@ lint.ignore = [
   "ISC001",   # (ruff format) Checks for implicitly concatenated strings on a single line
 ]
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 # Also ignore `E402` in all `__init__.py` files.
 "test_*.py" = [
   "S101",     # S101 Use of `assert` detected
