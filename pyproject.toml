@@ -69,3 +69,37 @@ addopts = """
     --reuse-db
 """
 filterwarnings = ["ignore::RuntimeWarning"]
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+toxworkdir=/tmp/tox/django-wakawaka
+skip_missing_interpreters=True
+envlist=
+    py{38,39,310,311,312}-django-{32,40,41,42}
+    py{310,311,312}-django-{50,51}
+
+[gh-actions]
+python =
+    3.8: py38
+    3.9: py39
+    3.10: py310
+    3.11: py311
+    3.12: py312
+
+[testenv]
+setenv =
+    DJANGO_SETTINGS_MODULE=wakawaka.tests.test_project.settings
+commands=
+    {envbindir}/django-admin collectstatic --noinput -v2
+    pytest {envsitepackagesdir}/wakawaka
+deps=
+    django-32: django==3.2.*
+    django-40: django==4.0.*
+    django-41: django==4.1.*
+    django-42: django==4.2.*
+    django-50: django==5.0.*
+    django-51: django==5.1.*
+    pytest
+    pytest-django
+"""
