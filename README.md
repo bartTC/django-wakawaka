@@ -31,10 +31,10 @@ Some screenshots from the _Example Project_:
 - [Page History][Page History]
 - [Page List][Page List]
 
-[WikiIndex Page]: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/overview.png
-[Revision List]: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/revisions.png
-[Page History]: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/history.png
-[Page List]: https://github.com/bartTC/django-wakawaka/raw/master/docs/_static/pagelist.png
+[WikiIndex Page]: https://github.com/bartTC/django-wakawaka/raw/main/docs/_static/overview.png
+[Revision List]: https://github.com/bartTC/django-wakawaka/raw/main/docs/_static/revisions.png
+[Page History]: https://github.com/bartTC/django-wakawaka/raw/main/docs/_static/history.png
+[Page List]: https://github.com/bartTC/django-wakawaka/raw/main/docs/_static/pagelist.png
 
 ## Installation:
 
