@@ -1,8 +1,11 @@
 # Changelog:
 
-WIP
+v1.6 (2024-11-19)
 
+- Added support for Python 3.13.
 - Added support for Django 5.1.
+- Drop support for Django <= 4.1.
+- Drop support for Python 3.8.
 
 v1.5 (2024-07-10):
 

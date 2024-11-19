@@ -5,7 +5,7 @@ build-backend = "poetry.core.masonry.api"
 # Quality Tools ------------------------------------------------------------------------
 [tool.poetry]
 name = "django-wakawaka"
-version = "1.5"
+version = "1.6"
 packages = [{include = "wakawaka"}]
 description = "A simple Django based wiki system."
 authors = ["Martin Mahner <martin@mahner.org>"]
@@ -20,11 +20,11 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Framework :: Django",
 ]
 
@@ -76,8 +76,8 @@ legacy_tox_ini = """
 toxworkdir=/tmp/tox/django-wakawaka
 skip_missing_interpreters=True
 envlist=
-    py{38,39,310,311,312}-django-{32,40,41,42}
-    py{310,311,312}-django-{50,51}
+    py{39,310,311,312,313}-django-{42}
+    py{310,311,312,313}-django-{50,51}
 
 [gh-actions]
 python =
@@ -86,6 +86,7 @@ python =
     3.10: py310
     3.11: py311
     3.12: py312
+    3.13: py313
 
 [testenv]
 setenv =
