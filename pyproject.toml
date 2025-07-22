@@ -42,13 +42,11 @@ target-version = "py38"
 exclude = ["migrations"]
 lint.select = ["ALL"]
 lint.ignore = [
-  "ANN101",   # Missing Type Annotation for "self"
   "ANN401",   # Dynamically typed expressions (typing.Any) are disallowed in `**kwargs`"
   "ARG001",   # Unused function argument (request, ...)
   "ARG002",   # Unused method argument (*args, **kwargs)
   "D",        # Missing or badly formatted docstrings
   "FBT",      # Flake Boolean Trap (don't use arg=True in functions)
-  "RUF012",   # Mutable class attributes https://github.com/astral-sh/ruff/issues/5243
 
   "COM812",   # (ruff format) Checks for the absence of trailing commas
   "ISC001",   # (ruff format) Checks for implicitly concatenated strings on a single line
@@ -77,7 +75,7 @@ toxworkdir=/tmp/tox/django-wakawaka
 skip_missing_interpreters=True
 envlist=
     py{39,310,311,312,313}-django-{42}
-    py{310,311,312,313}-django-{50,51}
+    py{310,311,312,313}-django-{50,51,52}
 
 [gh-actions]
 python =
@@ -101,6 +99,7 @@ deps=
     django-42: django==4.2.*
     django-50: django==5.0.*
     django-51: django==5.1.*
+    django-52: django==5.2.*
     pytest
     pytest-django
 """

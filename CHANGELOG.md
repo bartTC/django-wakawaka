@@ -1,5 +1,9 @@
 # Changelog:
 
+WIP
+
+- Added support for Django 5.2.
+
 v1.6 (2024-11-19)
 
 - Added support for Python 3.13.

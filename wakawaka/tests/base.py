@@ -1,5 +1,3 @@
-from typing import Any
-
 from django import get_version
 from django.contrib.auth.models import User
 from django.test import testcases
@@ -42,7 +40,7 @@ class BaseTestCase(testcases.TestCase):
         self.client.login(username=username, password=password)
         return user
 
-    def create_wikipage(self, slug: str, *args: Any) -> WikiPage:
+    def create_wikipage(self, slug: str, *args: str) -> WikiPage:
         """
         Creates a WikiPage using the given slug. Creates a Revision with the
         content of each additional argument. Example::
