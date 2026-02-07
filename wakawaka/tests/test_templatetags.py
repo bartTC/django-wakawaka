@@ -54,8 +54,7 @@ class TemplateTagTestCase(BaseTestCase):
         """
         f = wikify("Check WikiIndex out!")
         assert f == (
-            'Check <a class="doesnotexist" '
-            'href="/WikiIndex/edit/">WikiIndex</a> out!'
+            'Check <a class="doesnotexist" href="/WikiIndex/edit/">WikiIndex</a> out!'
         )
 
     def __defunctest_custom_wikiword_regex(self) -> None:

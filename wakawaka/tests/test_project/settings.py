@@ -1,7 +1,5 @@
 import pathlib
 
-# Django 1.8/1.9 Middleware style
-
 BASE_DIR = pathlib.Path(__file__).parent.resolve()
 
 SECRET_KEY = "@9^=k1pya3su*bgfr3%3n8=^-orkzuqrfwj_5-f+g5(&p05lr)"  # noqa: S105 Possible hardcoded password
@@ -50,9 +48,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "wakawaka.tests.test_project.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
     "default": {

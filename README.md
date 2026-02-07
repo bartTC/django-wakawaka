@@ -2,12 +2,12 @@
 
 _Compatibility Matrix:_
 
-| Py/Dj     | 3.9 | 3.10 | 3.11 | 3.12 | 3.13 |
-|-----------|-----|------|------|------|------|
-| 4.2 (LTS) | ✓   | ✓    | ✓    | ✓    | ✓    |
-| 5.0       |     | ✓    | ✓    | ✓    | ✓    |
-| 5.1       |     | ✓    | ✓    | ✓    | ✓    |
-| 5.2 (LTS) |     | ✓    | ✓    | ✓    | ✓    |
+| Py/Dj     | 3.9 | 3.10 | 3.11 | 3.12 | 3.13 | 3.14 |
+|-----------|-----|------|------|------|------|------|
+| 4.2 (LTS) | ✓   | ✓    | ✓    | ✓    | ✓    |      |
+| 5.0       |     | ✓    | ✓    | ✓    | ✓    |      |
+| 5.1       |     | ✓    | ✓    | ✓    | ✓    |      |
+| 5.2 (LTS) |     | ✓    | ✓    | ✓    | ✓    | ✓    |
 
 # django-wakawaka
 
@@ -43,7 +43,7 @@ Some screenshots from the _Example Project_:
    django project.
 2. Add `(r'^wiki/', include('wakawaka.urls')),` to your urls.py.
 
-That's all. Wakawaka has no other dependencies than Django 1.11 or later.
+That's all. Wakawaka has no other dependencies than Django 3.2 or later.
 
 ## Configuration:
 
