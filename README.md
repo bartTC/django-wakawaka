@@ -8,6 +8,7 @@ _Compatibility Matrix:_
 | 5.0       |     | ✓    | ✓    | ✓    | ✓    |      |
 | 5.1       |     | ✓    | ✓    | ✓    | ✓    |      |
 | 5.2 (LTS) |     | ✓    | ✓    | ✓    | ✓    | ✓    |
+| 6.0       |     |      |      | ✓    | ✓    | ✓    |
 
 # django-wakawaka
 

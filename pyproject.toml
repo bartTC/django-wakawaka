@@ -81,7 +81,7 @@ skip_missing_interpreters=True
 envlist=
     py{39,310,311,312,313}-django-{42}
     py{310,311,312,313}-django-{50,51,52}
-    py{314}-django-{52}
+    py{312,313,314}-django-{60}
 
 [gh-actions]
 python =
@@ -106,6 +106,7 @@ deps=
     django-50: django==5.0.*
     django-51: django==5.1.*
     django-52: django==5.2.*
+    django-60: django==6.0.*
     pytest
     pytest-django
 """
