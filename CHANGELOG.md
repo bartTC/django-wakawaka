@@ -1,6 +1,6 @@
 # Changelog:
 
-WIP
+v1.7 (2026-02-07)
 
 - Added support for Python 3.14.
 - Added support for Django 5.2.
