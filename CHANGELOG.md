@@ -1,9 +1,13 @@
 # Changelog:
 
+WIP
+
+- Added support for Django 6.0.
+
 v1.7 (2026-02-07)
 
 - Added support for Python 3.14.
-- Added support for Django 5.2 and 6.0.
+- Added support for Django 5.2.
 - Updated ruff config for ruff 0.15.
 
 v1.6 (2024-11-19)
